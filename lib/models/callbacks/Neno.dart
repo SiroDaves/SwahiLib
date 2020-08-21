@@ -1,10 +1,12 @@
+// This file declares neno model that will be used to manage 
+// maneno from the live database
+
 class Neno {
   String title;
   String maana;
   String visawe;
   String mnyambuliko;
 
-//id,title,maana,visawe,mnyambuliko,
   Neno(
       {this.title,
       this.maana,

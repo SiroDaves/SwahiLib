@@ -1,8 +1,10 @@
+// This file declares generic model that will be used to manage 
+// misemo, nahau, methali from the asset database
+
 class Generic {
   String title;
   String maana;
 
-//id,title,maana
   Generic(
       {this.title,
       this.maana });

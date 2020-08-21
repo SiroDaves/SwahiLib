@@ -1,3 +1,5 @@
+//This files manages the themes of the app
+
 import 'package:flutter/material.dart';
 
 final asLightTheme = _buildLightTheme();

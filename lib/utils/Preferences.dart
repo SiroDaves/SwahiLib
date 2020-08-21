@@ -1,3 +1,5 @@
+//This files manages shared preferences of the app
+
 import 'dart:async';
 
 import 'package:kamusi/utils/constants.dart';

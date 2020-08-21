@@ -1,3 +1,6 @@
+// This file declares neno model that will be used to manage 
+// maneno from the live database
+
 class NenoModel {
   int _id;
   String _title;
@@ -6,8 +9,6 @@ class NenoModel {
   String _mnyambuliko;
   int _views;
   int _isfav;
-
-  //id,title ,maana,visawe,mnyambuliko
 
   NenoModel(
       this._title,

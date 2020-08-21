@@ -1,11 +1,12 @@
+// This file declares generic model that will be used to manage 
+// misemo, nahau, methali from the live database
+
 class GenericModel {
   int _id;
   String _title;
   String _maana;
   int _views;
   int _isfav;
-
-  //id,title ,maana
 
   GenericModel(
       this._title,

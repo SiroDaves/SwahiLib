@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:kamusi/models/NenoModel.dart';
 import 'package:kamusi/helpers/SqliteHelper.dart';
-import 'package:kamusi/screens/EeNenoView.dart';
+import 'package:kamusi/screens/EeContentView.dart';
 //import 'package:kamusi/utils/Preferences.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/widgets/AsProgressWidget.dart';
@@ -238,7 +238,7 @@ class AsSearchNenoState extends State<AsSearchNeno> {
     bool haschorus = false;
     /*if (neno.content.contains("CHORUS")) haschorus = true;
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return EeNenoView(neno, haschorus, title, nenobook);
+      return EeContentView(neno, haschorus, title, nenobook);
     }));*/
   }
 }

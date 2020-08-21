@@ -1,7 +1,10 @@
+// This file declares the start screen which will handle
+// first time settings and the next screen
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kamusi/screens/CcKamusiLoad.dart';
+import 'package:kamusi/screens/CcInitLoad.dart';
 import 'package:kamusi/screens/DdHomeView.dart';
 import 'package:kamusi/utils/Preferences.dart';
 
@@ -43,7 +46,7 @@ class SplashPageState extends State<AppStart> {
           Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new DdHomeView()));
         }
         else {
-          Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new CcKamusiLoad())); 
+          Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new CcInitLoad())); 
         }
       });
     }

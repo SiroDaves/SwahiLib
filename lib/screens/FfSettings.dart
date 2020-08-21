@@ -1,3 +1,6 @@
+// This file declares the settings screen which will handle
+// first time settings and the next screen
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 

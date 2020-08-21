@@ -1,3 +1,4 @@
+//This file declares the strings used throughout the app
 
 class SharedPreferenceKeys {
   static const String Kamusidb_Loaded = "kamusi_database_loaded";
@@ -18,6 +19,15 @@ class Texts {
   static const String methali = 'methali';
   static const String misemo = 'misemo';
   static const String nahau = 'nahau';
+
+  static const String id = 'id';
+  static const String title = 'title';
+  static const String maana = 'maana';
+  static const String visawe = 'visawe';
+  static const String mnyambuliko = 'mnyambuliko';
+  static const String isfav = 'isfav';
+  static const String views = 'views';
+  static const String notes = 'notes';
 }
 
 class Tooltips {
@@ -32,58 +42,47 @@ class SnackBarText {
   static const String nenoDisliked = " disliked!";
 }
 
-class Columns {
-  static const String id = 'id';
-  static const String title = 'title';
-  static const String maana = 'maana';
-  static const String visawe = 'visawe';
-  static const String mnyambuliko = 'mnyambuliko';
-  static const String isfav = 'isfav';
-  static const String views = 'views';
-  static const String notes = 'notes';
-}
-
 class Queries {
   static const String createManenoTable = 'CREATE TABLE ' + Texts.maneno +
       '(' + 
-        Columns.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-        Columns.title + ' VARCHAR(100), ' +
-        Columns.maana + ' VARCHAR(300), ' +
-        Columns.visawe + ' VARCHAR(100), ' +
-        Columns.mnyambuliko + ' VARCHAR(100),' +
-        Columns.notes + ' VARCHAR(500), ' +
-        Columns.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
-        Columns.views + ' INTEGER NOT NULL DEFAULT 0' +
+        Texts.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+        Texts.title + ' VARCHAR(100), ' +
+        Texts.maana + ' VARCHAR(300), ' +
+        Texts.visawe + ' VARCHAR(100), ' +
+        Texts.mnyambuliko + ' VARCHAR(100),' +
+        Texts.notes + ' VARCHAR(500), ' +
+        Texts.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
+        Texts.views + ' INTEGER NOT NULL DEFAULT 0' +
     ");";
 
    static const String createMethaliTable = 'CREATE TABLE ' + Texts.methali +
       '(' + 
-        Columns.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-        Columns.title + ' VARCHAR(100), ' +
-        Columns.maana + ' VARCHAR(500), ' +
-        Columns.notes + ' VARCHAR(500), ' +
-        Columns.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
-        Columns.views + ' INTEGER NOT NULL DEFAULT 0' +
+        Texts.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+        Texts.title + ' VARCHAR(100), ' +
+        Texts.maana + ' VARCHAR(500), ' +
+        Texts.notes + ' VARCHAR(500), ' +
+        Texts.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
+        Texts.views + ' INTEGER NOT NULL DEFAULT 0' +
     ");";
    
    static const String createMisemoTable = 'CREATE TABLE ' + Texts.misemo +
       '(' + 
-        Columns.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-        Columns.title + ' VARCHAR(100), ' +
-        Columns.maana + ' VARCHAR(500), ' +
-        Columns.notes + ' VARCHAR(500), ' +
-        Columns.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
-        Columns.views + ' INTEGER NOT NULL DEFAULT 0' +
+        Texts.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+        Texts.title + ' VARCHAR(100), ' +
+        Texts.maana + ' VARCHAR(500), ' +
+        Texts.notes + ' VARCHAR(500), ' +
+        Texts.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
+        Texts.views + ' INTEGER NOT NULL DEFAULT 0' +
     ");";
    
    static const String createNahauTable = 'CREATE TABLE ' + Texts.nahau +
       '(' + 
-        Columns.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-        Columns.title + ' VARCHAR(100), ' +
-        Columns.maana + ' VARCHAR(500), ' +
-        Columns.notes + ' VARCHAR(500), ' +
-        Columns.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
-        Columns.views + ' INTEGER NOT NULL DEFAULT 0' +
+        Texts.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+        Texts.title + ' VARCHAR(100), ' +
+        Texts.maana + ' VARCHAR(500), ' +
+        Texts.notes + ' VARCHAR(500), ' +
+        Texts.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
+        Texts.views + ' INTEGER NOT NULL DEFAULT 0' +
     ");";
 
 }

@@ -1,3 +1,6 @@
+// This file declares functions that manages the database that is created in the app 
+// when the app is installed for the first time
+
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'dart:io';
@@ -72,11 +75,11 @@ class SqliteHelper {
     var result = await db.rawUpdate('UPDATE ' +
         Texts.maneno +
         ' SET ' +
-        Columns.isfav +
+        Texts.isfav +
         '=' +
         neno.isfav.toString() +
         ' WHERE ' +
-        Columns.id +
+        Texts.id +
         '=' +
         neno.id.toString());
     return result;
@@ -87,7 +90,7 @@ class SqliteHelper {
     int result = await db.rawDelete('DELETE FROM ' +
         Texts.maneno +
         ' WHERE ' +
-        Columns.id +
+        Texts.id +
         '=' +
         nenoID.toString());
     return result;
@@ -137,8 +140,8 @@ class SqliteHelper {
   Future<List<Map<String, dynamic>>> getNenoSearchMapList(
       String searchThis) async {
     Database db = await this.database;
-    String sqlQuery = Columns.title + ' LIKE "%' + searchThis + '%"' +
-        ' OR ' + Columns.maana + ' LIKE "%' + searchThis + '%"';
+    String sqlQuery = Texts.title + ' LIKE "%' + searchThis + '%"' +
+        ' OR ' + Texts.maana + ' LIKE "%' + searchThis + '%"';
 
     var result = db.query(Texts.maneno, where: sqlQuery);
     return result;
@@ -159,8 +162,8 @@ class SqliteHelper {
   Future<List<Map<String, dynamic>>> getGenericSearchMapList(
       String searchThis, String table) async {
     Database db = await this.database;
-    String sqlQuery = Columns.title + ' LIKE "%' + searchThis + '%"' +
-        ' OR ' + Columns.maana + ' LIKE "%' + searchThis + '%"';
+    String sqlQuery = Texts.title + ' LIKE "%' + searchThis + '%"' +
+        ' OR ' + Texts.maana + ' LIKE "%' + searchThis + '%"';
 
     var result = db.query(table, where: sqlQuery);
     return result;
@@ -180,7 +183,7 @@ class SqliteHelper {
   //FAVOURITES LISTS
   Future<List<Map<String, dynamic>>> getFavoritesList() async {
     Database db = await this.database;
-    var result = db.query(Texts.maneno, where: Columns.isfav + '=1');
+    var result = db.query(Texts.maneno, where: Texts.isfav + '=1');
     return result;
   }
 
@@ -199,9 +202,9 @@ class SqliteHelper {
   Future<List<Map<String, dynamic>>> getFavSearchMapList(
       String searchThis) async {
     Database db = await this.database;
-    String extraQuery = 'AND ' + Columns.isfav + '=1 ';
-    String sqlQuery = Columns.title + ' LIKE "%' + searchThis + '%" ' + extraQuery +
-        'OR ' + Columns.maana + ' LIKE "%' + searchThis + '%" ' + extraQuery;
+    String extraQuery = 'AND ' + Texts.isfav + '=1 ';
+    String sqlQuery = Texts.title + ' LIKE "%' + searchThis + '%" ' + extraQuery +
+        'OR ' + Texts.maana + ' LIKE "%' + searchThis + '%" ' + extraQuery;
 
     var result = db.query(Texts.maneno, where: sqlQuery);
     return result;

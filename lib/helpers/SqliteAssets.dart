@@ -1,3 +1,5 @@
+// This file declares functions that manages the asset database that is compiled with the app
+
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';

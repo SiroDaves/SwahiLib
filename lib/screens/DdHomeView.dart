@@ -1,3 +1,5 @@
+// This file declares the home screen of the app
+
 import 'package:flutter/material.dart';
 import 'package:kamusi/utils/Constants.dart';
 import 'package:kamusi/widgets/AsSearchGeneric.dart';
