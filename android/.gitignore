@@ -7,3 +7,4 @@ gradle-wrapper.jar
 /key.properties
 /local.properties
 GeneratedPluginRegistrant.java
+app/google-services.json

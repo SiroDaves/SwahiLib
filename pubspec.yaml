@@ -10,19 +10,33 @@ dependencies:
   flutter:
     sdk: flutter
 
+  debug_mode: ^0.1.1
+  dio: ^3.0.9
+  dio_http_cache: ^0.2.6
+  pretty_dio_logger: ^1.1.1
+  flutter_stetho: ^0.6.0-dev.1
+  freezed_annotation:
+  json_serializable: ^3.3.0
+  firebase_analytics: ^5.0.11
+  firebase_performance: ^0.3.1+8
+  dio_firebase_performance: ^0.0.1
+  firebase_crashlytics: ^0.1.3+3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  freezed:
   animated_floatactionbuttons: ^0.1.0
   async: ^2.4.0
   backdrop: ^0.2.8
+  build_runner: ^1.1.2
   cupertino_icons: ^0.1.2
-  english_words: ^3.1.5
+  change_app_package_name: ^0.1.2
   flutter_html : ^1.0.2
-  flutter_launcher_icons: ^0.6.1
-  flutter_slidable: ^0.5.4
+  flutter_launcher_icons: ^0.7.5
   fluttertoast: ^7.0.2
   http: ^0.12.0
-  intl: ^0.15.7
   json_annotation: ^3.0.1
-  matrix_gesture_detector: ^0.1.0
   path_provider: ^1.6.11
   percent_indicator: ^2.1.3
   provider: ^4.3.2
@@ -30,22 +44,16 @@ dependencies:
   share: ^0.6.4+3
   shared_preferences: ^0.5.8
   shared_preferences_settings: ^1.2.0
-  swipedetector: ^1.2.0
   sqflite: ^1.3.1
   vertical_tabs: ^0.2.0
 
 flutter_icons:
-  image_path: "assets/images/appicon.png"
-  android: true
+  android: "launcher_icon"
   ios: true
-
-dev_dependencies:
-  build_runner: ^1.1.2
-  json_serializable: ^3.3.0
+  image_path: "assets/images/appicon.png"
 
   flutter_test:
     sdk: flutter
-
 
 flutter:
 
@@ -54,14 +62,10 @@ flutter:
   assets:
     - assets/kamusi.db
     - assets/images/appicon.png
-    - assets/images/appsmata.png
-    - assets/images/book.jpg
-    - assets/images/bg.jpg
     - assets/images/donation_airtel.png
     - assets/images/donation_equitel.png
     - assets/images/donation_mpesa.png
     - assets/images/donation_paypal.png
-    - assets/images/header.png
     - assets/images/ic_arrow_back_white.png
     - assets/images/ic_books.png
     - assets/images/ic_check_circle.png
@@ -74,5 +78,4 @@ flutter:
     - assets/images/ic_font_bigger.png
     - assets/images/ic_font_smaller.png
     - assets/images/ic_home.png
-    - assets/images/logo.png
     - assets/images/splash.jpg

@@ -1,3 +1,8 @@
+import 'package:debug_mode/debug_mode.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+//import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,10 +11,17 @@ import 'package:kamusi/screens/BbSplash.dart';
 import 'package:kamusi/screens/AppStart.dart';
 import 'package:kamusi/utils/Themes.dart';
 
-void main() => runApp(new MyApplication());
+void main() {
+  if (DebugMode.isInDebugMode) {
+    //Stetho.initialize();
+  }
+  Crashlytics.instance.enableInDevMode = true;
+  // Pass all uncaught errors from the framework to Crashlytics.
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+  runApp(MyApplication());
+}
 
 class MyApplication extends StatelessWidget {
-  const MyApplication({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +41,7 @@ class MyApplication extends StatelessWidget {
 }
 
 class _MyApplication extends StatelessWidget {
-  const _MyApplication({Key key}) : super(key: key);
+  final FirebaseAnalytics analytics = FirebaseAnalytics();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +49,9 @@ class _MyApplication extends StatelessWidget {
       title: 'Kamusi',
       theme: Provider.of<AppSettings>(context).isDarkMode ? asDarkTheme : asLightTheme,
       home: new AppStart(),
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics),
+      ],
     );
   }
 }
