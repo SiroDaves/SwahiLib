@@ -46,8 +46,7 @@ class SplashPageState extends State<AppStart> {
           Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new DdHomeView()));
         }
         else {
-          Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new DdHomeView()));
-          //Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new CcInitLoad()));
+          Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new CcInitLoad()));
         }
       });
     }
