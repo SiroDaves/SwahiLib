@@ -1,7 +1,5 @@
 // This file declares the content view screen
 
-import 'dart:math';
-
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,68 +7,58 @@ import 'package:kamusi/helpers/SqliteHelper.dart';
 import 'package:kamusi/models/NenoModel.dart';
 import 'package:backdrop/backdrop.dart';
 import 'package:kamusi/screens/FfSettingsQuick.dart';
-import 'package:vertical_tabs/vertical_tabs.dart';
 import 'package:share/share.dart';
 import 'package:kamusi/utils/Constants.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 
 class EeContentView extends StatefulWidget {
-  final bool haschorus;
   final NenoModel neno;
-  final String nenotitle;
-  final String nenobook;
 
-  EeContentView(this.neno, this.haschorus, this.nenotitle, this.nenobook);
+  EeContentView(this.neno);
 
   @override
   State<StatefulWidget> createState() {
-    return EeContentViewState(
-        this.neno, this.haschorus, this.nenotitle, this.nenobook);
+    return EeContentViewState(this.neno);
   }
 }
 
 class EeContentViewState extends State<EeContentView> {
-  EeContentViewState(this.neno, this.haschorus, this.nenotitle, this.nenobook);
+  EeContentViewState(this.neno);
   final globalKey = new GlobalKey<ScaffoldState>();
   SqliteHelper db = SqliteHelper();
 
   var appBar = AppBar(), nenoVerses;
-  String nenotitle, nenobook;
-  bool haschorus;
   NenoModel neno;
-  int curStanza = 0, curNeno = 0;
-  List<String> verseTexts, verseTitles, verseInfos;
-  String nenoTitle, nenoContent;
-
-  void getListView() async {
-    await setContent();
-  }
+  int curNeno = 0;
+  String nenoContent;
+  List<String> meanings, synonyms;
+  List<NenoModel> nenos;
 
   @override
   Widget build(BuildContext context) {
     curNeno = neno.id;
-    nenoTitle = neno.title;
-    nenoContent = neno.maana.replaceAll("\\n", "\n").replaceAll("''", "'");
-
-    if (verseTexts == null) {
-      verseInfos = List<String>();
-      verseTitles = List<String>();
-      verseTexts = List<String>();
-      getListView();
-    }
+    nenoContent = neno.title + " ni neno la Kiswahili lenye maana:";
     bool isFavourited(int favorite) => favorite == 1 ?? false;
+
+    if (meanings == null) {
+      meanings = List<String>();
+      synonyms = List<String>();
+      processData();
+    }
 
     return WillPopScope(
       onWillPop: () {
         moveToLastScreen();
       },
       child: BackdropScaffold(
-        title: Text(nenotitle),
+        title: Text(Texts.appName),
         actions: <Widget>[
           IconButton(
             icon: Icon(
               isFavourited(neno.isfav) ? Icons.star : Icons.star_border,
             ),
-            onPressed: () => favoriteNeno(),
+            onPressed: () => favoriteThis(),
           )
         ],
         iconPosition: BackdropIconPosition.action,
@@ -83,8 +71,8 @@ class EeContentViewState extends State<EeContentView> {
               body: mainBody(),
               floatingActionButton: AnimatedFloatingActionButton(
                 fabButtons: floatingButtons(),
-                colorStartAnimation: Colors.deepOrange,
-                colorEndAnimation: Colors.red,
+                colorStartAnimation: Colors.blueAccent,
+                colorEndAnimation: Colors.blue,
                 animatedIconData: AnimatedIcons.menu_close,
               ),
             ),
@@ -96,121 +84,90 @@ class EeContentViewState extends State<EeContentView> {
   }
 
   Widget mainBody() {
-    return Center(
-      child: Container(
-        constraints: BoxConstraints.expand(),
-        child: new Stack(
-          children: <Widget>[
-            nenoViewer(),
-            nenoBook(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget nenoBook() {
     return Container(
-      padding: const EdgeInsets.all(5),
-      height: 50,
-      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height - 160),
-      child: Center(
-        child: Text(
-          nenobook,
-          style: new TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.deepOrange),
-        ),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.white, Colors.cyan, Colors.indigo]),
+      ),
+      child: new Stack(
+        children: <Widget>[
+          new Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Html(
+              data: "<h3>" + neno.title + "</h3>",
+              style: {
+                "h3": Style(
+                  fontSize: FontSize(30.0),
+                ),
+              },
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height - 100,
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            margin: EdgeInsets.only(top: 60),
+            child: ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: meanings.length,
+              itemBuilder: listView,
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget nenoViewer() {
-    return VerticalTabs(
-        tabsWidth: 50,
-        contentScrollAxis: Axis.vertical,
-        tabs: List<Tab>.generate(
-          verseInfos.length,
-          (int index) {
-            return new Tab(text: verseInfos[index]);
+  Widget listView(BuildContext context, int index) {
+    if (neno.visawe == meanings[index]) {
+      nenoContent =
+          nenoContent + Texts.visawe_vya + neno.title + " ni: " + neno.visawe;
+
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Html(
+          data: "<p><b>Visawe:</b> <i>" + neno.visawe + "</i></p>",
+          style: {
+            "p": Style(
+              fontSize: FontSize(25.0),
+            ),
           },
         ),
-        contents: List<Widget>.generate(
-          verseInfos.length,
-          (int index) {
-            return new Container(
-              child: tabsContent(index),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: new AssetImage("assets/images/bg.jpg"),
-                      fit: BoxFit.cover)),
-            );
-          },
-        ));
-  }
+      );
+    } else {
+      var strContents = meanings[index].split(":");
+      String strContent = meanings[index];
 
-  double getFontSize(int characters, double height, double width) {
-    height = height - 300;
-    width = width - 100;
-    return sqrt((height * width) / characters);
-  }
+      if (strContents.length > 1) {
+        strContent = strContents[0] + "<br>";
+        strContent = strContent +
+            "<p><b>Kwa mfano:</b> <i>" +
+            strContents[1] +
+            "</i></p>";
 
-  Widget tabsContent(int index) {
-    var lines = verseTexts[index].split("\\n");
-    String lyrics =
-        verseTexts[index].replaceAll("\\n", "\n").replaceAll("''", "'");
-    double nfontsize = getFontSize(lyrics.length,
-        MediaQuery.of(context).size.height, MediaQuery.of(context).size.width);
+        nenoContent = nenoContent + "\n- " + strContents[0] + " kwa mfano: ";
+        nenoContent = nenoContent + strContents[1];
+      } else
+        nenoContent = nenoContent + "\n - " + meanings[index];
 
-    return new Stack(
-      children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height - 180,
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          child: Card(
-              elevation: 2,
-              child: new Center(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: new Text(
-                    lyrics,
-                    style: new TextStyle(fontSize: nfontsize),
-                  ),
-                ),
-              )),
-        ),
-        Container(
-          margin:
-              EdgeInsets.only(top: MediaQuery.of(context).size.height - 215),
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: new Column(
-            children: <Widget>[
-              new Center(
-                child: new Container(
-                  width: 200,
-                  height: 50,
-                  decoration: new BoxDecoration(
-                      color: Colors.orangeAccent,
-                      border: Border.all(color: Colors.orange),
-                      boxShadow: [BoxShadow(blurRadius: 5)],
-                      borderRadius:
-                          new BorderRadius.all(new Radius.circular(5))),
-                  child: new Center(
-                    child: new Text(
-                      verseTitles[index],
-                      style: new TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 22),
-                    ),
-                  ),
-                ),
+      return Card(
+        elevation: 2,
+        child: GestureDetector(
+          child: Html(
+            data: "<ul><li>" + strContent + "</li></ul>",
+            style: {
+              "li": Style(
+                fontSize: FontSize(25.0),
               ),
-            ],
+              "p": Style(
+                fontSize: FontSize(22.0),
+              ),
+            },
           ),
         ),
-      ],
-    );
+      );
+    }
   }
 
   List<Widget> floatingButtons() {
@@ -218,85 +175,80 @@ class EeContentViewState extends State<EeContentView> {
       FloatingActionButton(
         heroTag: null,
         child: Icon(Icons.content_copy),
-        tooltip: Tooltips.copyNeno,
-        onPressed: copyNeno,
+        tooltip: Tooltips.copyThis,
+        onPressed: copyItem,
       ),
       FloatingActionButton(
         heroTag: null,
         child: Icon(Icons.share),
-        tooltip: Tooltips.shareNeno,
-        onPressed: shareNeno,
+        tooltip: Tooltips.shareThis,
+        onPressed: shareItem,
       ),
     ];
   }
 
-  Future<void> setContent() async {
-    verseInfos = [];
-    verseTitles = [];
-    verseTexts = [];
-    nenoVerses = neno.maana.split("\\n\\n");
-    int verseCount = nenoVerses.length;
-
-    if (haschorus) {
-      String chorus = nenoVerses[1].toString().replaceAll("CHORUS\\n", "");
-
-      verseInfos.add("1");
-      verseInfos.add("C");
-      verseTitles.add("VERSE 1 of " + (verseCount - 1).toString());
-      verseTitles.add('CHORUS');
-      verseTexts.add(nenoVerses[0]);
-      verseTexts.add(chorus);
-
-      try {
-        for (int i = 2; i < verseCount; i++) {
-          String verseno = i.toString();
-          verseInfos.add(verseno);
-          verseInfos.add("C");
-          verseTitles
-              .add('VERSE ' + verseno + ' of ' + (verseCount - 1).toString());
-          verseTitles.add('CHORUS');
-          verseTexts.add(nenoVerses[i]);
-          verseTexts.add(chorus);
-        }
-      } catch (Exception) {}
-    } else {
-      try {
-        for (int i = 0; i < verseCount; i++) {
-          String verseno = (i + 1).toString();
-          verseInfos.add(verseno);
-          verseTitles.add('VERSE ' + verseno + ' of ' + verseCount.toString());
-          verseTexts.add(nenoVerses[i]);
-        }
-      } catch (Exception) {}
-    }
-  }
-
-  void copyNeno() {
-    Clipboard.setData(ClipboardData(text: nenoTitle + "\n\n" + nenoContent));
+  void copyItem() {
+    Clipboard.setData(ClipboardData(text: nenoContent + Texts.campaign));
     globalKey.currentState.showSnackBar(new SnackBar(
       content: new Text(SnackBarText.nenoCopied),
     ));
   }
 
-  void shareNeno() {
+  void shareItem() {
     Share.share(
-      nenoTitle + "\n\n" + nenoContent + "\n\nvia #Kamusi App",
-      subject: "Share the neno: " + nenoTitle,
+      nenoContent + Texts.campaign,
+      subject: "Shiriki neno: " + neno.title,
     );
   }
 
-  void favoriteNeno() {
+  void favoriteThis() {
     if (neno.isfav == 1)
       db.favouriteNeno(neno, false);
     else
       db.favouriteNeno(neno, true);
     globalKey.currentState.showSnackBar(new SnackBar(
-      content: new Text(nenoTitle + " " + SnackBarText.nenoLiked),
+      content: new Text(neno.title + " " + SnackBarText.nenoLiked),
     ));
     //notifyListeners();
   }
 
   void moveToLastScreen() {
     Navigator.pop(context, true);
+  }
+
+  void processData() async {
+    nenoContent = neno.title;
+    meanings = [];
+    synonyms = [];
+
+    try {
+      String strMeaning = neno.maana;
+      strMeaning = strMeaning.replaceAll("\\u201c", "");
+      strMeaning = strMeaning.replaceAll("\\", "");
+      strMeaning = strMeaning.replaceAll('"', '');
+
+      var strMeanings = strMeaning.split("|");
+
+      if (strMeanings.length > 1) {
+        for (int i = 0; i < strMeanings.length; i++) {
+          meanings.add(strMeanings[i]);
+        }
+      } else {
+        meanings.add(strMeanings[0]);
+      }
+    } catch (Exception) {}
+    if (neno.visawe.length > 1) meanings.add(neno.visawe);
+
+    try {
+      var strSynonyms = neno.maana.split("|");
+
+      if (strSynonyms.length > 1) {
+        for (int i = 0; i < strSynonyms.length; i++) {
+          synonyms.add(strSynonyms[i]);
+        }
+      } else {
+        synonyms.add(strSynonyms[0]);
+      }
+    } catch (Exception) {}
   }
 }

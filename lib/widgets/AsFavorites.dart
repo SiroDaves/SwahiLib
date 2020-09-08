@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:kamusi/models/NenoModel.dart';
 import 'package:kamusi/helpers/SqliteHelper.dart';
 import 'package:kamusi/screens/EeContentView.dart';
-import 'package:kamusi/utils/constants.dart';
+import 'package:kamusi/utils/Constants.dart';
 import 'package:kamusi/widgets/AsProgressWidget.dart';
 
 class AsFavorites extends StatefulWidget {

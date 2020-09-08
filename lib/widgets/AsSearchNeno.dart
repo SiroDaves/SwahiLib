@@ -4,10 +4,9 @@ import 'package:kamusi/models/NenoModel.dart';
 import 'package:kamusi/helpers/SqliteHelper.dart';
 import 'package:kamusi/screens/EeContentView.dart';
 //import 'package:kamusi/utils/Preferences.dart';
-import 'package:kamusi/utils/constants.dart';
+import 'package:kamusi/utils/Constants.dart';
 import 'package:kamusi/widgets/AsProgressWidget.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/html_parser.dart';
 import 'package:flutter_html/style.dart';
 
 class AsSearchNeno extends StatefulWidget {
@@ -29,8 +28,33 @@ class AsSearchNenoState extends State<AsSearchNeno> {
 
   AsSearchNenoState();
   Future<Database> dbFuture;
-  List< NenoModel> results;
-  List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z'];
+  List<NenoModel> results;
+  List<String> letters = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'Y',
+    'Z'
+  ];
   String letterSearch;
 
   @override
@@ -41,6 +65,23 @@ class AsSearchNenoState extends State<AsSearchNeno> {
     }
 
     return new Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: [
+              0.1,
+              0.4,
+              0.6,
+              0.9
+            ],
+            colors: [
+              Colors.black,
+              Colors.blue[900],
+              Colors.blue,
+              Colors.blue[200]
+            ]),
+      ),
       child: new Stack(
         children: <Widget>[
           new Container(
@@ -54,7 +95,7 @@ class AsSearchNenoState extends State<AsSearchNeno> {
                     scrollDirection: Axis.horizontal,
                     physics: BouncingScrollPhysics(),
                     itemCount: letters.length,
-                    itemBuilder: lettersListView,
+                    itemBuilder: lettersView,
                   ),
                 ),
               ],
@@ -68,11 +109,11 @@ class AsSearchNenoState extends State<AsSearchNeno> {
           Container(
             height: MediaQuery.of(context).size.height - 200,
             padding: const EdgeInsets.symmetric(horizontal: 5),
-            margin: EdgeInsets.only(top: 120),
+            margin: EdgeInsets.only(top: 110),
             child: ListView.builder(
               physics: BouncingScrollPhysics(),
               itemCount: results.length,
-              itemBuilder: itemListView,
+              itemBuilder: listView,
             ),
           ),
         ],
@@ -91,12 +132,14 @@ class AsSearchNenoState extends State<AsSearchNeno> {
             suffixIcon: Icon(Icons.clear),
             hintText: Texts.searchNow + 'maneno',
             hintStyle: TextStyle(fontSize: 18)),
-        onChanged: (value) { searchNow(); },
+        onChanged: (value) {
+          searchNow();
+        },
       ),
     );
   }
 
-  Widget lettersListView(BuildContext context, int index) {
+  Widget lettersView(BuildContext context, int index) {
     return Container(
       width: 50,
       child: GestureDetector(
@@ -123,83 +166,72 @@ class AsSearchNenoState extends State<AsSearchNeno> {
     );
   }
 
-  Widget itemListView(BuildContext context, int index) {
+  Widget listView(BuildContext context, int index) {
     String strContent = "<b>" + results[index].title + "</b>";
-    if (results[index].visawe.length > 1)
-    {
-      strContent = strContent + " | visawe: <i>" + results[index].visawe + "</i>";
-    }
-    strContent = strContent + '<ul>';
-    
-    try {
-        var strContents = results[index].maana.split("|");
+    String strMeaning = results[index].maana;
 
-        if (strContents.length > 1)
-        {
+    try {
+      if (strMeaning.length == 0) {
+        return Container();
+      } else {
+        strMeaning = strMeaning.replaceAll("\\u201c", "");
+        strMeaning = strMeaning.replaceAll("\\", "");
+        strMeaning = strMeaning.replaceAll('"', '');
+
+        strContent = strContent + '<ul>';
+        var strContents = strMeaning.split("|");
+
+        if (strContents.length > 1) {
           try {
             for (int i = 0; i < strContents.length; i++) {
               var strExtra = strContents[i].split(":");
               strContent = strContent + "<li>" + strExtra[0] + "</li>";
             }
           } catch (Exception) {}
-        }
-        else
-        {
+        } else {
           var strExtra = strContents[0].split(":");
           strContent = strContent + "<li>" + strExtra[0] + "</li>";
         }
-        strContent = strContent + '</ul><hr>';
-        
-        if (strContents.length == 0)
-        {
-          strContent = "";
-        }
-    }
-    catch (Exception) {
-        strContent = '';    
-    }
+        strContent = strContent + '</ul>';
+        if (results[index].visawe.length > 1)
+          strContent = strContent +
+              "<br><p><b>Visawe:</b> <i>" +
+              results[index].visawe +
+              "</i></p>";
 
-    return Container(
-      width: 50,
-      child: GestureDetector(
-        onTap: () {
-          //navigateToNeno(results[index], nenoTitle,
-          //    " Neno #" + results[index].number.toString() + " - " + nenobook);
-        },
-        child: new Stack(
-          children: <Widget>[
-            /*new Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Text(
-                  nenoTitle,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+        return Card(
+          elevation: 2,
+          child: GestureDetector(
+            child: Html(
+              data: strContent,
+              style: {
+                "html": Style(
+                  fontSize: FontSize(20.0),
                 ),
-            ),*/
-            new Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Html(
-                data: strContent,
-                style: {
-                  "html": Style(
-                    fontSize: FontSize(20.0),
-                  ),
-                  "ul": Style(
-                    fontSize: FontSize(18.0),
-                  ),
-                },
-              ),
+                "ul": Style(
+                  fontSize: FontSize(18.0),
+                ),
+                "p": Style(
+                  fontSize: FontSize(18.0),
+                  margin: EdgeInsets.only(left: 25, top: 10),
+                ),
+              },
             ),
-          ],
-        ),
-      ),
-    );
+            onTap: () {
+              navigateToNeno(results[index]);
+            },
+          ),
+        );
+      }
+    } catch (Exception) {
+      return Container();
+    }
   }
 
   void updateSearchList() {
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List< NenoModel>> nenoListFuture = db.getNenoList();
+      Future<List<NenoModel>> nenoListFuture = db.getNenoList();
       nenoListFuture.then((resultList) {
         setState(() {
           results = resultList;
@@ -234,12 +266,10 @@ class AsSearchNenoState extends State<AsSearchNeno> {
     updateSearchList();
   }
 
-  void navigateToNeno( NenoModel neno, String title, String nenobook) async {
-    bool haschorus = false;
-    /*if (neno.content.contains("CHORUS")) haschorus = true;
+  void navigateToNeno(NenoModel neno) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return EeContentView(neno, haschorus, title, nenobook);
-    }));*/
+      return EeContentView(neno);
+    }));
   }
 }
 

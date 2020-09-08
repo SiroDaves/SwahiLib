@@ -14,6 +14,9 @@ class AsProgressDialogTitles {
 
 class Texts {
   static const String appName = "Kamusi Ya Kiswahili";
+  static const String campaign =
+      "\n\n#KamusiYaKiswahili #KiswahiliKitukuzwe \n\nhttps://play.google.com/store/apps/details?id=com.kazibora.kamusi ";
+  static const String visawe_vya = "\n\nVisawe (synonyms) vya neno ";
   static const String searchNow = "Tafuta ";
   static const String maneno = 'maneno';
   static const String methali = 'methali';
@@ -31,8 +34,8 @@ class Texts {
 }
 
 class Tooltips {
-  static const String copyNeno = "Copy to Clipboard";
-  static const String shareNeno = "Share this";
+  static const String copyThis = "Nakili kwa Clipboard";
+  static const String shareThis = "Shiriki";
 }
 
 class SnackBarText {
@@ -43,46 +46,75 @@ class SnackBarText {
 }
 
 class Queries {
-  static const String createManenoTable = 'CREATE TABLE ' + Texts.maneno +
-      '(' + 
-        Texts.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-        Texts.title + ' VARCHAR(100), ' +
-        Texts.maana + ' VARCHAR(300), ' +
-        Texts.visawe + ' VARCHAR(100), ' +
-        Texts.mnyambuliko + ' VARCHAR(100),' +
-        Texts.notes + ' VARCHAR(500), ' +
-        Texts.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
-        Texts.views + ' INTEGER NOT NULL DEFAULT 0' +
-    ");";
+  static const String createManenoTable = 'CREATE TABLE ' +
+      Texts.maneno +
+      '(' +
+      Texts.id +
+      ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+      Texts.title +
+      ' VARCHAR(100), ' +
+      Texts.maana +
+      ' VARCHAR(300), ' +
+      Texts.visawe +
+      ' VARCHAR(100), ' +
+      Texts.mnyambuliko +
+      ' VARCHAR(100),' +
+      Texts.notes +
+      ' VARCHAR(500), ' +
+      Texts.isfav +
+      ' INTEGER NOT NULL DEFAULT 0, ' +
+      Texts.views +
+      ' INTEGER NOT NULL DEFAULT 0' +
+      ");";
 
-   static const String createMethaliTable = 'CREATE TABLE ' + Texts.methali +
-      '(' + 
-        Texts.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-        Texts.title + ' VARCHAR(100), ' +
-        Texts.maana + ' VARCHAR(500), ' +
-        Texts.notes + ' VARCHAR(500), ' +
-        Texts.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
-        Texts.views + ' INTEGER NOT NULL DEFAULT 0' +
-    ");";
-   
-   static const String createMisemoTable = 'CREATE TABLE ' + Texts.misemo +
-      '(' + 
-        Texts.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-        Texts.title + ' VARCHAR(100), ' +
-        Texts.maana + ' VARCHAR(500), ' +
-        Texts.notes + ' VARCHAR(500), ' +
-        Texts.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
-        Texts.views + ' INTEGER NOT NULL DEFAULT 0' +
-    ");";
-   
-   static const String createNahauTable = 'CREATE TABLE ' + Texts.nahau +
-      '(' + 
-        Texts.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-        Texts.title + ' VARCHAR(100), ' +
-        Texts.maana + ' VARCHAR(500), ' +
-        Texts.notes + ' VARCHAR(500), ' +
-        Texts.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
-        Texts.views + ' INTEGER NOT NULL DEFAULT 0' +
-    ");";
+  static const String createMethaliTable = 'CREATE TABLE ' +
+      Texts.methali +
+      '(' +
+      Texts.id +
+      ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+      Texts.title +
+      ' VARCHAR(100), ' +
+      Texts.maana +
+      ' VARCHAR(500), ' +
+      Texts.notes +
+      ' VARCHAR(500), ' +
+      Texts.isfav +
+      ' INTEGER NOT NULL DEFAULT 0, ' +
+      Texts.views +
+      ' INTEGER NOT NULL DEFAULT 0' +
+      ");";
 
+  static const String createMisemoTable = 'CREATE TABLE ' +
+      Texts.misemo +
+      '(' +
+      Texts.id +
+      ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+      Texts.title +
+      ' VARCHAR(100), ' +
+      Texts.maana +
+      ' VARCHAR(500), ' +
+      Texts.notes +
+      ' VARCHAR(500), ' +
+      Texts.isfav +
+      ' INTEGER NOT NULL DEFAULT 0, ' +
+      Texts.views +
+      ' INTEGER NOT NULL DEFAULT 0' +
+      ");";
+
+  static const String createNahauTable = 'CREATE TABLE ' +
+      Texts.nahau +
+      '(' +
+      Texts.id +
+      ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+      Texts.title +
+      ' VARCHAR(100), ' +
+      Texts.maana +
+      ' VARCHAR(500), ' +
+      Texts.notes +
+      ' VARCHAR(500), ' +
+      Texts.isfav +
+      ' INTEGER NOT NULL DEFAULT 0, ' +
+      Texts.views +
+      ' INTEGER NOT NULL DEFAULT 0' +
+      ");";
 }

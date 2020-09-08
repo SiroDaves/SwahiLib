@@ -9,14 +9,11 @@ class AsProgressDialog extends StatefulWidget {
   AsProgressDialogState progressDialogState;
 
   AsProgressDialog(
-    {
-      this.backgroundColor = Colors.black54,
+      {this.backgroundColor = Colors.black54,
       this.color = Colors.white,
       this.containerColor = Colors.transparent,
       this.borderRadius = 10,
-      this.text
-    }
-  );
+      this.text});
 
   @override
   createState() => progressDialogState = new AsProgressDialogState(
@@ -57,44 +54,40 @@ class AsProgressDialogState extends State<AsProgressDialog> {
   String text;
   bool _opacity = false;
 
-  AsProgressDialogState(    
-    {
-      this.backgroundColor = Colors.black54,
+  AsProgressDialogState(
+      {this.backgroundColor = Colors.black54,
       this.color = Colors.white,
       this.containerColor = Colors.transparent,
       this.borderRadius = 10,
-      this.text
-    }
-  );
+      this.text});
 
   @override
   Widget build(BuildContext context) {
     return new Container(
-      child: !_opacity ? null : new Opacity(
-        opacity: _opacity ? 1 : 0,
-        child: new Stack(
-          children: <Widget>[
-            new Center(
-              child: new Container(
-                width: 300,
-                height: 120,
-                decoration: new BoxDecoration(
-                  color: containerColor,
-                  border: Border.all(color: Colors.orange),
-                  boxShadow: [BoxShadow(blurRadius: 5)],
-                  borderRadius: new BorderRadius.all(
-                     new Radius.circular(borderRadius)
-                  )
+        child: !_opacity
+            ? null
+            : new Opacity(
+                opacity: _opacity ? 1 : 0,
+                child: new Stack(
+                  children: <Widget>[
+                    new Center(
+                      child: new Container(
+                        width: 300,
+                        height: 120,
+                        decoration: new BoxDecoration(
+                            color: containerColor,
+                            border: Border.all(color: Colors.lightBlueAccent),
+                            boxShadow: [BoxShadow(blurRadius: 5)],
+                            borderRadius: new BorderRadius.all(
+                                new Radius.circular(borderRadius))),
+                      ),
+                    ),
+                    new Center(
+                      child: _getCenterContent(),
+                    )
+                  ],
                 ),
-              ),
-            ),
-            new Center(
-              child: _getCenterContent(),
-            )
-          ],
-        ),
-      )
-    );
+              ));
   }
 
   Widget _getCenterContent() {
@@ -121,7 +114,7 @@ class AsProgressDialogState extends State<AsProgressDialog> {
 
   Widget _getCircularProgress() {
     return new CircularProgressIndicator(
-        valueColor: new AlwaysStoppedAnimation(Colors.deepOrange));
+        valueColor: new AlwaysStoppedAnimation(Colors.blue));
   }
 
   void hideProgress() {

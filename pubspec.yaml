@@ -66,6 +66,7 @@ flutter:
     - assets/images/donation_equitel.png
     - assets/images/donation_mpesa.png
     - assets/images/donation_paypal.png
+    - assets/images/donation_visa_mastercard.png
     - assets/images/ic_arrow_back_white.png
     - assets/images/ic_books.png
     - assets/images/ic_check_circle.png
@@ -78,4 +79,7 @@ flutter:
     - assets/images/ic_font_bigger.png
     - assets/images/ic_font_smaller.png
     - assets/images/ic_home.png
+    - assets/images/review.png
+    - assets/images/support.png
+    - assets/images/github.png
     - assets/images/splash.jpg

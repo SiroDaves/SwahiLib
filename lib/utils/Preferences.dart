@@ -2,11 +2,10 @@
 
 import 'dart:async';
 
-import 'package:kamusi/utils/constants.dart';
+import 'package:kamusi/utils/Constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences {
-
   static Future<SharedPreferences> getInstance() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs;
@@ -29,7 +28,7 @@ class Preferences {
 
   static Future<void> setKamusidbLoaded(bool isKamusidbLoaded) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setBool(SharedPreferenceKeys.Kamusidb_Loaded, isKamusidbLoaded);
+    return prefs.setBool(
+        SharedPreferenceKeys.Kamusidb_Loaded, isKamusidbLoaded);
   }
-
 }

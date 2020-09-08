@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:kamusi/models/GenericModel.dart';
 import 'package:kamusi/helpers/SqliteHelper.dart';
-//import 'package:kamusi/screens/EeGenericView.dart';
-//import 'package:kamusi/utils/Preferences.dart';
-import 'package:kamusi/utils/constants.dart';
+import 'package:kamusi/utils/Constants.dart';
 import 'package:kamusi/widgets/AsProgressWidget.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/html_parser.dart';
 import 'package:flutter_html/style.dart';
 
 class AsSearchGeneric extends StatefulWidget {
@@ -25,14 +22,40 @@ class AsSearchGeneric extends StatefulWidget {
 }
 
 class AsSearchGenericState extends State<AsSearchGeneric> {
-  AsProgressWidget progressWidget = AsProgressWidget.getProgressWidget(AsProgressDialogTitles.somePatience);
+  AsProgressWidget progressWidget =
+      AsProgressWidget.getProgressWidget(AsProgressDialogTitles.somePatience);
   TextEditingController txtSearch = new TextEditingController(text: "");
   SqliteHelper db = SqliteHelper();
 
   AsSearchGenericState({this.table});
   Future<Database> dbFuture;
-  List< GenericModel> results;
-  List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z'];
+  List<GenericModel> results;
+  List<String> letters = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'Y',
+    'Z'
+  ];
   String letterSearch;
   String table;
 
@@ -44,6 +67,23 @@ class AsSearchGenericState extends State<AsSearchGeneric> {
     }
 
     return new Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [
+              0.1,
+              0.4,
+              0.6,
+              0.9
+            ],
+            colors: [
+              Colors.black,
+              Colors.blue[900],
+              Colors.blue,
+              Colors.blue[200]
+            ]),
+      ),
       child: new Stack(
         children: <Widget>[
           new Container(
@@ -57,7 +97,7 @@ class AsSearchGenericState extends State<AsSearchGeneric> {
                     scrollDirection: Axis.horizontal,
                     physics: BouncingScrollPhysics(),
                     itemCount: letters.length,
-                    itemBuilder: lettersListView,
+                    itemBuilder: lettersView,
                   ),
                 ),
               ],
@@ -71,11 +111,11 @@ class AsSearchGenericState extends State<AsSearchGeneric> {
           Container(
             height: MediaQuery.of(context).size.height - 200,
             padding: const EdgeInsets.symmetric(horizontal: 5),
-            margin: EdgeInsets.only(top: 120),
+            margin: EdgeInsets.only(top: 110),
             child: ListView.builder(
               physics: BouncingScrollPhysics(),
               itemCount: results.length,
-              itemBuilder: itemListView,
+              itemBuilder: listView,
             ),
           ),
         ],
@@ -94,12 +134,14 @@ class AsSearchGenericState extends State<AsSearchGeneric> {
             suffixIcon: Icon(Icons.clear),
             hintText: Texts.searchNow + table,
             hintStyle: TextStyle(fontSize: 18)),
-        onChanged: (value) { searchNow(); },
+        onChanged: (value) {
+          searchNow();
+        },
       ),
     );
   }
 
-  Widget lettersListView(BuildContext context, int index) {
+  Widget lettersView(BuildContext context, int index) {
     return Container(
       width: 50,
       child: GestureDetector(
@@ -126,35 +168,72 @@ class AsSearchGenericState extends State<AsSearchGeneric> {
     );
   }
 
-  Widget itemListView(BuildContext context, int index) {
-    String strContent = "<b>" + results[index].title + "</b><ul>";
-    
-    try {
-        var strContents = results[index].maana.split("|");
+  Widget listView(BuildContext context, int index) {
+    String strContent = "<b>" + results[index].title + "</b>";
 
-        if (strContents.length > 1)
-        {
+    try {
+      if (results[index].maana.length > 1) {
+        strContent = strContent + '<ul>';
+        var strContents = results[index].maana.split(";");
+
+        if (strContents.length > 1) {
           try {
             for (int i = 0; i < strContents.length; i++) {
               var strExtra = strContents[i].split(":");
-              strContent = strContent + "<li>" + strExtra[0] + "</li>";
+              strContent = strContent + "<li>" + strExtra[0].trim() + "</li>";
             }
           } catch (Exception) {}
-        }
-        else
-        {
+        } else {
           var strExtra = strContents[0].split(":");
-          strContent = strContent + "<li>" + strExtra[0] + "</li>";
+          strContent = strContent + "<li>" + strExtra[0].trim() + "</li>";
         }
-        strContent = strContent + '</ul><hr>';
-        
-        if (strContents.length == 0)
-        {
-          strContent = "";
-        }
+        strContent = strContent + '</ul>';
+      }
+      return Card(
+        elevation: 2,
+        child: GestureDetector(
+          child: Html(
+            data: strContent,
+            style: {
+              "html": Style(
+                fontSize: FontSize(20.0),
+              ),
+              "ul": Style(
+                fontSize: FontSize(18.0),
+              ),
+            },
+          ),
+        ),
+      );
+    } catch (Exception) {
+      return Container();
     }
-    catch (Exception) {
-        strContent = '';    
+  }
+
+  Widget listViewx(BuildContext context, int index) {
+    String strContent = "<b>" + results[index].title + "</b><ul>";
+
+    try {
+      var strContents = results[index].maana.split("|");
+
+      if (strContents.length > 1) {
+        try {
+          for (int i = 0; i < strContents.length; i++) {
+            var strExtra = strContents[i].split(":");
+            strContent = strContent + "<li>" + strExtra[0] + "</li>";
+          }
+        } catch (Exception) {}
+      } else {
+        var strExtra = strContents[0].split(":");
+        strContent = strContent + "<li>" + strExtra[0] + "</li>";
+      }
+      strContent = strContent + '</ul><hr>';
+
+      if (strContents.length == 0) {
+        strContent = "";
+      }
+    } catch (Exception) {
+      strContent = '';
     }
 
     return Container(
@@ -197,7 +276,7 @@ class AsSearchGenericState extends State<AsSearchGeneric> {
   void updateSearchList() {
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List< GenericModel>> genericListFuture = db.getGenericList(table);
+      Future<List<GenericModel>> genericListFuture = db.getGenericList(table);
       genericListFuture.then((resultList) {
         setState(() {
           results = resultList;
@@ -213,7 +292,8 @@ class AsSearchGenericState extends State<AsSearchGeneric> {
       results.clear();
       dbFuture = db.initializeDatabase();
       dbFuture.then((database) {
-        Future<List<GenericModel>> genericListFuture = db.getGenericSearch(table, txtSearch.text);
+        Future<List<GenericModel>> genericListFuture =
+            db.getGenericSearch(table, txtSearch.text);
         genericListFuture.then((resultList) {
           setState(() {
             results = resultList;
@@ -231,7 +311,8 @@ class AsSearchGenericState extends State<AsSearchGeneric> {
     updateSearchList();
   }
 
-  void navigateToGeneric( GenericModel generic, String title, String genericbook) async {
+  void navigateToGeneric(
+      GenericModel generic, String title, String genericbook) async {
     /*if (generic.content.contains("CHORUS")) haschorus = true;
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return EeGenericView(generic, haschorus, title, genericbook);
