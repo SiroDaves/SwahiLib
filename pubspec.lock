@@ -253,6 +253,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  fancy_bottom_navigation:
+    dependency: "direct dev"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: da9b40126ba27cf5a3b6f993f90cd6f2c0a516a3
+      url: "https://github.com/skquark/fancy_bottom_navigation.git"
+    source: git
+    version: "0.3.2"
   file:
     dependency: transitive
     description:
@@ -328,6 +337,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  flutter_keyboard_visibility:
+    dependency: "direct dev"
+    description:
+      name: flutter_keyboard_visibility
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.2"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -464,6 +480,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
+  loadmore:
+    dependency: "direct dev"
+    description:
+      name: loadmore
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   logging:
     dependency: transitive
     description:
@@ -527,6 +550,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.3"
+  page_transition:
+    dependency: "direct dev"
+    description:
+      name: page_transition
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.6"
   path:
     dependency: transitive
     description:
@@ -889,13 +919,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
-  vertical_tabs:
-    dependency: "direct dev"
-    description:
-      name: vertical_tabs
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.0"
   video_player:
     dependency: transitive
     description:

@@ -1,4 +1,4 @@
-// This file declares functions that manages the database that is created in the app 
+// This file declares functions that manages the database that is created in the app
 // when the app is installed for the first time
 
 import 'package:sqflite/sqflite.dart';
@@ -138,17 +138,21 @@ class SqliteHelper {
 
   //NENO SEARCH
   Future<List<Map<String, dynamic>>> getNenoSearchMapList(
-      String searchThis) async {
+      String searchThis, bool searchByTitle) async {
     Database db = await this.database;
-    String sqlQuery = Texts.title + ' LIKE "%' + searchThis + '%"' +
-        ' OR ' + Texts.maana + ' LIKE "%' + searchThis + '%"';
+    String sqlQuery = Texts.title + " LIKE '" + searchThis + "%'";
+
+    if (!searchByTitle)
+      sqlQuery =
+          sqlQuery + " OR " + Texts.maana + " LIKE '" + searchThis + "%'";
 
     var result = db.query(Texts.maneno, where: sqlQuery);
     return result;
   }
 
-  Future<List<NenoModel>> getNenoSearch(String searchThis) async {
-    var nenoMapList = await getNenoSearchMapList(searchThis);
+  Future<List<NenoModel>> getNenoSearch(
+      String searchString, bool searchByTitle) async {
+    var nenoMapList = await getNenoSearchMapList(searchString, searchByTitle);
 
     List<NenoModel> nenoList = List<NenoModel>();
     // For loop to create a 'neno List' from a 'Map List'
@@ -162,14 +166,14 @@ class SqliteHelper {
   Future<List<Map<String, dynamic>>> getGenericSearchMapList(
       String searchThis, String table) async {
     Database db = await this.database;
-    String sqlQuery = Texts.title + ' LIKE "%' + searchThis + '%"' +
-        ' OR ' + Texts.maana + ' LIKE "%' + searchThis + '%"';
+    String sqlQuery = Texts.title + ' LIKE "' + searchThis + '%"';
 
     var result = db.query(table, where: sqlQuery);
     return result;
   }
 
-  Future<List<GenericModel>> getGenericSearch(String searchThis, String table) async {
+  Future<List<GenericModel>> getGenericSearch(
+      String searchThis, String table) async {
     var genericMapList = await getGenericSearchMapList(searchThis, table);
 
     List<GenericModel> genericList = List<GenericModel>();
@@ -203,8 +207,17 @@ class SqliteHelper {
       String searchThis) async {
     Database db = await this.database;
     String extraQuery = 'AND ' + Texts.isfav + '=1 ';
-    String sqlQuery = Texts.title + ' LIKE "%' + searchThis + '%" ' + extraQuery +
-        'OR ' + Texts.maana + ' LIKE "%' + searchThis + '%" ' + extraQuery;
+    String sqlQuery = Texts.title +
+        ' LIKE "%' +
+        searchThis +
+        '%" ' +
+        extraQuery +
+        'OR ' +
+        Texts.maana +
+        ' LIKE "%' +
+        searchThis +
+        '%" ' +
+        extraQuery;
 
     var result = db.query(Texts.maneno, where: sqlQuery);
     return result;
@@ -220,5 +233,4 @@ class SqliteHelper {
     }
     return nenoList;
   }
-
 }

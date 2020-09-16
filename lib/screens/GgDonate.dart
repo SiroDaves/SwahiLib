@@ -31,6 +31,7 @@ class GgDonateState extends State<GgDonate> {
         length: tabTitles.length,
         child: Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             title: Text('Tuunge Mkono, Changia'),
             bottom: TabBar(
               tabs: tabTitles,

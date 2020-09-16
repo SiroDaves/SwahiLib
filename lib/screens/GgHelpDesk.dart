@@ -35,6 +35,7 @@ class GgHelpDeskState extends State<GgHelpDesk> {
         length: tabTitles.length,
         child: Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             title: Text('Usaidizi'),
             bottom: TabBar(
               tabs: tabTitles,

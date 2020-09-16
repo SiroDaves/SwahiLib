@@ -248,7 +248,7 @@ class AsSearchNenoState extends State<AsSearchNeno> {
       dbFuture = db.initializeDatabase();
       dbFuture.then((database) {
         Future<List<NenoModel>> nenoListFuture =
-            db.getNenoSearch(txtSearch.text);
+            db.getNenoSearch(txtSearch.text, false);
         nenoListFuture.then((resultList) {
           setState(() {
             results = resultList;
@@ -260,10 +260,20 @@ class AsSearchNenoState extends State<AsSearchNeno> {
     }
   }
 
-  void setSearchingLetter(String _letter) {
-    letterSearch = _letter;
+  void setSearchingLetter(String strLetter) {
+    letterSearch = strLetter;
+    txtSearch.text = "";
     results.clear();
-    updateSearchList();
+    dbFuture = db.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<NenoModel>> nenoListFuture =
+          db.getNenoSearch(strLetter, true);
+      nenoListFuture.then((resultList) {
+        setState(() {
+          results = resultList;
+        });
+      });
+    });
   }
 
   void navigateToNeno(NenoModel neno) async {
