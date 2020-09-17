@@ -93,7 +93,7 @@ class CcInitLoadState extends State<CcInitLoad> {
     return new Center(
       child: new Container(
         child: new CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation(Colors.blue)),
+            valueColor: new AlwaysStoppedAnimation(Colors.blue)),
         margin: EdgeInsets.only(top: 270),
       ),
     );
@@ -177,10 +177,11 @@ class CcInitLoadState extends State<CcInitLoad> {
   void requestNahauData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> nahauListAsset = adb.getGenericList(Texts.nahau);
+      Future<List<Generic>> nahauListAsset =
+          adb.getGenericList(LangStrings.nahau);
       nahauListAsset.then((nahauList) {
-        setState(() { 
-          nahau = nahauList; 
+        setState(() {
+          nahau = nahauList;
           requestMisemoData();
         });
       });
@@ -190,29 +191,31 @@ class CcInitLoadState extends State<CcInitLoad> {
   void requestMisemoData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> misemoListAsset = adb.getGenericList(Texts.misemo);
+      Future<List<Generic>> misemoListAsset =
+          adb.getGenericList(LangStrings.misemo);
       misemoListAsset.then((misemoList) {
-        setState(() { 
+        setState(() {
           misemo = misemoList;
           requestMethaliData();
         });
       });
     });
   }
-    
+
   void requestMethaliData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> methaliListAsset = adb.getGenericList(Texts.methali);
+      Future<List<Generic>> methaliListAsset =
+          adb.getGenericList(LangStrings.methali);
       methaliListAsset.then((methaliList) {
-        setState(() {  
+        setState(() {
           methali = methaliList;
           _goToNextScreen();
         });
       });
     });
   }
-  
+
   Future<void> saveManenoData() async {
     for (int i = 0; i < nenos.length; i++) {
       int progress = (i / nenos.length * 100).toInt();
@@ -256,7 +259,8 @@ class CcInitLoadState extends State<CcInitLoad> {
 
       Neno item = nenos[i];
 
-      NenoModel neno = new NenoModel(item.title, item.maana, item.visawe, item.mnyambuliko);
+      NenoModel neno =
+          new NenoModel(item.title, item.maana, item.visawe, item.mnyambuliko);
 
       await db.insertNeno(neno);
     }
@@ -280,11 +284,12 @@ class CcInitLoadState extends State<CcInitLoad> {
 
   Future<void> _goToNextScreen() async {
     await saveManenoData();
-    await saveGenericData(Texts.nahau, nahau);
-    await saveGenericData(Texts.misemo, misemo);
-    await saveGenericData(Texts.methali, methali);
+    await saveGenericData(LangStrings.nahau, nahau);
+    await saveGenericData(LangStrings.misemo, misemo);
+    await saveGenericData(LangStrings.methali, methali);
 
     Preferences.setKamusidbLoaded(true);
-    Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => new AppStart()));
+    Navigator.pushReplacement(
+        context, new MaterialPageRoute(builder: (context) => new AppStart()));
   }
 }

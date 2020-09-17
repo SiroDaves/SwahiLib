@@ -6,13 +6,11 @@ class SharedPreferenceKeys {
   static const String DarkMode = "kamusi_dark_mode";
 }
 
-class AsProgressDialogTitles {
+class LangStrings {
   static const String inProgress = "Inaendelea ...";
   static const String gettingReady = "Matayarisho ...";
   static const String somePatience = "Eish! ... Subiri kidogo ...";
-}
 
-class Texts {
   static const String appName = "Kamusi Ya Kiswahili";
   static const String campaign =
       "\n\n#KamusiYaKiswahili #KiswahiliKitukuzwe \n\nhttps://play.google.com/store/apps/details?id=com.kazibora.kamusi ";
@@ -31,90 +29,117 @@ class Texts {
   static const String isfav = 'isfav';
   static const String views = 'views';
   static const String notes = 'notes';
-}
 
-class Tooltips {
   static const String copyThis = "Nakili kwa Clipboard";
   static const String shareThis = "Shiriki";
-}
 
-class SnackBarText {
   static const String noInternetConnection = "No internet connection";
   static const String nenoCopied = "Neno copied to clipboard!";
   static const String nenoLiked = " liked!";
   static const String nenoDisliked = " disliked!";
+
+  static const String donateTabPage = "Tuunge Mkono, Changia";
+
+  static const String donateTab1Title = "M-Pesa";
+  static const String donateTab1Content = "PAYBILL: 891300\n\nAKAUNTI: 34489";
+
+  static const String donateTab2Title = "Equitel";
+  static const String donateTab2Content =
+      "NAMBARI YA BIASHARA:\n\t891300\n\nAKAUNTI: 34489";
+
+  static const String donateTab3Title = "Airtel";
+  static const String donateTab3Content =
+      "JINA LA BIASHARA:\n\tMCHANGA\n\nAKAUNTI: 34489";
+
+  static const String donateTab4Title = "PayPal";
+  static const String donateTab4Content =
+      "ANWANI:\n\ttunaboresha [at] gmail.com";
+
+  static const String helpTabPage = "Usaidizi";
+
+  static const String helpTab1Title = "Wasiliana";
+  static const String helpTab1Content =
+      "<p>SIMU: +2547 - </p><hr><p>BARUA PEPE: <a href=\"mailto:tunaboresha@gmail.com\">tunaboresha@gmail.com</a> </p><hr> <p>TOVUTI: <a href=\"https://kazibora.github.io\">kazibora.github.io</a></p>";
+
+  static const String helpTab2Title = "Reviews";
+  static const String helpTab2Content =
+      "Iwapo unafurahia kitumizi (app) chetu au haufurahii tafadhali tujulishe kwa kuacha review yako kwenye <a href=\"https://play.google.com/store/apps/details?id=com.kazibora.kamusi\">Google Play Store</a>";
+
+  static const String helpTab3Title = "Open Source";
+  static const String helpTab3Content =
+      "Iwapo wewe ni Msanidi Kitumizi (App Developer), source code ya kitumizi hiki yapatikana bila malipo kwenye GitHub:</br></br> <a href=\"https://github.com/kazibora/kamusi\">github.com/kazibora/kamusi</a>";
 }
 
 class Queries {
   static const String createManenoTable = 'CREATE TABLE ' +
-      Texts.maneno +
+      LangStrings.maneno +
       '(' +
-      Texts.id +
+      LangStrings.id +
       ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-      Texts.title +
+      LangStrings.title +
       ' VARCHAR(100), ' +
-      Texts.maana +
+      LangStrings.maana +
       ' VARCHAR(300), ' +
-      Texts.visawe +
+      LangStrings.visawe +
       ' VARCHAR(100), ' +
-      Texts.mnyambuliko +
+      LangStrings.mnyambuliko +
       ' VARCHAR(100),' +
-      Texts.notes +
+      LangStrings.notes +
       ' VARCHAR(500), ' +
-      Texts.isfav +
+      LangStrings.isfav +
       ' INTEGER NOT NULL DEFAULT 0, ' +
-      Texts.views +
+      LangStrings.views +
       ' INTEGER NOT NULL DEFAULT 0' +
       ");";
 
   static const String createMethaliTable = 'CREATE TABLE ' +
-      Texts.methali +
+      LangStrings.methali +
       '(' +
-      Texts.id +
+      LangStrings.id +
       ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-      Texts.title +
+      LangStrings.title +
       ' VARCHAR(100), ' +
-      Texts.maana +
+      LangStrings.maana +
       ' VARCHAR(500), ' +
-      Texts.notes +
+      LangStrings.notes +
       ' VARCHAR(500), ' +
-      Texts.isfav +
+      LangStrings.isfav +
       ' INTEGER NOT NULL DEFAULT 0, ' +
-      Texts.views +
+      LangStrings.views +
       ' INTEGER NOT NULL DEFAULT 0' +
       ");";
 
   static const String createMisemoTable = 'CREATE TABLE ' +
-      Texts.misemo +
+      LangStrings.misemo +
       '(' +
-      Texts.id +
+      LangStrings.id +
       ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-      Texts.title +
+      LangStrings.title +
       ' VARCHAR(100), ' +
-      Texts.maana +
+      LangStrings.maana +
       ' VARCHAR(500), ' +
-      Texts.notes +
+      LangStrings.notes +
       ' VARCHAR(500), ' +
-      Texts.isfav +
+      LangStrings.isfav +
       ' INTEGER NOT NULL DEFAULT 0, ' +
-      Texts.views +
+      LangStrings.views +
       ' INTEGER NOT NULL DEFAULT 0' +
       ");";
 
   static const String createNahauTable = 'CREATE TABLE ' +
-      Texts.nahau +
+      LangStrings.nahau +
       '(' +
-      Texts.id +
+      LangStrings.id +
       ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-      Texts.title +
+      LangStrings.title +
       ' VARCHAR(100), ' +
-      Texts.maana +
+      LangStrings.maana +
       ' VARCHAR(500), ' +
-      Texts.notes +
+      LangStrings.notes +
       ' VARCHAR(500), ' +
-      Texts.isfav +
+      LangStrings.isfav +
       ' INTEGER NOT NULL DEFAULT 0, ' +
-      Texts.views +
+      LangStrings.views +
       ' INTEGER NOT NULL DEFAULT 0' +
       ");";
 }

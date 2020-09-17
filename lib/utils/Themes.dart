@@ -49,9 +49,9 @@ ThemeData _buildDarkTheme() {
   final ThemeData base = ThemeData(
     brightness: Brightness.dark,
     accentColorBrightness: Brightness.dark,
-    primaryColor: primaryColor,
-    primaryColorDark: Colors.grey,
-    primaryColorLight: secondaryColor,
+    //primaryColor: primaryColor,
+    //primaryColorDark: Colors.grey,
+    //primaryColorLight: secondaryColor,
     buttonColor: primaryColor,
     indicatorColor: Colors.white,
     toggleableActiveColor: const Color(0xFFfafafa),

@@ -25,7 +25,7 @@ class AsSearchGeneric extends StatefulWidget {
 
 class AsSearchGenericState extends State<AsSearchGeneric> {
   AsProgressWidget progressWidget =
-      AsProgressWidget.getProgressWidget(AsProgressDialogTitles.somePatience);
+      AsProgressWidget.getProgressWidget(LangStrings.somePatience);
   TextEditingController txtSearch = new TextEditingController(text: "");
   SqliteHelper db = SqliteHelper();
 
@@ -136,7 +136,7 @@ class AsSearchGenericState extends State<AsSearchGeneric> {
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.search),
             suffixIcon: Icon(Icons.clear),
-            hintText: Texts.searchNow + table,
+            hintText: LangStrings.searchNow + table,
             hintStyle: TextStyle(fontSize: 18)),
         onChanged: (value) {
           searchNow();

@@ -10,9 +10,9 @@ class SearchView extends StatefulWidget {
 
 class _SearchViewState extends State<SearchView> {
   AsSearchNeno tabview1 = AsSearchNeno.getList();
-  AsSearchGeneric tabview2 = AsSearchGeneric.getList(Texts.nahau);
-  AsSearchGeneric tabview3 = AsSearchGeneric.getList(Texts.misemo);
-  AsSearchGeneric tabview4 = AsSearchGeneric.getList(Texts.methali);
+  AsSearchGeneric tabview2 = AsSearchGeneric.getList(LangStrings.nahau);
+  AsSearchGeneric tabview3 = AsSearchGeneric.getList(LangStrings.misemo);
+  AsSearchGeneric tabview4 = AsSearchGeneric.getList(LangStrings.methali);
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +23,10 @@ class _SearchViewState extends State<SearchView> {
       Center(child: tabview4)
     ];
     final pageTabs = <Tab>[
-      Tab(text: Texts.maneno.toUpperCase()),
-      Tab(text: Texts.nahau.toUpperCase()),
-      Tab(text: Texts.misemo.toUpperCase()),
-      Tab(text: Texts.methali.toUpperCase())
+      Tab(text: LangStrings.maneno.toUpperCase()),
+      Tab(text: LangStrings.nahau.toUpperCase()),
+      Tab(text: LangStrings.misemo.toUpperCase()),
+      Tab(text: LangStrings.methali.toUpperCase())
     ];
 
     return DefaultTabController(
@@ -34,7 +34,7 @@ class _SearchViewState extends State<SearchView> {
       child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text(Texts.appName),
+            title: Text(LangStrings.appName),
             bottom: TabBar(tabs: pageTabs),
           ),
           body: TabBarView(children: pageViews)),

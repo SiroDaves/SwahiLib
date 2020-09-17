@@ -23,7 +23,7 @@ class AsSearchNeno extends StatefulWidget {
 
 class AsSearchNenoState extends State<AsSearchNeno> {
   AsProgressWidget progressWidget =
-      AsProgressWidget.getProgressWidget(AsProgressDialogTitles.somePatience);
+      AsProgressWidget.getProgressWidget(LangStrings.somePatience);
   TextEditingController txtSearch = new TextEditingController(text: "");
   SqliteHelper db = SqliteHelper();
 
@@ -133,7 +133,7 @@ class AsSearchNenoState extends State<AsSearchNeno> {
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.search),
             suffixIcon: Icon(Icons.clear),
-            hintText: Texts.searchNow + 'maneno',
+            hintText: LangStrings.searchNow + 'maneno',
             hintStyle: TextStyle(fontSize: 18)),
         onChanged: (value) {
           searchNow();

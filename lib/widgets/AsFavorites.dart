@@ -13,7 +13,7 @@ class AsFavorites extends StatefulWidget {
 
 class AsFavoritesState extends State<AsFavorites> {
   AsProgressWidget progressWidget =
-      AsProgressWidget.getProgressWidget(AsProgressDialogTitles.somePatience);
+      AsProgressWidget.getProgressWidget(LangStrings.somePatience);
   TextEditingController txtSearch = new TextEditingController(text: "");
   SqliteHelper db = SqliteHelper();
 
@@ -75,7 +75,7 @@ class AsFavoritesState extends State<AsFavorites> {
         style: TextStyle(fontSize: 18),
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.search),
-            hintText: Texts.searchNow,
+            hintText: LangStrings.searchNow,
             hintStyle: TextStyle(fontSize: 18)),
         onChanged: (value) {
           searchNeno();

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:kamusi/helpers/AppSettings.dart';
+import 'package:kamusi/utils/Constants.dart';
 
 class GgDonate extends StatefulWidget {
   @override
@@ -11,16 +14,16 @@ class GgDonateState extends State<GgDonate> {
   @override
   Widget build(BuildContext context) {
     final tabPages = <Widget>[
-      tabContent("mpesa", "PAYBILL: 891300\n\nAKAUNTI: 34489"),
-      tabContent("equitel", "NAMBARI YA BIASHARA:\n\t891300\n\nAKAUNTI: 33112"),
-      tabContent("airtel", "JINA LA BIASHARA:\n\tMCHANGA\n\nAKAUNTI: 33112"),
-      tabContent("paypal", "ANWANI:\n\ttunaboresha [at] gmail.com"),
+      tabContent("donation1", LangStrings.donateTab1Content),
+      tabContent("donation2", LangStrings.donateTab2Content),
+      tabContent("donation3", LangStrings.donateTab3Content),
+      tabContent("donation4", LangStrings.donateTab4Content),
     ];
     final tabTitles = <Tab>[
-      Tab(text: 'M-Pesa'),
-      Tab(text: 'Equitel'),
-      Tab(text: 'Airtel'),
-      Tab(text: 'PayPal'),
+      Tab(text: LangStrings.donateTab1Title),
+      Tab(text: LangStrings.donateTab2Title),
+      Tab(text: LangStrings.donateTab3Title),
+      Tab(text: LangStrings.donateTab4Title),
     ];
 
     return WillPopScope(
@@ -32,7 +35,7 @@ class GgDonateState extends State<GgDonate> {
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text('Tuunge Mkono, Changia'),
+            title: Text(LangStrings.donateTabPage),
             bottom: TabBar(
               tabs: tabTitles,
             ),
@@ -48,12 +51,14 @@ class GgDonateState extends State<GgDonate> {
   Widget tabContent(String image, String strText) {
     return Container(
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.white, Colors.cyan, Colors.indigo]),
-      ),
+      decoration: Provider.of<AppSettings>(context).isDarkMode
+          ? BoxDecoration()
+          : BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.white, Colors.cyan, Colors.indigo]),
+            ),
       child: ListView(
         children: <Widget>[
           Card(
@@ -61,8 +66,7 @@ class GgDonateState extends State<GgDonate> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Image(
-                image:
-                    new AssetImage("assets/images/donation_" + image + ".png"),
+                image: new AssetImage("assets/images/" + image + ".png"),
               ),
             ),
           ),

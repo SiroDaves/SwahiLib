@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
+import 'package:kamusi/helpers/AppSettings.dart';
+import 'package:kamusi/utils/Constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GgHelpDesk extends StatefulWidget {
@@ -14,17 +17,14 @@ class GgHelpDeskState extends State<GgHelpDesk> {
   @override
   Widget build(BuildContext context) {
     final tabPages = <Widget>[
-      tabContent("support",
-          "<p>SIMU: +2547 - </p><hr><p>BARUA PEPE: <a href=\"mailto:tunaboresha@gmail.com\">tunaboresha@gmail.com</a> </p><hr> <p>TOVUTI: <a href=\"https://kazibora.github.io\">kazibora.github.io</a></p>"),
-      tabContent("review",
-          "Iwapo unafurahia kitumizi (app) chetu au haufurahii tafadhali tujulishe kwa kuacha review yako kwenye <a href=\"play.google.com/store/apps/details?id=com.kazibora.kamusi\">Google Play Store</a>"),
-      tabContent("github",
-          "Iwapo wewe ni Msanidi Kitumizi (App Developer), source code ya kitumizi hiki yapatikana bila malipo kwenye GitHub:</br></br> <a href=\"Https://github.com/kazibora/kamusi\">github.com/kazibora/kamusi</a>"),
+      tabContent("help1", LangStrings.helpTab1Content),
+      tabContent("help2", LangStrings.helpTab2Content),
+      tabContent("help3", LangStrings.helpTab3Content),
     ];
     final tabTitles = <Tab>[
-      Tab(text: 'Wasiliana'),
-      Tab(text: 'Reviews'),
-      Tab(text: 'Open Source'),
+      Tab(text: LangStrings.helpTab1Title),
+      Tab(text: LangStrings.helpTab2Title),
+      Tab(text: LangStrings.helpTab3Title),
     ];
 
     return WillPopScope(
@@ -36,7 +36,7 @@ class GgHelpDeskState extends State<GgHelpDesk> {
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text('Usaidizi'),
+            title: Text(LangStrings.helpTabPage),
             bottom: TabBar(
               tabs: tabTitles,
             ),
@@ -52,12 +52,14 @@ class GgHelpDeskState extends State<GgHelpDesk> {
   Widget tabContent(String image, String strText) {
     return Container(
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.white, Colors.cyan, Colors.indigo]),
-      ),
+      decoration: Provider.of<AppSettings>(context).isDarkMode
+          ? BoxDecoration()
+          : BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.white, Colors.cyan, Colors.indigo]),
+            ),
       child: ListView(
         children: <Widget>[
           Card(
@@ -94,11 +96,7 @@ class GgHelpDeskState extends State<GgHelpDesk> {
   }
 
   launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      print('Could not launch URL');
-    }
+    if (await canLaunch(url)) await launch(url);
   }
 
   void moveToLastScreen() {

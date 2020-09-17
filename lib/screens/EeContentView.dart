@@ -55,7 +55,7 @@ class EeContentViewState extends State<EeContentView> {
         key: globalKey,
         appBar: AppBar(
           centerTitle: true,
-          title: Text(Texts.appName),
+          title: Text(LangStrings.appName),
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -116,8 +116,11 @@ class EeContentViewState extends State<EeContentView> {
 
   Widget listView(BuildContext context, int index) {
     if (neno.visawe == meanings[index]) {
-      nenoContent =
-          nenoContent + Texts.visawe_vya + neno.title + " ni: " + neno.visawe;
+      nenoContent = nenoContent +
+          LangStrings.visawe_vya +
+          neno.title +
+          " ni: " +
+          neno.visawe;
 
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -170,28 +173,28 @@ class EeContentViewState extends State<EeContentView> {
       FloatingActionButton(
         heroTag: null,
         child: Icon(Icons.content_copy),
-        tooltip: Tooltips.copyThis,
+        tooltip: LangStrings.copyThis,
         onPressed: copyItem,
       ),
       FloatingActionButton(
         heroTag: null,
         child: Icon(Icons.share),
-        tooltip: Tooltips.shareThis,
+        tooltip: LangStrings.shareThis,
         onPressed: shareItem,
       ),
     ];
   }
 
   void copyItem() {
-    Clipboard.setData(ClipboardData(text: nenoContent + Texts.campaign));
+    Clipboard.setData(ClipboardData(text: nenoContent + LangStrings.campaign));
     globalKey.currentState.showSnackBar(new SnackBar(
-      content: new Text(SnackBarText.nenoCopied),
+      content: new Text(LangStrings.nenoCopied),
     ));
   }
 
   void shareItem() {
     Share.share(
-      nenoContent + Texts.campaign,
+      nenoContent + LangStrings.campaign,
       subject: "Shiriki neno: " + neno.title,
     );
   }
@@ -202,7 +205,7 @@ class EeContentViewState extends State<EeContentView> {
     else
       db.favouriteNeno(neno, true);
     globalKey.currentState.showSnackBar(new SnackBar(
-      content: new Text(neno.title + " " + SnackBarText.nenoLiked),
+      content: new Text(neno.title + " " + LangStrings.nenoLiked),
     ));
     //notifyListeners();
   }

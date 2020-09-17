@@ -53,7 +53,7 @@ class SqliteHelper {
     Database db = await this.database;
     neno.isfav = neno.views = 0;
 
-    var result = await db.insert(Texts.maneno, neno.toMap());
+    var result = await db.insert(LangStrings.maneno, neno.toMap());
     return result;
   }
 
@@ -73,13 +73,13 @@ class SqliteHelper {
     else
       neno.isfav = 0;
     var result = await db.rawUpdate('UPDATE ' +
-        Texts.maneno +
+        LangStrings.maneno +
         ' SET ' +
-        Texts.isfav +
+        LangStrings.isfav +
         '=' +
         neno.isfav.toString() +
         ' WHERE ' +
-        Texts.id +
+        LangStrings.id +
         '=' +
         neno.id.toString());
     return result;
@@ -88,9 +88,9 @@ class SqliteHelper {
   Future<int> deleteNeno(int nenoID) async {
     var db = await this.database;
     int result = await db.rawDelete('DELETE FROM ' +
-        Texts.maneno +
+        LangStrings.maneno +
         ' WHERE ' +
-        Texts.id +
+        LangStrings.id +
         '=' +
         nenoID.toString());
     return result;
@@ -99,7 +99,7 @@ class SqliteHelper {
   Future<int> getNenoCount() async {
     Database db = await this.database;
     List<Map<String, dynamic>> x =
-        await db.rawQuery('SELECT COUNT (*) from ' + Texts.maneno);
+        await db.rawQuery('SELECT COUNT (*) from ' + LangStrings.maneno);
     int result = Sqflite.firstIntValue(x);
     return result;
   }
@@ -107,7 +107,7 @@ class SqliteHelper {
   //NENO LISTS
   Future<List<Map<String, dynamic>>> getNenoMapList() async {
     Database db = await this.database;
-    var result = db.query(Texts.maneno);
+    var result = db.query(LangStrings.maneno);
     return result;
   }
 
@@ -140,13 +140,13 @@ class SqliteHelper {
   Future<List<Map<String, dynamic>>> getNenoSearchMapList(
       String searchThis, bool searchByTitle) async {
     Database db = await this.database;
-    String sqlQuery = Texts.title + " LIKE '" + searchThis + "%'";
+    String sqlQuery = LangStrings.title + " LIKE '" + searchThis + "%'";
 
     if (!searchByTitle)
       sqlQuery =
-          sqlQuery + " OR " + Texts.maana + " LIKE '" + searchThis + "%'";
+          sqlQuery + " OR " + LangStrings.maana + " LIKE '" + searchThis + "%'";
 
-    var result = db.query(Texts.maneno, where: sqlQuery);
+    var result = db.query(LangStrings.maneno, where: sqlQuery);
     return result;
   }
 
@@ -166,7 +166,7 @@ class SqliteHelper {
   Future<List<Map<String, dynamic>>> getGenericSearchMapList(
       String searchThis, String table) async {
     Database db = await this.database;
-    String sqlQuery = Texts.title + ' LIKE "' + searchThis + '%"';
+    String sqlQuery = LangStrings.title + ' LIKE "' + searchThis + '%"';
 
     var result = db.query(table, where: sqlQuery);
     return result;
@@ -187,7 +187,7 @@ class SqliteHelper {
   //FAVOURITES LISTS
   Future<List<Map<String, dynamic>>> getFavoritesList() async {
     Database db = await this.database;
-    var result = db.query(Texts.maneno, where: Texts.isfav + '=1');
+    var result = db.query(LangStrings.maneno, where: LangStrings.isfav + '=1');
     return result;
   }
 
@@ -206,20 +206,20 @@ class SqliteHelper {
   Future<List<Map<String, dynamic>>> getFavSearchMapList(
       String searchThis) async {
     Database db = await this.database;
-    String extraQuery = 'AND ' + Texts.isfav + '=1 ';
-    String sqlQuery = Texts.title +
+    String extraQuery = 'AND ' + LangStrings.isfav + '=1 ';
+    String sqlQuery = LangStrings.title +
         ' LIKE "%' +
         searchThis +
         '%" ' +
         extraQuery +
         'OR ' +
-        Texts.maana +
+        LangStrings.maana +
         ' LIKE "%' +
         searchThis +
         '%" ' +
         extraQuery;
 
-    var result = db.query(Texts.maneno, where: sqlQuery);
+    var result = db.query(LangStrings.maneno, where: sqlQuery);
     return result;
   }
 

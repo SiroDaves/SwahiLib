@@ -44,11 +44,12 @@ class SqliteAssets {
     try {
       await Directory(dirname(path)).create(recursive: true);
     } catch (_) {}
-      
+
     // Copy from asset
     ByteData data = await rootBundle.load(join("assets", "kamusi.db"));
-    List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-    
+    List<int> bytes =
+        data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+
     // Write and flush the bytes written
     await File(path).writeAsBytes(bytes, flush: true);
 
@@ -59,7 +60,7 @@ class SqliteAssets {
 
   Future<List<Map<String, dynamic>>> getNenoMapList() async {
     Database db = await this.database;
-    var result = db.query(Texts.maneno);
+    var result = db.query(LangStrings.maneno);
     return result;
   }
 
@@ -86,5 +87,4 @@ class SqliteAssets {
     }
     return genericList;
   }
-
 }
