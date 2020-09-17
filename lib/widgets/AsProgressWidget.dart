@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:kamusi/helpers/AppSettings.dart';
 
 class AsProgressWidget extends StatefulWidget {
   Color backgroundColor;
@@ -74,12 +76,20 @@ class AsProgressWidgetState extends State<AsProgressWidget> {
                       child: new Container(
                         width: 300,
                         height: 120,
-                        decoration: new BoxDecoration(
-                            color: containerColor,
-                            border: Border.all(color: Colors.lightBlueAccent),
-                            boxShadow: [BoxShadow(blurRadius: 5)],
-                            borderRadius: new BorderRadius.all(
-                                new Radius.circular(borderRadius))),
+                        decoration: Provider.of<AppSettings>(context).isDarkMode
+                            ? BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.black),
+                                boxShadow: [BoxShadow(blurRadius: 5)],
+                                borderRadius: new BorderRadius.all(
+                                    new Radius.circular(borderRadius)))
+                            : BoxDecoration(
+                                color: containerColor,
+                                border:
+                                    Border.all(color: Colors.lightBlueAccent),
+                                boxShadow: [BoxShadow(blurRadius: 5)],
+                                borderRadius: new BorderRadius.all(
+                                    new Radius.circular(borderRadius))),
                       ),
                     ),
                     new Center(
@@ -114,7 +124,10 @@ class AsProgressWidgetState extends State<AsProgressWidget> {
 
   Widget _getCircularProgress() {
     return new CircularProgressIndicator(
-        valueColor: new AlwaysStoppedAnimation(Colors.blue));
+        valueColor: new AlwaysStoppedAnimation(
+            Provider.of<AppSettings>(context).isDarkMode
+                ? Colors.black
+                : Colors.blue));
   }
 
   void hideProgress() {

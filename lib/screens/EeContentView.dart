@@ -3,10 +3,10 @@
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:kamusi/helpers/AppSettings.dart';
 import 'package:kamusi/helpers/SqliteHelper.dart';
 import 'package:kamusi/models/NenoModel.dart';
-import 'package:backdrop/backdrop.dart';
-import 'package:kamusi/screens/FfSettingsQuick.dart';
 import 'package:share/share.dart';
 import 'package:kamusi/utils/Constants.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -51,46 +51,39 @@ class EeContentViewState extends State<EeContentView> {
       onWillPop: () {
         moveToLastScreen();
       },
-      child: BackdropScaffold(
-        title: Text(Texts.appName),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              isFavourited(neno.isfav) ? Icons.star : Icons.star_border,
-            ),
-            onPressed: () => favoriteThis(),
-          )
-        ],
-        iconPosition: BackdropIconPosition.action,
-        headerHeight: 120,
-        frontLayer: Center(
-          child: Container(
-            constraints: BoxConstraints.expand(),
-            child: Scaffold(
-              key: globalKey,
-              body: mainBody(),
-              floatingActionButton: AnimatedFloatingActionButton(
-                fabButtons: floatingButtons(),
-                colorStartAnimation: Colors.blueAccent,
-                colorEndAnimation: Colors.blue,
-                animatedIconData: AnimatedIcons.menu_close,
+      child: Scaffold(
+        key: globalKey,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(Texts.appName),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                isFavourited(neno.isfav) ? Icons.star : Icons.star_border,
               ),
-            ),
-          ),
+              onPressed: () => favoriteThis(),
+            )
+          ],
         ),
-        backLayer: FfSettingsQuick(),
+        body: mainBody(),
+        floatingActionButton: AnimatedFloatingActionButton(
+          fabButtons: floatingButtons(),
+          animatedIconData: AnimatedIcons.menu_close,
+        ),
       ),
     );
   }
 
   Widget mainBody() {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.white, Colors.cyan, Colors.indigo]),
-      ),
+      decoration: Provider.of<AppSettings>(context).isDarkMode
+          ? BoxDecoration()
+          : BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.white, Colors.cyan, Colors.indigo]),
+            ),
       child: new Stack(
         children: <Widget>[
           new Container(
@@ -99,8 +92,10 @@ class EeContentViewState extends State<EeContentView> {
               data: "<h3>" + neno.title + "</h3>",
               style: {
                 "h3": Style(
-                  fontSize: FontSize(30.0),
-                ),
+                    fontSize: FontSize(30.0),
+                    color: Provider.of<AppSettings>(context).isDarkMode
+                        ? Colors.white
+                        : Colors.black),
               },
             ),
           ),

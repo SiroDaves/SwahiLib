@@ -1,9 +1,6 @@
-import 'package:kamusi/screens/GgDonate.dart';
-import 'package:kamusi/screens/GgHelpDesk.dart';
 import 'package:kamusi/views/GameView.dart';
 import 'package:kamusi/views/SearchView.dart';
 import 'package:kamusi/views/MoreView.dart';
-import 'package:kamusi/utils/Navigation.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +11,7 @@ class DdHomeView extends StatefulWidget {
 
 class _DdHomeViewState extends State<DdHomeView> {
   int _currentIndex = 1;
-  List<Widget> tabs = [GgHelpDesk(), SearchView(), GgDonate()];
+  List<Widget> tabs = [MoreView(), SearchView(), GameView()];
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +35,15 @@ class _DdHomeViewState extends State<DdHomeView> {
       ),*/
       body: tabs[_currentIndex],
       bottomNavigationBar: FancyBottomNavigation(
-        barHeight: 70,
-        arcHeight: 65,
+        barHeight: 55,
+        arcHeight: 50,
+        arcWidth: 75,
         circleHeight: 50,
         initialSelection: 1,
         tabs: [
-          TabData(iconData: Icons.list, title: 'Usaidizi'),
+          TabData(iconData: Icons.settings, title: 'Zaidi'),
           TabData(iconData: Icons.search, title: 'Tafuta'),
-          TabData(iconData: Icons.list, title: 'Changia'),
+          TabData(iconData: Icons.games, title: 'Michezo'),
         ],
         onTabChangedListener: (position) {
           setState(() {

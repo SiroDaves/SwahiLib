@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kamusi/helpers/AppSettings.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:provider/provider.dart';
 import 'package:kamusi/models/GenericModel.dart';
 import 'package:kamusi/helpers/SqliteHelper.dart';
 import 'package:kamusi/utils/Constants.dart';
@@ -67,23 +69,25 @@ class AsSearchGenericState extends State<AsSearchGeneric> {
     }
 
     return new Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [
-              0.1,
-              0.4,
-              0.6,
-              0.9
-            ],
-            colors: [
-              Colors.black,
-              Colors.blue[900],
-              Colors.blue,
-              Colors.blue[200]
-            ]),
-      ),
+      decoration: Provider.of<AppSettings>(context).isDarkMode
+          ? BoxDecoration()
+          : BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  stops: [
+                    0.1,
+                    0.4,
+                    0.6,
+                    0.9
+                  ],
+                  colors: [
+                    Colors.black,
+                    Colors.blue[900],
+                    Colors.blue,
+                    Colors.blue[200]
+                  ]),
+            ),
       child: new Stack(
         children: <Widget>[
           new Container(

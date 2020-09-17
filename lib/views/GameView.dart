@@ -9,6 +9,10 @@ class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Chemsha Bongo'),
+      ),
       body: ListView(
         children: <Widget>[],
       ),
