@@ -140,11 +140,10 @@ class SqliteHelper {
   Future<List<Map<String, dynamic>>> getNenoSearchMapList(
       String searchThis, bool searchByTitle) async {
     Database db = await this.database;
-    String sqlQuery = LangStrings.title + " LIKE '" + searchThis + "%'";
+    String sqlQuery = LangStrings.title + " LIKE '$searchThis%'";
 
     if (!searchByTitle)
-      sqlQuery =
-          sqlQuery + " OR " + LangStrings.maana + " LIKE '" + searchThis + "%'";
+      sqlQuery = sqlQuery + " OR " + LangStrings.maana + " LIKE '$searchThis%'";
 
     var result = db.query(LangStrings.maneno, where: sqlQuery);
     return result;
@@ -166,7 +165,7 @@ class SqliteHelper {
   Future<List<Map<String, dynamic>>> getGenericSearchMapList(
       String searchThis, String table) async {
     Database db = await this.database;
-    String sqlQuery = LangStrings.title + ' LIKE "' + searchThis + '%"';
+    String sqlQuery = LangStrings.title + ' LIKE "$searchThis%"';
 
     var result = db.query(table, where: sqlQuery);
     return result;
@@ -208,16 +207,9 @@ class SqliteHelper {
     Database db = await this.database;
     String extraQuery = 'AND ' + LangStrings.isfav + '=1 ';
     String sqlQuery = LangStrings.title +
-        ' LIKE "%' +
-        searchThis +
-        '%" ' +
-        extraQuery +
-        'OR ' +
+        ' LIKE "$searchThis%" $extraQuery OR ' +
         LangStrings.maana +
-        ' LIKE "%' +
-        searchThis +
-        '%" ' +
-        extraQuery;
+        ' LIKE "$searchThis%" $extraQuery';
 
     var result = db.query(LangStrings.maneno, where: sqlQuery);
     return result;
