@@ -59,7 +59,7 @@ class LangStrings {
 
   static const String helpTab1Title = "Wasiliana";
   static const String helpTab1Content =
-      "<p>SIMU: +2547 - </p><hr><p>BARUA PEPE: <a href=\"mailto:tunaboresha@gmail.com\">tunaboresha@gmail.com</a> </p><hr> <p>TOVUTI: <a href=\"https://kazibora.github.io\">kazibora.github.io</a></p>";
+      "<p>SIMU: +2547 - </p><hr><p>BARUA PEPE: tunaboresha [at] gmail.com </p><hr> <p>TOVUTI: <a href=\"https://kazibora.github.io\">kazibora.github.io</a></p>";
 
   static const String helpTab2Title = "Reviews";
   static const String helpTab2Content =

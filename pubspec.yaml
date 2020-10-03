@@ -4,7 +4,7 @@ description: kiswahili kitukuzwe
 version: 1.2.7+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -26,14 +26,12 @@ dev_dependencies:
     sdk: flutter
   freezed:
   animated_floatactionbuttons: ^0.1.0
+  anisi_controls: ^0.0.2
   async: ^2.4.0
   backdrop: ^0.2.8
   build_runner: ^1.1.2
   cupertino_icons: ^0.1.2
   change_app_package_name: ^0.1.2
-  fancy_bottom_navigation:
-    git:
-      url: https://github.com/skquark/fancy_bottom_navigation.git
   flutter_html : ^1.0.2
   flutter_launcher_icons: ^0.7.5
   fluttertoast: ^7.0.2

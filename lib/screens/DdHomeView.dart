@@ -1,7 +1,7 @@
 import 'package:kamusi/views/GameView.dart';
 import 'package:kamusi/views/SearchView.dart';
 import 'package:kamusi/views/MoreView.dart';
-import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:anisi_controls/anisi_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 
 class DdHomeView extends StatefulWidget {
@@ -34,7 +34,7 @@ class _DdHomeViewState extends State<DdHomeView> {
         ],
       ),*/
       body: tabs[_currentIndex],
-      bottomNavigationBar: FancyBottomNavigation(
+      bottomNavigationBar: AnisiBottomNavigation(
         barHeight: 55,
         arcHeight: 50,
         arcWidth: 75,
