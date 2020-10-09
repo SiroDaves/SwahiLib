@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "687871599531",
+    "firebase_url": "https://kamusiyamswahili.firebaseio.com",
+    "project_id": "kamusiyamswahili",
+    "storage_bucket": "kamusiyamswahili.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687871599531:android:a29d24d65916ca621a28ee",
+        "android_client_info": {
+          "package_name": "com.kazibora.kamusi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687871599531-fc2pmkftpivq0og2d1onpk67ielia5oq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kazibora.kamusi",
+            "certificate_hash": "b840268c1a5de54277fb87404757f4b05b687ca3"
+          }
+        },
+        {
+          "client_id": "687871599531-5sf166afjqlhbetohu1p9lrfeilouq9c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBh0yb-vgWHk33HLHNsHUuH2mBXvcEQ1aM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687871599531-5sf166afjqlhbetohu1p9lrfeilouq9c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
