@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:kamusi/helpers/AppSettings.dart';
 import 'package:sqflite/sqflite.dart';
@@ -9,6 +12,7 @@ import 'package:kamusi/utils/Constants.dart';
 import 'package:kamusi/widgets/AsProgressWidget.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class AsSearchNeno extends StatefulWidget {
   AsSearchNeno();
@@ -22,10 +26,12 @@ class AsSearchNeno extends StatefulWidget {
 }
 
 class AsSearchNenoState extends State<AsSearchNeno> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   AsProgressWidget progressWidget =
       AsProgressWidget.getProgressWidget(LangStrings.somePatience);
   TextEditingController txtSearch = new TextEditingController(text: "");
   SqliteHelper db = SqliteHelper();
+  final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey<LiquidPullToRefreshState>();
 
   AsSearchNenoState();
   Future<Database> dbFuture;
@@ -57,6 +63,23 @@ class AsSearchNenoState extends State<AsSearchNeno> {
     'Z'
   ];
   String letterSearch;
+  
+  Future<void> _handleRefresh() {
+    final Completer<void> completer = Completer<void>();
+    Timer(const Duration(seconds: 3), () {
+      completer.complete();
+    });
+    
+    return completer.future.then<void>((_) {
+      _scaffoldKey.currentState?.showSnackBar(SnackBar(
+          content: const Text('Refresh complete'),
+          action: SnackBarAction(
+              label: 'RETRY',
+              onPressed: () {
+                _refreshIndicatorKey.currentState.show();
+              })));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,11 +136,14 @@ class AsSearchNenoState extends State<AsSearchNeno> {
             height: MediaQuery.of(context).size.height - 200,
             padding: const EdgeInsets.symmetric(horizontal: 5),
             margin: EdgeInsets.only(top: 110),
-            child: ListView.builder(
-              physics: BouncingScrollPhysics(),
-              itemCount: results.length,
-              itemBuilder: listView,
-            ),
+            child: LiquidPullToRefresh(
+              key: _refreshIndicatorKey,	// key if you want to add
+              onRefresh: _handleRefresh,	// refresh callback
+              child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: results.length,
+                    itemBuilder: listView,
+                  ),
           ),
         ],
       ),

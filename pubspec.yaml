@@ -20,6 +20,7 @@ dependencies:
   firebase_performance: ^0.3.1+8
   dio_firebase_performance: ^0.0.1
   firebase_crashlytics: ^0.1.3+3
+  liquid_pull_to_refresh: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -64,25 +65,4 @@ flutter:
 
   assets:
     - assets/kamusi.db
-    - assets/images/appicon.png
-    - assets/images/donation1.png
-    - assets/images/donation2.png
-    - assets/images/donation3.png
-    - assets/images/donation4.png
-    - assets/images/donation5.png
-    - assets/images/help1.png
-    - assets/images/help2.png
-    - assets/images/help3.png
-    - assets/images/ic_arrow_back_white.png
-    - assets/images/ic_books.png
-    - assets/images/ic_check_circle.png
-    - assets/images/ic_done.png
-    - assets/images/ic_edit.png
-    - assets/images/ic_fab_online.png
-    - assets/images/ic_fab_search.png
-    - assets/images/ic_favorite_black.png
-    - assets/images/ic_favorite_border_black.png
-    - assets/images/ic_font_bigger.png
-    - assets/images/ic_font_smaller.png
-    - assets/images/ic_home.png
-    - assets/images/splash.jpg
+    - assets/images/
