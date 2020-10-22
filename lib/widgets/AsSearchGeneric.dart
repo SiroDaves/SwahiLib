@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kamusi/helpers/AppSettings.dart';
 import 'package:sqflite/sqflite.dart';
@@ -8,6 +9,7 @@ import 'package:kamusi/utils/Constants.dart';
 import 'package:kamusi/widgets/AsProgressWidget.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class AsSearchGeneric extends StatefulWidget {
   final String table;
@@ -24,10 +26,29 @@ class AsSearchGeneric extends StatefulWidget {
 }
 
 class AsSearchGenericState extends State<AsSearchGeneric> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   AsProgressWidget progressWidget =
       AsProgressWidget.getProgressWidget(LangStrings.somePatience);
   TextEditingController txtSearch = new TextEditingController(text: "");
   SqliteHelper db = SqliteHelper();
+  final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey<LiquidPullToRefreshState>();
+
+  Future<void> _handleRefresh() {
+      final Completer<void> completer = Completer<void>();
+      Timer(const Duration(seconds: 3), () {
+        completer.complete();
+      });
+      
+      return completer.future.then<void>((_) {
+        _scaffoldKey.currentState?.showSnackBar(SnackBar(
+            content: const Text('Refresh complete'),
+            action: SnackBarAction(
+                label: 'RETRY',
+                onPressed: () {
+                  _refreshIndicatorKey.currentState.show();
+                })));
+      });
+    }
 
   AsSearchGenericState({this.table});
   Future<Database> dbFuture;
@@ -97,11 +118,14 @@ class AsSearchGenericState extends State<AsSearchGeneric> {
                 searchBox(),
                 Container(
                   height: 50,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
-                    itemCount: letters.length,
-                    itemBuilder: lettersView,
+                  child: LiquidPullToRefresh(
+                    key: _refreshIndicatorKey,	// key if you want to add
+                    onRefresh: _handleRefresh,	// refresh callback
+                    child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      itemCount: results.length,
+                      itemBuilder: listView,
+                    ),
                   ),
                 ),
               ],

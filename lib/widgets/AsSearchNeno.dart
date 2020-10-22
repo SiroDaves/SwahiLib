@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:kamusi/helpers/AppSettings.dart';
 import 'package:sqflite/sqflite.dart';
@@ -140,10 +138,11 @@ class AsSearchNenoState extends State<AsSearchNeno> {
               key: _refreshIndicatorKey,	// key if you want to add
               onRefresh: _handleRefresh,	// refresh callback
               child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    itemCount: results.length,
-                    itemBuilder: listView,
-                  ),
+                physics: BouncingScrollPhysics(),
+                itemCount: results.length,
+                itemBuilder: listView,
+              ),
+            ),
           ),
         ],
       ),
