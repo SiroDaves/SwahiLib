@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-class BbSplash extends StatelessWidget {
-  const BbSplash({Key key}) : super(key: key);
+class AppSplash extends StatelessWidget {
+  const AppSplash({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

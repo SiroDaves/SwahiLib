@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 
-class AsProgressDialog extends StatefulWidget {
+class AsProgress extends StatefulWidget {
   Color backgroundColor;
   Color color;
   Color containerColor;
   double borderRadius;
   String text;
-  AsProgressDialogState progressDialogState;
+  AsProgressState progressState;
 
-  AsProgressDialog(
-      {this.backgroundColor = Colors.black54,
+  AsProgress(
+    {
+      this.backgroundColor = Colors.black54,
       this.color = Colors.white,
       this.containerColor = Colors.transparent,
       this.borderRadius = 10,
-      this.text});
+      this.text
+    }
+  );
 
   @override
-  createState() => progressDialogState = new AsProgressDialogState(
+  createState() => progressState = new AsProgressState(
       backgroundColor: this.backgroundColor,
       color: this.color,
       containerColor: this.containerColor,
@@ -24,19 +27,19 @@ class AsProgressDialog extends StatefulWidget {
       text: this.text);
 
   void hideProgress() {
-    progressDialogState.hideProgress();
+    progressState.hideProgress();
   }
 
   void showProgress() {
-    progressDialogState.showProgress();
+    progressState.showProgress();
   }
 
   void showProgressWithText(String title) {
-    progressDialogState.showProgressWithText(title);
+    progressState.showProgressWithText(title);
   }
 
-  static Widget getAsProgressDialog(String title) {
-    return new AsProgressDialog(
+  static Widget getProgress(String title) {
+    return new AsProgress(
       backgroundColor: Colors.black12,
       color: Colors.black,
       containerColor: Colors.white,
@@ -46,7 +49,7 @@ class AsProgressDialog extends StatefulWidget {
   }
 }
 
-class AsProgressDialogState extends State<AsProgressDialog> {
+class AsProgressState extends State<AsProgress> {
   Color backgroundColor;
   Color color;
   Color containerColor;
@@ -54,40 +57,44 @@ class AsProgressDialogState extends State<AsProgressDialog> {
   String text;
   bool _opacity = false;
 
-  AsProgressDialogState(
-      {this.backgroundColor = Colors.black54,
+  AsProgressState(    
+    {
+      this.backgroundColor = Colors.black54,
       this.color = Colors.white,
       this.containerColor = Colors.transparent,
       this.borderRadius = 10,
-      this.text});
+      this.text
+    }
+  );
 
   @override
   Widget build(BuildContext context) {
     return new Container(
-        child: !_opacity
-            ? null
-            : new Opacity(
-                opacity: _opacity ? 1 : 0,
-                child: new Stack(
-                  children: <Widget>[
-                    new Center(
-                      child: new Container(
-                        width: 300,
-                        height: 120,
-                        decoration: new BoxDecoration(
-                            color: containerColor,
-                            border: Border.all(color: Colors.lightBlueAccent),
-                            boxShadow: [BoxShadow(blurRadius: 5)],
-                            borderRadius: new BorderRadius.all(
-                                new Radius.circular(borderRadius))),
-                      ),
-                    ),
-                    new Center(
-                      child: _getCenterContent(),
-                    )
-                  ],
+      child: !_opacity ? null : new Opacity(
+        opacity: _opacity ? 1 : 0,
+        child: new Stack(
+          children: <Widget>[
+            new Center(
+              child: new Container(
+                width: 300,
+                height: 120,
+                decoration: new BoxDecoration(
+                  color: containerColor,
+                  border: Border.all(color: Colors.orange),
+                  boxShadow: [BoxShadow(blurRadius: 5)],
+                  borderRadius: new BorderRadius.all(
+                     new Radius.circular(borderRadius)
+                  )
                 ),
-              ));
+              ),
+            ),
+            new Center(
+              child: _getCenterContent(),
+            )
+          ],
+        ),
+      )
+    );
   }
 
   Widget _getCenterContent() {
@@ -114,7 +121,7 @@ class AsProgressDialogState extends State<AsProgressDialog> {
 
   Widget _getCircularProgress() {
     return new CircularProgressIndicator(
-        valueColor: new AlwaysStoppedAnimation(Colors.blue));
+        valueColor: new AlwaysStoppedAnimation(Colors.deepOrange));
   }
 
   void hideProgress() {

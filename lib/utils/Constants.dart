@@ -7,15 +7,16 @@ class SharedPreferenceKeys {
 }
 
 class LangStrings {
+  static const String appName = "Kamusi Ya Kiswahili";
   static const String inProgress = "Inaendelea ...";
   static const String gettingReady = "Matayarisho ...";
   static const String somePatience = "Eish! ... Subiri kidogo ...";
 
-  static const String appName = "Kamusi Ya Kiswahili";
-  static const String campaign =
-      "\n\n#KamusiYaKiswahili #KiswahiliKitukuzwe \n\nhttps://play.google.com/store/apps/details?id=com.kazibora.kamusi ";
+  static const String campaign = "\n\n#KamusiYaKiswahili #KiswahiliKitukuzwe \n\nhttps://play.google.com/store/apps/details?id=com.kazibora.kamusi ";
   static const String visawe_vya = "\n\nVisawe (synonyms) vya neno ";
   static const String searchNow = "Tafuta ";
+  static const String searchHint = "Tafuta Maneno ya Kiswahili";
+  static const String favourited = "Maneno Uliyopenda";
   static const String maneno = 'maneno';
   static const String methali = 'methali';
   static const String misemo = 'misemo';
@@ -34,18 +35,18 @@ class LangStrings {
   static const String shareThis = "Shiriki";
 
   static const String noInternetConnection = "No internet connection";
-  static const String nenoCopied = "Neno copied to clipboard!";
-  static const String nenoLiked = " liked!";
-  static const String nenoDisliked = " disliked!";
+  static const String nenoCopied = "Neno limenakiliwa kwa clipboard!";
+  static const String nenoLiked = " imependwa!";
+  static const String nenoDisliked = " haijapendwa!";
 
+  static const String mandhariMeusi = "Mandhari Meusi";
   static const String donateTabPage = "Tuunge Mkono, Changia";
 
   static const String donateTab1Title = "M-Pesa";
   static const String donateTab1Content = "PAYBILL: 891300\n\nAKAUNTI: 34489";
 
   static const String donateTab2Title = "Equitel";
-  static const String donateTab2Content =
-      "NAMBARI YA BIASHARA:\n\t891300\n\nAKAUNTI: 34489";
+  static const String donateTab2Content = "NAMBARI YA BIASHARA:\n\t891300\n\nAKAUNTI: 34489";
 
   static const String donateTab3Title = "Airtel";
   static const String donateTab3Content =
@@ -55,7 +56,7 @@ class LangStrings {
   static const String donateTab4Content =
       "ANWANI:\n\ttunaboresha [at] gmail.com";
 
-  static const String helpTabPage = "Usaidizi";
+  static const String helpTabPage = "Usaidizi na Mawasiliano";
 
   static const String helpTab1Title = "Wasiliana";
   static const String helpTab1Content =
@@ -68,6 +69,13 @@ class LangStrings {
   static const String helpTab3Title = "Open Source";
   static const String helpTab3Content =
       "Iwapo wewe ni Msanidi Kitumizi (App Developer), source code ya kitumizi hiki yapatikana bila malipo kwenye GitHub:</br></br> <a href=\"https://github.com/kazibora/kamusi\">github.com/kazibora/kamusi</a>";
+
+      
+  static const String howToUse = "Jinsi ya Kutumia Kitumizi";
+  static const String howToSearch1 = "Kutafuta maneno";
+  static const String howToSearch2 = "Guza sehemu nyeupe iliyoonyeshwa kwa mstari mwekundu ili kufungua skrini ya kutafuta maneno. " +
+  "Tafadhali zingatia kuwa utafutaji ni wa maneno pekee";
+  static const String aboutApp = "Kuhusu Kitumizi";
 }
 
 class Queries {

@@ -9,7 +9,7 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:kamusi/models/callbacks/Generic.dart';
 import 'package:kamusi/models/callbacks/Neno.dart';
-import 'package:kamusi/utils/Constants.dart';
+import 'package:kamusi/utils/constants.dart';
 
 class SqliteAssets {
   static SqliteAssets sqliteHelper; // Singleton DatabaseHelper

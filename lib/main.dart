@@ -1,13 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:kamusi/helpers/AppSettings.dart';
-import 'package:kamusi/screens/BbSplash.dart';
-import 'package:kamusi/screens/AppStart.dart';
-import 'package:kamusi/utils/Themes.dart';
+
+import 'package:kamusi/helpers/app_settings.dart';
+import 'package:kamusi/screens/app_splash.dart';
+import 'package:kamusi/screens/app_start.dart';
+import 'package:kamusi/utils/themes.dart';
 
 void main() {
   Crashlytics.instance.enableInDevMode = true;
@@ -23,7 +24,7 @@ class MyApplication extends StatelessWidget {
       future: SharedPreferences.getInstance(),
       builder:
           (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
-        if (!snapshot.hasData) return BbSplash();
+        if (!snapshot.hasData) return AppSplash();
 
         return ChangeNotifierProvider<AppSettings>.value(
           value: AppSettings(snapshot.data),

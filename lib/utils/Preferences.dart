@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:kamusi/utils/Constants.dart';
+import 'package:kamusi/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences {

@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
-import 'package:kamusi/helpers/AppSettings.dart';
-import 'package:kamusi/utils/Constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class GgHelpDesk extends StatefulWidget {
+import 'package:kamusi/helpers/app_settings.dart';
+import 'package:kamusi/utils/constants.dart';
+
+class HelpDesk extends StatefulWidget {
   @override
-  createState() => new GgHelpDeskState();
+  createState() => new HelpDeskState();
 }
 
-class GgHelpDeskState extends State<GgHelpDesk> {
+class HelpDeskState extends State<HelpDesk> {
   final globalKey = new GlobalKey<ScaffoldState>();
 
   @override

@@ -4,9 +4,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kamusi/screens/CcInitLoad.dart';
-import 'package:kamusi/utils/Navigation.dart';
-import 'package:kamusi/utils/Preferences.dart';
+import 'package:kamusi/screens/init_load.dart';
+import 'package:kamusi/utils/navigation.dart';
+import 'package:kamusi/utils/preferences.dart';
 
 class AppStart extends StatefulWidget {
   @override

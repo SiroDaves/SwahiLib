@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class AsTextView extends StatefulWidget {
   final String text;
   final double fsize;
@@ -43,9 +44,9 @@ class AsTextViewState extends State<AsTextView> {
 
   @override
   Widget build(BuildContext context) {
-    return new Text(
+    return Text(
       text,
-      style: new TextStyle(fontWeight: isbold ? FontWeight.bold : FontWeight.normal, fontSize: fsize),
+      style: TextStyle(fontWeight: isbold ? FontWeight.bold : FontWeight.normal, fontSize: fsize),
     );
   }
 

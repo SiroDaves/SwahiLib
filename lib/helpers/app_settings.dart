@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:kamusi/utils/Constants.dart';
+import 'package:kamusi/utils/constants.dart';
 
 class AppSettings extends ChangeNotifier {
 

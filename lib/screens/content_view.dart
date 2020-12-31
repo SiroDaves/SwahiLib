@@ -1,21 +1,22 @@
 // This file declares the content view screen
 
-import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:kamusi/helpers/AppSettings.dart';
-import 'package:kamusi/helpers/SqliteHelper.dart';
-import 'package:kamusi/models/NenoModel.dart';
 import 'package:share/share.dart';
-import 'package:kamusi/utils/Constants.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
+import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 
-class EeContentView extends StatefulWidget {
+import 'package:kamusi/utils/constants.dart';
+import 'package:kamusi/helpers/app_settings.dart';
+import 'package:kamusi/helpers/sqlite_helper.dart';
+import 'package:kamusi/models/neno_model.dart';
+
+class ContentView extends StatefulWidget {
   final NenoModel neno;
 
-  EeContentView(this.neno);
+  ContentView(this.neno);
 
   @override
   State<StatefulWidget> createState() {
@@ -23,7 +24,7 @@ class EeContentView extends StatefulWidget {
   }
 }
 
-class EeContentViewState extends State<EeContentView> {
+class EeContentViewState extends State<ContentView> {
   EeContentViewState(this.neno);
   final globalKey = new GlobalKey<ScaffoldState>();
   SqliteHelper db = SqliteHelper();

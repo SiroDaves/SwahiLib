@@ -41,7 +41,7 @@ class AsLineProgressState extends State<AsLineProgress> {
       lineHeight: 40,
       percent: progress,
       linearStrokeCap: LinearStrokeCap.round,
-      progressColor: Colors.blueAccent,
+      progressColor: Colors.orangeAccent,
       backgroundColor: Colors.white,
     );
   }

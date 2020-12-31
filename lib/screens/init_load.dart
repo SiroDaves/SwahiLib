@@ -2,18 +2,19 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:kamusi/models/GenericModel.dart';
-import 'package:kamusi/models/NenoModel.dart';
+import 'package:sqflite/sqflite.dart';
+
+import 'package:kamusi/models/generic_model.dart';
+import 'package:kamusi/models/neno_model.dart';
 import 'package:kamusi/models/callbacks/Generic.dart';
 import 'package:kamusi/models/callbacks/Neno.dart';
-import 'package:kamusi/utils/Constants.dart';
-import 'package:kamusi/utils/Preferences.dart';
-import 'package:kamusi/helpers/SqliteAssets.dart';
-import 'package:kamusi/helpers/SqliteHelper.dart';
-import 'package:kamusi/screens/AppStart.dart';
-import 'package:kamusi/widgets/AsTextView.dart';
-import 'package:kamusi/widgets/AsLineProgress.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:kamusi/utils/constants.dart';
+import 'package:kamusi/utils/preferences.dart';
+import 'package:kamusi/helpers/sqlite_assets.dart';
+import 'package:kamusi/helpers/sqlite_helper.dart';
+import 'package:kamusi/screens/app_start.dart';
+import 'package:kamusi/widgets/as_text_view.dart';
+import 'package:kamusi/widgets/as_line_progress.dart';
 
 class CcInitLoad extends StatefulWidget {
   @override

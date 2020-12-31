@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:kamusi/helpers/AppSettings.dart';
-import 'package:kamusi/utils/Constants.dart';
+import 'package:kamusi/helpers/app_settings.dart';
+import 'package:kamusi/utils/constants.dart';
 
-class GgDonate extends StatefulWidget {
+class Donate extends StatefulWidget {
   @override
-  createState() => new GgDonateState();
+  createState() => new DonateState();
 }
 
-class GgDonateState extends State<GgDonate> {
+class DonateState extends State<Donate> {
   final globalKey = new GlobalKey<ScaffoldState>();
 
   @override
