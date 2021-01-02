@@ -15,5 +15,6 @@ Kiswahili Dictionary app made with Flutter.
 <tr>
 <td><img src="screenshots/Screenshot_1.jpeg" width="240px" /></td>
 <td><img src="screenshots/Screenshot_2.jpeg" width="240px" /></td>
+<td><img src="screenshots/Screenshot_3.jpeg" width="240px" /></td>
 </tr>
 </table>
