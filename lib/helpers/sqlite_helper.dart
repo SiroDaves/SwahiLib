@@ -1,14 +1,14 @@
 // This file declares functions that manages the database that is created in the app
 // when the app is installed for the first time
 
-import 'package:sqflite/sqflite.dart';
-import 'dart:async';
-import 'dart:io';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:kamusi/models/generic_model.dart';
-import 'package:kamusi/models/neno_model.dart';
-import 'package:kamusi/utils/constants.dart';
+import "package:sqflite/sqflite.dart";
+import "dart:async";
+import "dart:io";
+import "package:path/path.dart";
+import "package:path_provider/path_provider.dart";
+import "package:kamusi/models/generic_model.dart";
+import "package:kamusi/models/neno_model.dart";
+import "package:kamusi/utils/constants.dart";
 
 class SqliteHelper {
   static SqliteHelper sqliteHelper; // Singleton DatabaseHelper
@@ -70,16 +70,15 @@ class SqliteHelper {
     var db = await this.database;
     if (isFavorited) item.isfav = 1;
     else item.isfav = 0;
-    var result = await db.rawUpdate('UPDATE ' + LangStrings.maneno +
-        ' SET ' + LangStrings.isfav + '=' + item.isfav.toString() +
-        ' WHERE ' + LangStrings.id + '=' + item.id.toString());
+    var result = await db.rawUpdate('UPDATE ' + LangStrings.maneno + ' SET ' + LangStrings.isfav + '=' + item.isfav.toString() + 
+      ' WHERE ' + LangStrings.id + '=' + item.id.toString());
+
     return result;
   }
 
   Future<int> deleteNeno(int itemID) async {
     var db = await this.database;
-    int result = await db.rawDelete('DELETE FROM ' + LangStrings.maneno +
-      ' WHERE ' + LangStrings.id + '=' + itemID.toString());
+    int result = await db.rawDelete('DELETE FROM ' + LangStrings.maneno + ' WHERE ' + LangStrings.id + '=' + itemID.toString());
     return result;
   }
 
@@ -118,10 +117,10 @@ class SqliteHelper {
 
   Future<List<Map<String, dynamic>>> getGenericSearchMapList(String searchString, String table, bool searchByTitle) async {
     Database db = await this.database;
-    String sqlQuery = LangStrings.title + " LIKE '$searchString%'";
+    String sqlQuery = LangStrings.title + ' LIKE "$searchString%"';
 
     if (!searchByTitle)
-      sqlQuery = sqlQuery + " OR " + LangStrings.maana + " LIKE '$searchString%'";
+      sqlQuery = sqlQuery + ' OR ' + LangStrings.maana + ' LIKE "$searchString%"';
 
     var result = db.query(table, where: sqlQuery);
     return result;
@@ -131,7 +130,7 @@ class SqliteHelper {
     var itemMapList = await getGenericSearchMapList(searchString, table, searchByTitle);
 
     List<GenericModel> itemList = List<GenericModel>();
-    // For loop to create a 'item List' from a 'Map List'
+    // For loop to create a "item List" from a "Map List"
     for (int i = 0; i < itemMapList.length; i++) {
       itemList.add(GenericModel.fromMapObject(itemMapList[i]));
     }
@@ -157,10 +156,10 @@ class SqliteHelper {
   //NENO SEARCH
   Future<List<Map<String, dynamic>>> getNenoSearchMapList(String searchString, bool searchByTitle) async {
     Database db = await this.database;
-    String sqlQuery = LangStrings.title + " LIKE '$searchString%'";
+    String sqlQuery = LangStrings.title + ' LIKE "$searchString%"';
 
     if (!searchByTitle)
-      sqlQuery = sqlQuery + " OR " + LangStrings.maana + " LIKE '$searchString%'";
+      sqlQuery = sqlQuery + ' OR ' + LangStrings.maana + ' LIKE "$searchString%"';
 
     var result = db.query(LangStrings.maneno, where: sqlQuery);
     return result;
@@ -170,7 +169,7 @@ class SqliteHelper {
     var itemMapList = await getNenoSearchMapList(searchString, searchByTitle);
 
     List<NenoModel> itemList = List<NenoModel>();
-    // For loop to create a 'item List' from a 'Map List'
+    // For loop to create a "item List" from a "Map List"
     for (int i = 0; i < itemMapList.length; i++) {
       itemList.add(NenoModel.fromMapObject(itemMapList[i]));
     }
@@ -180,7 +179,7 @@ class SqliteHelper {
   //FAVOURITES LISTS
   Future<List<Map<String, dynamic>>> getFavoritesList() async {
     Database db = await this.database;
-    var result = db.query(LangStrings.maneno, where: LangStrings.isfav + "=1");
+    var result = db.query(LangStrings.maneno, where: LangStrings.isfav + '=1');
     return result;
   }
 
@@ -199,9 +198,9 @@ class SqliteHelper {
   Future<List<Map<String, dynamic>>> getFavSearchMapList(
       String searchString) async {
     Database db = await this.database;
-    String extraQuery = 'AND ' + LangStrings.isfav + "=1 ";
+    String extraQuery = "AND ' + LangStrings.isfav + '=1 ";
     String sqlQuery = LangStrings.title + ' LIKE "$searchString%" $extraQuery OR ' +
-        LangStrings.maana + ' LIKE "$searchString%" $extraQuery';
+        LangStrings.maana + ' LIKE "$searchString%" $extraQuery"';
 
     var result = db.query(LangStrings.maneno, where: sqlQuery);
     return result;
@@ -211,7 +210,7 @@ class SqliteHelper {
     var itemMapList = await getFavSearchMapList(searchString);
 
     List<NenoModel> itemList = List<NenoModel>();
-    // For loop to create a 'item List' from a 'Map List'
+    // For loop to create a "item List" from a "Map List"
     for (int i = 0; i < itemMapList.length; i++) {
       itemList.add(NenoModel.fromMapObject(itemMapList[i]));
     }
