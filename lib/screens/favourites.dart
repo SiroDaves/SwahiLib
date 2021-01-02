@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
 import 'package:kamusi/models/neno_model.dart';
 import 'package:kamusi/views/neno_item.dart';
-import 'package:kamusi/widgets/as_progress.dart';
+import 'package:kamusi/widgets/as_loader.dart';
 import 'package:provider/provider.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/utils/constants.dart';
@@ -14,19 +14,35 @@ class Favourites extends StatefulWidget {
 }
 
 class FavouritesState extends State<Favourites> {
-  AsProgress progressWidget = AsProgress.getProgress(LangStrings.somePatience);
+  AsLoader loader = AsLoader();
   SqliteHelper db = SqliteHelper();
 
   Future<Database> dbFuture;
-  List<NenoModel> items;
+  List<NenoModel> items = List<NenoModel>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => updateListView(context));
+  }
+
+  void updateListView(BuildContext context) async {
+    loader.showWidget();
+
+    dbFuture = db.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<NenoModel>> itemListFuture = db.getFavorites();
+      itemListFuture.then((resultList) {
+        setState(() {
+          items = resultList;
+          loader.hideWidget();
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (items == null) {
-      items = [];
-      updateListView();
-    }
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -50,9 +66,6 @@ class FavouritesState extends State<Favourites> {
       child: Stack(
         children: <Widget>[
           Container(
-            child: progressWidget,
-          ),
-          Container(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: ListView.builder(
               physics: BouncingScrollPhysics(),
@@ -62,22 +75,12 @@ class FavouritesState extends State<Favourites> {
               }
             ),
           ),
+          Container(
+            child: loader,
+          ),
         ],
       ),
     );
   }
   
-  void updateListView() {
-    dbFuture = db.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<NenoModel>> itemListFuture = db.getFavorites();
-      itemListFuture.then((resultList) {
-        setState(() {
-          items = resultList;
-          progressWidget.hideProgress();
-        });
-      });
-    });
-  }
-
 }
