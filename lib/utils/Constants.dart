@@ -36,8 +36,9 @@ class LangStrings {
 
   static const String noInternetConnection = "No internet connection";
   static const String nenoCopied = "Neno limenakiliwa kwa clipboard!";
-  static const String nenoLiked = " imependwa!";
-  static const String nenoDisliked = " haijapendwa!";
+  static const String nenoThis = "Neno ";
+  static const String nenoLiked = " limependwa!";
+  static const String nenoDisliked = " limeondolewa kwa vipendwa";
 
   static const String mandhariMeusi = "Mandhari Meusi";
   static const String donateTabPage = "Tuunge Mkono, Changia";
