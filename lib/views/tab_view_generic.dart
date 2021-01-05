@@ -5,66 +5,87 @@ import 'package:sqflite/sqflite.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:kamusi/utils/colors.dart';
-import 'package:kamusi/utils/constants.dart';
 
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/models/generic_model.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
-import 'package:kamusi/widgets/as_progress.dart';
+import 'package:kamusi/widgets/as_loader.dart';
 
 class TabViewGeneric extends StatefulWidget {
   final String tabname;
   const TabViewGeneric(this.tabname);
-  
+
   @override
   TabViewGenericState createState() => TabViewGenericState();
 }
 
 class TabViewGenericState extends State<TabViewGeneric> {
-  AsProgress progressWidget = AsProgress.getProgress(LangStrings.somePatience);
+  AsLoader loader = AsLoader();
   SqliteHelper db = SqliteHelper();
 
+  Future<Database> dbFuture;
+  List<GenericModel> items = List<GenericModel>();
+  List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z' ];
   String letterSearch;
 
-  Future<Database> dbFuture;
-  List<GenericModel> results;
-  List<String> letters = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z' ];
-  
+  TabViewGenericState();
+
   @override
-  initState() {
+  void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => updateListView(context));
+  }
+
+  void updateListView(BuildContext context) async {
+    loader.showWidget();
+    dbFuture = db.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<GenericModel>> itemListFuture = db.getGenericList(widget.tabname);
+      itemListFuture.then((resultList) {
+        setState(() {
+          items = resultList;
+          loader.hideWidget();
+        });
+      });
+    });
+  }
+
+  void setSearchingLetter(String _letter) async {
+    loader.showWidget();
+    letterSearch = _letter;
+    items.clear();
+    dbFuture = db.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<GenericModel>> itemListFuture = db.getGenericSearch(_letter, widget.tabname, true);
+      itemListFuture.then((resultList) {
+        setState(() {
+          items = resultList;
+          loader.hideWidget();
+        });
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (results == null) {
-      results = [];
-      updateListView();
-    }
-
-    return new Container(
+    return Container(
       decoration: Provider.of<AppSettings>(context).isDarkMode ? BoxDecoration()
           : BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 stops: [ 0.1, 0.4, 0.6, 0.9 ],
-                colors: [ Colors.black, Colors.blue[900],  Colors.blue, Colors.blue[200] ]),
+                colors: [ Colors.black, ColorUtils.baseColor,  ColorUtils.primaryColor, ColorUtils.lightColor ]),
             ),
       child: Stack(
         children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height - 200,
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: progressWidget,
-          ),
           Container(
             height: MediaQuery.of(context).size.height - 130,
             padding: const EdgeInsets.symmetric(horizontal: 5),
             margin: EdgeInsets.only(top: 25),
             child: ListView.builder(
               physics: BouncingScrollPhysics(),
-              itemCount: results.length,
+              itemCount: items.length,
               itemBuilder: listView,
             ),
           ),
@@ -84,6 +105,11 @@ class TabViewGenericState extends State<TabViewGeneric> {
                 ),
               ],
             ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height - 200,
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: loader,
           ),
         ],
       ),
@@ -122,12 +148,12 @@ class TabViewGenericState extends State<TabViewGeneric> {
   }
 
   Widget listView(BuildContext context, int index) {
-    String strContent = "<b>" + results[index].title + "</b>";
+    String strContent = "<b>" + items[index].title + "</b>";
 
     try {
-      if (results[index].maana.length > 1) {
+      if (items[index].maana.length > 1) {
         strContent = strContent + '<ul>';
-        var strContents = results[index].maana.split(";");
+        var strContents = items[index].maana.split(";");
 
         if (strContents.length > 1) {
           try {
@@ -163,45 +189,4 @@ class TabViewGenericState extends State<TabViewGeneric> {
     }
   }
 
-  void updateListView() {
-    dbFuture = db.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<GenericModel>> itemListFuture = db.getGenericList(widget.tabname);
-      itemListFuture.then((resultList) {
-        setState(() {
-          results = resultList;
-          progressWidget.hideProgress();
-        });
-      });
-    });
-  }
-
-  void setSearchingLetterx(String _letter) {
-    letterSearch = _letter;
-    results.clear();
-    updateListView();
-  }
-
-  void setSearchingLetter(String _letter) {
-    letterSearch = _letter;
-    results.clear();
-    dbFuture = db.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<GenericModel>> itemListFuture = db.getGenericSearch(_letter, widget.tabname, true);
-      itemListFuture.then((resultList) {
-        setState(() {
-          results = resultList;
-        });
-      });
-    });
-  }
-
-  void navigateToViewer(GenericModel neno) async {
-  }
-}
-
-class BookItem<T> {
-  bool isSelected = false;
-  T data;
-  BookItem(this.data);
 }

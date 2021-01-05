@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:kamusi/utils/colors.dart';
-import 'package:kamusi/utils/constants.dart';
 
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/models/neno_model.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
 import 'package:kamusi/views/neno_item.dart';
-import 'package:kamusi/widgets/as_progress.dart';
+import 'package:kamusi/widgets/as_loader.dart';
 
 class TabViewNeno extends StatefulWidget {
 
@@ -18,28 +17,54 @@ class TabViewNeno extends StatefulWidget {
 }
 
 class TabViewNenoState extends State<TabViewNeno> {
-  AsProgress progressWidget = AsProgress.getProgress(LangStrings.somePatience);
+  AsLoader loader = AsLoader();
   SqliteHelper db = SqliteHelper();
 
   Future<Database> dbFuture;
-  List<NenoModel> items;
+  List<NenoModel> items = List<NenoModel>();
   List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z' ];
   String letterSearch;
 
   TabViewNenoState();
 
   @override
-  initState() {
+  void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => updateListView(context));
+  }
+
+  void updateListView(BuildContext context) async {
+    loader.showWidget();
+    dbFuture = db.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<NenoModel>> itemListFuture = db.getNenoList();
+      itemListFuture.then((resultList) {
+        setState(() {
+          items = resultList;
+          loader.hideWidget();
+        });
+      });
+    });
+  }
+
+  void setSearchingLetter(String _letter) async {
+    loader.showWidget();
+    letterSearch = _letter;
+    items.clear();
+    dbFuture = db.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<NenoModel>> itemListFuture = db.getNenoSearch(_letter, true);
+      itemListFuture.then((resultList) {
+        setState(() {
+          items = resultList;
+          loader.hideWidget();
+        });
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (items == null) {
-      items = [];
-      updateListView();
-    }
-
     return Container(
       decoration: Provider.of<AppSettings>(context).isDarkMode ? BoxDecoration()
           : BoxDecoration(
@@ -47,15 +72,10 @@ class TabViewNenoState extends State<TabViewNeno> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 stops: [ 0.1, 0.4, 0.6, 0.9 ],
-                colors: [ Colors.black, Colors.blue[900],  Colors.blue, Colors.blue[200] ]),
+                colors: [ Colors.black, ColorUtils.baseColor,  ColorUtils.primaryColor, ColorUtils.lightColor ]),
             ),
       child: Stack(
         children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height - 200,
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: progressWidget,
-          ),
           Container(
             height: MediaQuery.of(context).size.height - 130,
             padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -84,6 +104,11 @@ class TabViewNenoState extends State<TabViewNeno> {
                 ),
               ],
             ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height - 200,
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: loader,
           ),
         ],
       ),
@@ -121,37 +146,4 @@ class TabViewNenoState extends State<TabViewNeno> {
     );
   }
 
-  void updateListView() {
-    dbFuture = db.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<NenoModel>> itemListFuture = db.getNenoList();
-      itemListFuture.then((resultList) {
-        setState(() {
-          items = resultList;
-          progressWidget.hideProgress();
-        });
-      });
-    });
-  }
-
-  void setSearchingLetter(String _letter) {
-    letterSearch = _letter;
-    items.clear();
-    dbFuture = db.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<NenoModel>> itemListFuture = db.getNenoSearch(_letter, true);
-      itemListFuture.then((resultList) {
-        setState(() {
-          items = resultList;
-        });
-      });
-    });
-  }
-
-}
-
-class BookItem<T> {
-  bool isSelected = false;
-  T data;
-  BookItem(this.data);
 }
