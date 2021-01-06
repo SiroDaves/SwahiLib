@@ -1,11 +1,13 @@
 //This file declares the strings used throughout the app
 
+/// Shared Preference Keys for this app
 class SharedPreferenceKeys {
   static const String Kamusidb_Loaded = "kamusi_database_loaded";
   static const String User = "kamusi_user";
   static const String DarkMode = "kamusi_dark_mode";
 }
 
+/// General language strings that are used throught the application majoryly in Kiswahili language
 class LangStrings {
   static const String appName = "Kamusi Ya Kiswahili";
   static const String inProgress = "Inaendelea ...";
@@ -34,14 +36,20 @@ class LangStrings {
   static const String copyThis = "Nakili kwa Clipboard";
   static const String shareThis = "Shiriki";
 
-  static const String noInternetConnection = "No internet connection";
   static const String nenoCopied = "Neno limenakiliwa kwa clipboard!";
-  static const String nenoThis = "Neno ";
-  static const String nenoLiked = " limependwa!";
-  static const String nenoDisliked = " limeondolewa kwa vipendwa";
+  static const String nenoLiked = " imependwa!";
+  static const String nenoDisliked = " haijapendwa!";
 
   static const String mandhariMeusi = "Mandhari Meusi";
-  static const String donateTabPage = "Tuunge Mkono, Changia";
+
+  static const String donateActionButton = "CHANGIA";
+  static const String laterActionButton = "BAADAYE";
+  
+  static String donateDialogTitle = "CHANGIA SASA";
+  static const String donateDialogMessage = "Kamusi ya Kiswahili ni kitumizi cha bure cha kuwezesha watumizi kama wewe waelimike na kufuzu katika lugha ya Kiswahili." +
+    " Sisi ni shirika lisilo la faida na tunategemea watu kama wewe kutusaidia kuweka Kamusi bure bila ya matangazo ya kibiashara kwa mamilioni ya watu ulimwenguni";
+
+  static const String donateTabPage = "Tuunge Mkono kwa Mchango";
 
   static const String donateTab1Title = "M-Pesa";
   static const String donateTab1Content = "PAYBILL: 891300\n\nAKAUNTI: 34489";
@@ -79,76 +87,51 @@ class LangStrings {
   static const String aboutApp = "Kuhusu Kitumizi";
 }
 
+/// Strings used in the database queries
 class Queries {
-  static const String createManenoTable = 'CREATE TABLE ' +
-      LangStrings.maneno +
-      '(' +
-      LangStrings.id +
-      ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-      LangStrings.title +
-      ' VARCHAR(100), ' +
-      LangStrings.maana +
-      ' VARCHAR(300), ' +
-      LangStrings.visawe +
-      ' VARCHAR(100), ' +
-      LangStrings.mnyambuliko +
-      ' VARCHAR(100),' +
-      LangStrings.notes +
-      ' VARCHAR(500), ' +
-      LangStrings.isfav +
-      ' INTEGER NOT NULL DEFAULT 0, ' +
-      LangStrings.views +
-      ' INTEGER NOT NULL DEFAULT 0' +
-      ");";
+  /// Query string for creating the maneno (words) table
+  static const String createManenoTable = 'CREATE TABLE ' + LangStrings.maneno +
+    '(' + 
+      LangStrings.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+      LangStrings.title + ' VARCHAR(100), ' +
+      LangStrings.maana + ' VARCHAR(300), ' +
+      LangStrings.visawe + ' VARCHAR(100), ' +
+      LangStrings.mnyambuliko + ' VARCHAR(100),' +
+      LangStrings.notes + ' VARCHAR(500), ' +
+      LangStrings.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
+      LangStrings.views + ' INTEGER NOT NULL DEFAULT 0' +
+    ');';
 
-  static const String createMethaliTable = 'CREATE TABLE ' +
-      LangStrings.methali +
-      '(' +
-      LangStrings.id +
-      ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-      LangStrings.title +
-      ' VARCHAR(100), ' +
-      LangStrings.maana +
-      ' VARCHAR(500), ' +
-      LangStrings.notes +
-      ' VARCHAR(500), ' +
-      LangStrings.isfav +
-      ' INTEGER NOT NULL DEFAULT 0, ' +
-      LangStrings.views +
-      ' INTEGER NOT NULL DEFAULT 0' +
-      ");";
+  /// Query string for creating the methali (proverbs) table
+  static const String createMethaliTable = 'CREATE TABLE ' + LangStrings.methali +
+    '(' +
+      LangStrings.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+      LangStrings.title + ' VARCHAR(100), ' +
+      LangStrings.maana + ' VARCHAR(500), ' +
+      LangStrings.notes + ' VARCHAR(500), ' +
+      LangStrings.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
+      LangStrings.views + ' INTEGER NOT NULL DEFAULT 0' +
+    ');';
 
-  static const String createMisemoTable = 'CREATE TABLE ' +
-      LangStrings.misemo +
-      '(' +
-      LangStrings.id +
-      ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-      LangStrings.title +
-      ' VARCHAR(100), ' +
-      LangStrings.maana +
-      ' VARCHAR(500), ' +
-      LangStrings.notes +
-      ' VARCHAR(500), ' +
-      LangStrings.isfav +
-      ' INTEGER NOT NULL DEFAULT 0, ' +
-      LangStrings.views +
-      ' INTEGER NOT NULL DEFAULT 0' +
-      ");";
+  /// Query string for creating the misemo (sayings) table
+  static const String createMisemoTable = 'CREATE TABLE ' + LangStrings.misemo +
+    '(' +
+      LangStrings.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+      LangStrings.title + ' VARCHAR(100), ' +
+      LangStrings.maana + ' VARCHAR(500), ' +
+      LangStrings.notes + ' VARCHAR(500), ' +
+      LangStrings.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
+      LangStrings.views + ' INTEGER NOT NULL DEFAULT 0' +
+    ');';
 
-  static const String createNahauTable = 'CREATE TABLE ' +
-      LangStrings.nahau +
-      '(' +
-      LangStrings.id +
-      ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
-      LangStrings.title +
-      ' VARCHAR(100), ' +
-      LangStrings.maana +
-      ' VARCHAR(500), ' +
-      LangStrings.notes +
-      ' VARCHAR(500), ' +
-      LangStrings.isfav +
-      ' INTEGER NOT NULL DEFAULT 0, ' +
-      LangStrings.views +
-      ' INTEGER NOT NULL DEFAULT 0' +
-      ");";
+  /// Query string for creating the nahau (phrases) table
+  static const String createNahauTable = 'CREATE TABLE ' + LangStrings.nahau +
+    '(' +
+      LangStrings.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+      LangStrings.title + ' VARCHAR(100), ' +
+      LangStrings.maana + ' VARCHAR(500), ' +
+      LangStrings.notes + ' VARCHAR(500), ' +
+      LangStrings.isfav + ' INTEGER NOT NULL DEFAULT 0, ' +
+      LangStrings.views + ' INTEGER NOT NULL DEFAULT 0' +
+    ');';
 }

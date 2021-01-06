@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kamusi/utils/colors.dart';
 
 class AsProgress extends StatefulWidget {
   Color backgroundColor;
@@ -20,27 +19,27 @@ class AsProgress extends StatefulWidget {
   );
 
   @override
-  createState() => progressState = AsProgressState(
+  createState() => progressState = new AsProgressState(
       backgroundColor: this.backgroundColor,
       color: this.color,
       containerColor: this.containerColor,
       borderRadius: this.borderRadius,
       text: this.text);
 
-  void hideWidget() {
-    progressState.hideWidget();
+  void hideProgress() {
+    progressState.hideProgress();
   }
 
-  void showWidget() {
-    progressState.showWidget();
+  void showProgress() {
+    progressState.showProgress();
   }
 
-  void showWidgetWithText(String title) {
-    progressState.showWidgetWithText(title);
+  void showProgressWithText(String title) {
+    progressState.showProgressWithText(title);
   }
 
   static Widget getProgress(String title) {
-    return AsProgress(
+    return new AsProgress(
       backgroundColor: Colors.black12,
       color: Colors.black,
       containerColor: Colors.white,
@@ -70,26 +69,26 @@ class AsProgressState extends State<AsProgress> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: !_opacity ? null : Opacity(
+    return new Container(
+      child: !_opacity ? null : new Opacity(
         opacity: _opacity ? 1 : 0,
-        child: Stack(
+        child: new Stack(
           children: <Widget>[
-            Center(
-              child: Container(
+            new Center(
+              child: new Container(
                 width: 300,
                 height: 120,
-                decoration: BoxDecoration(
+                decoration: new BoxDecoration(
                   color: containerColor,
-                  border: Border.all(color: ColorUtils.primaryColor),
+                  border: Border.all(color: Colors.orange),
                   boxShadow: [BoxShadow(blurRadius: 5)],
-                  borderRadius: BorderRadius.all(
-                     Radius.circular(borderRadius)
+                  borderRadius: new BorderRadius.all(
+                     new Radius.circular(borderRadius)
                   )
                 ),
               ),
             ),
-            Center(
+            new Center(
               child: _getCenterContent(),
             )
           ],
@@ -103,16 +102,16 @@ class AsProgressState extends State<AsProgress> {
       return _getCircularProgress();
     }
 
-    return Center(
-      child: Row(
+    return new Center(
+      child: new Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _getCircularProgress(),
-          Container(
+          new Container(
             margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-            child: Text(
+            child: new Text(
               text,
-              style: TextStyle(color: color, fontSize: 18),
+              style: new TextStyle(color: color, fontSize: 18),
             ),
           )
         ],
@@ -121,23 +120,23 @@ class AsProgressState extends State<AsProgress> {
   }
 
   Widget _getCircularProgress() {
-    return CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation(ColorUtils.primaryColor));
+    return new CircularProgressIndicator(
+        valueColor: new AlwaysStoppedAnimation(Colors.deepOrange));
   }
 
-  void hideWidget() {
+  void hideProgress() {
     setState(() {
       _opacity = false;
     });
   }
 
-  void showWidget() {
+  void showProgress() {
     setState(() {
       _opacity = true;
     });
   }
 
-  void showWidgetWithText(String title) {
+  void showProgressWithText(String title) {
     setState(() {
       _opacity = true;
       text = title;

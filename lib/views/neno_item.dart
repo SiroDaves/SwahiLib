@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
-import 'package:kamusi/screens/item_view.dart';
+import 'package:kamusi/screens/content_view.dart';
 import 'package:provider/provider.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/utils/colors.dart';
@@ -81,7 +81,7 @@ class NenoItem extends StatelessWidget {
   
   void navigateToNeno(NenoModel neno) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return ItemView(neno);
+      return ContentView(neno);
     }));
   }
   

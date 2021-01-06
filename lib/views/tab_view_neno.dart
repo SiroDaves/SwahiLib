@@ -33,27 +33,11 @@ class TabViewNenoState extends State<TabViewNeno> {
     WidgetsBinding.instance.addPostFrameCallback((_) => updateListView(context));
   }
 
-  void updateListView(BuildContext context) async {
+  void updateListView(BuildContext context) {
     loader.showWidget();
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
       Future<List<NenoModel>> itemListFuture = db.getNenoList();
-      itemListFuture.then((resultList) {
-        setState(() {
-          items = resultList;
-          loader.hideWidget();
-        });
-      });
-    });
-  }
-
-  void setSearchingLetter(String _letter) async {
-    loader.showWidget();
-    letterSearch = _letter;
-    items.clear();
-    dbFuture = db.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<NenoModel>> itemListFuture = db.getNenoSearch(_letter, true);
       itemListFuture.then((resultList) {
         setState(() {
           items = resultList;
@@ -72,10 +56,15 @@ class TabViewNenoState extends State<TabViewNeno> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 stops: [ 0.1, 0.4, 0.6, 0.9 ],
-                colors: [ Colors.black, ColorUtils.baseColor,  ColorUtils.primaryColor, ColorUtils.lightColor ]),
+                colors: [ Colors.black, Colors.blue[900],  Colors.blue, Colors.blue[200] ]),
             ),
       child: Stack(
         children: <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.height - 200,
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: loader,
+          ),
           Container(
             height: MediaQuery.of(context).size.height - 130,
             padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -104,11 +93,6 @@ class TabViewNenoState extends State<TabViewNeno> {
                 ),
               ],
             ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height - 200,
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: loader,
           ),
         ],
       ),
@@ -146,4 +130,24 @@ class TabViewNenoState extends State<TabViewNeno> {
     );
   }
 
+  void setSearchingLetter(String _letter) {
+    letterSearch = _letter;
+    items.clear();
+    dbFuture = db.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<NenoModel>> itemListFuture = db.getNenoSearch(_letter, true);
+      itemListFuture.then((resultList) {
+        setState(() {
+          items = resultList;
+        });
+      });
+    });
+  }
+
+}
+
+class BookItem<T> {
+  bool isSelected = false;
+  T data;
+  BookItem(this.data);
 }

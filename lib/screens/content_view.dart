@@ -1,4 +1,4 @@
-// This file declares the item view screen
+// This file declares the content view screen
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,19 +13,19 @@ import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
 import 'package:kamusi/models/neno_model.dart';
 
-class ItemView extends StatefulWidget {
+class ContentView extends StatefulWidget {
   final NenoModel neno;
 
-  ItemView(this.neno);
+  ContentView(this.neno);
 
   @override
   State<StatefulWidget> createState() {
-    return ItemViewState(this.neno);
+    return EeContentViewState(this.neno);
   }
 }
 
-class ItemViewState extends State<ItemView> {
-  ItemViewState(this.neno);
+class EeContentViewState extends State<ContentView> {
+  EeContentViewState(this.neno);
   final globalKey = new GlobalKey<ScaffoldState>();
   SqliteHelper db = SqliteHelper();
 
@@ -205,10 +205,9 @@ class ItemViewState extends State<ItemView> {
       db.favouriteNeno(neno, false);
     else
       db.favouriteNeno(neno, true);
-      globalKey.currentState.showSnackBar(new SnackBar(
-        content: new Text(LangStrings.nenoThis + neno.title + " " + LangStrings.nenoLiked),
-      )
-    );
+    globalKey.currentState.showSnackBar(new SnackBar(
+      content: new Text(neno.title + " " + LangStrings.nenoLiked),
+    ));
     //notifyListeners();
   }
 

@@ -70,7 +70,6 @@ class NenoModel {
 
   // Extract a Note object from a Map object
   NenoModel.fromMapObject(Map<String, dynamic> map) {
-    this._id = map['id'];
     this._title = map['title'];
     this._maana = map['maana'];
     this._visawe = map['visawe'];
