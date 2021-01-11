@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:anisi_controls/anisi_controls.dart';
+
+import 'package:kamusi/utils/colors.dart';
+import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
 import 'package:kamusi/models/neno_model.dart';
 import 'package:kamusi/views/neno_item.dart';
-import 'package:kamusi/widgets/as_progress.dart';
-import 'package:provider/provider.dart';
 import 'package:kamusi/helpers/app_settings.dart';
-import 'package:kamusi/utils/constants.dart';
-import 'package:sqflite/sqflite.dart';
 
 class Favourites extends StatefulWidget {
   @override
@@ -14,19 +16,44 @@ class Favourites extends StatefulWidget {
 }
 
 class FavouritesState extends State<Favourites> {
-  AsProgress progressWidget = AsProgress.getProgress(LangStrings.somePatience);
+  AsLoader loader = AsLoader.setUp(ColorUtils.primaryColor);
+  AsInformer notice = AsInformer.setUp(3, LangStrings.nothing, Colors.red, Colors.transparent, Colors.white, 10);
+  
   SqliteHelper db = SqliteHelper();
 
   Future<Database> dbFuture;
-  List<NenoModel> items;
+  List<NenoModel> items = List<NenoModel>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => initBuild(context));
+  }
+
+  /// Method to run anything that needs to be run immediately after Widget build
+  void initBuild(BuildContext context) async {
+    loadListView();
+  }
+  
+  void loadListView() async {
+    loader.showWidget();
+
+    dbFuture = db.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<NenoModel>> itemListFuture = db.getFavorites();
+      itemListFuture.then((resultList) {
+        setState(() {
+          items = resultList;
+          loader.hideWidget();
+          if (items.length == 0) notice.showWidget();
+          else notice.hideWidget();
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (items == null) {
-      items = [];
-      updateListView();
-    }
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -50,9 +77,6 @@ class FavouritesState extends State<Favourites> {
       child: Stack(
         children: <Widget>[
           Container(
-            child: progressWidget,
-          ),
-          Container(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: ListView.builder(
               physics: BouncingScrollPhysics(),
@@ -62,22 +86,19 @@ class FavouritesState extends State<Favourites> {
               }
             ),
           ),
+          Container(
+            height: 200,
+            child: notice,
+          ),
+          Container(
+            height: 200,
+            child: Center(
+              child: loader,
+            ),
+          ),
         ],
       ),
     );
   }
   
-  void updateListView() {
-    dbFuture = db.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<NenoModel>> itemListFuture = db.getFavorites();
-      itemListFuture.then((resultList) {
-        setState(() {
-          items = resultList;
-          progressWidget.hideProgress();
-        });
-      });
-    });
-  }
-
 }

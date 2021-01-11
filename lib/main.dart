@@ -14,10 +14,11 @@ void main() {
   Crashlytics.instance.enableInDevMode = true;
   // Pass all uncaught errors from the framework to Crashlytics.
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
-  runApp(MyApplication());
+  runApp(MyApp());
 }
 
-class MyApplication extends StatelessWidget {
+/// The genesis of this great app
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<SharedPreferences>(
@@ -28,23 +29,21 @@ class MyApplication extends StatelessWidget {
 
         return ChangeNotifierProvider<AppSettings>.value(
           value: AppSettings(snapshot.data),
-          child: _MyApplication(),
+          child: _MyApp(),
         );
       },
     );
   }
 }
 
-class _MyApplication extends StatelessWidget {
+class _MyApp extends StatelessWidget {
   final FirebaseAnalytics analytics = FirebaseAnalytics();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Kamusi',
-      theme: Provider.of<AppSettings>(context).isDarkMode
-          ? asDarkTheme
-          : asLightTheme,
+      theme: Provider.of<AppSettings>(context).isDarkMode ? asDarkTheme : asLightTheme,
       home: new AppStart(),
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: analytics),

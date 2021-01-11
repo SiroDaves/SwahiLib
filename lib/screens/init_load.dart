@@ -3,18 +3,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:anisi_controls/anisi_controls.dart';
 
 import 'package:kamusi/models/generic_model.dart';
 import 'package:kamusi/models/neno_model.dart';
 import 'package:kamusi/models/callbacks/Generic.dart';
 import 'package:kamusi/models/callbacks/Neno.dart';
 import 'package:kamusi/utils/constants.dart';
+import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/utils/preferences.dart';
 import 'package:kamusi/helpers/sqlite_assets.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
 import 'package:kamusi/screens/app_start.dart';
-import 'package:kamusi/widgets/as_text_view.dart';
-import 'package:kamusi/widgets/as_line_progress.dart';
 
 class CcInitLoad extends StatefulWidget {
   @override
@@ -24,138 +24,72 @@ class CcInitLoad extends StatefulWidget {
 }
 
 class CcInitLoadState extends State<CcInitLoad> {
-  AsTextView textIndicator = AsTextView.setUp("Vruuummh! ...", 25, true);
-  AsTextView textProgress = AsTextView.setUp("", 25, true);
-  AsLineProgress lineProgress = AsLineProgress.setUp(300, 0);
   final globalKey = new GlobalKey<ScaffoldState>();
-
+  
+  AsLineProgress progress = AsLineProgress.setUp(0, Colors.black, Colors.black, ColorUtils.secondaryColor);
+  AsInformer informer = AsInformer.setUp(1, LangStrings.gettingReady, ColorUtils.primaryColor, Colors.transparent, Colors.white, 10);
+  
   SqliteHelper db = SqliteHelper();
   SqliteAssets adb = SqliteAssets();
 
-  List<Neno> nenos;
-  List<Generic> nahau;
-  List<Generic> misemo;
-  List<Generic> methali;
+  List<Neno> nenos =List<Neno>();
+  List<Generic> nahau =List<Generic>();
+  List<Generic> misemo =List<Generic>();
+  List<Generic> methali =List<Generic>();
 
   Future<Database> dbAssets;
   Future<Database> dbFuture;
 
+  double mHeight, mWidth;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => initBuild(context));
+  }
+
+  /// Method to run anything that needs to be run immediately after Widget build
+  void initBuild(BuildContext context) async {
+    informer.showWidget();
+    requestData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (nenos == null) {
-      nenos = List<Neno>();
-      nahau = List<Generic>();
-      misemo = List<Generic>();
-      methali = List<Generic>();
-      requestData();
-    }
-
     return Scaffold(
       key: globalKey,
-      body: Center(
-        child: Container(
-          constraints: BoxConstraints.expand(),
-          child: new Column(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  _appIcon(),
-                  _appLoading(),
-                ],
-              ),
-              _appLabel(),
-              Stack(
-                children: <Widget>[
-                  _appProgress(),
-                  _appProgressText(),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: mainBody(),
     );
   }
 
-  Widget _appIcon() {
-    return new Center(
-      child: new Container(
-        child: new Image(
-          image: new AssetImage("assets/images/appicon.png"),
-          height: 450,
-          width: 300,
-        ),
-        margin: EdgeInsets.only(top: 75),
+  Widget mainBody() {
+    mHeight = MediaQuery.of(context).size.height;
+    mWidth = MediaQuery.of(context).size.width;
+    
+    return Container(
+      constraints: BoxConstraints.expand(),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/splash.jpg"),
+          fit: BoxFit.cover)
       ),
-    );
-  }
-
-  Widget _appLoading() {
-    return new Center(
-      child: new Container(
-        child: new CircularProgressIndicator(
-            valueColor: new AlwaysStoppedAnimation(Colors.blue)),
-        margin: EdgeInsets.only(top: 270),
-      ),
-    );
-  }
-
-  Widget _appLabel() {
-    return new Center(
-      child: new Container(
-        height: 100,
-        width: 350,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: new BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.blue),
-            boxShadow: [BoxShadow(blurRadius: 5)],
-            borderRadius: new BorderRadius.all(new Radius.circular(10))),
-        child: new Stack(
+      child: SingleChildScrollView(
+        child: Column(
           children: <Widget>[
-            new Center(child: new Container(width: 300, height: 120)),
-            new Center(
-              child: new Container(
-                margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: textIndicator,
+            Container(
+              width: mWidth / 1.125,
+              margin: EdgeInsets.only(top: mHeight / 2.52),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Center(
+                child: progress,
               ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _appProgress() {
-    return new Center(
-      child: new Container(
-        height: 100,
-        width: 350,
-        margin: EdgeInsets.only(top: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: new Stack(
-          children: <Widget>[
-            new Center(
-              child: lineProgress,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _appProgressText() {
-    return new Center(
-      child: new Container(
-        height: 100,
-        width: 350,
-        margin: EdgeInsets.only(top: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: new Stack(
-          children: <Widget>[
-            new Center(
-              child: textProgress,
-            )
+            ),
+            Container(
+              margin: EdgeInsets.only(top: mHeight / 7.56),
+              child: Center(
+                child: informer,
+              ),
+            ),
           ],
         ),
       ),
@@ -219,42 +153,45 @@ class CcInitLoadState extends State<CcInitLoad> {
 
   Future<void> saveManenoData() async {
     for (int i = 0; i < nenos.length; i++) {
-      int progress = (i / nenos.length * 100).toInt();
-      String progresStr = (progress / 100).toStringAsFixed(1);
+      int progressValue = (i / nenos.length * 100).toInt();
+      progress.setProgress(progressValue);
 
-      textProgress.setText(progress.toString() + " %");
-      lineProgress.setProgress(double.parse(progresStr));
-
-      switch (progress) {
+      switch (progressValue) {
         case 1:
-          textIndicator.setText("Moja...");
+          informer.setText("Moja...");
           break;
         case 2:
-          textIndicator.setText("Mbili...");
+          informer.setText("Mbili...");
           break;
         case 3:
-          textIndicator.setText("Tatu ...");
+          informer.setText("Tatu ...");
           break;
         case 4:
-          textIndicator.setText("Inapakia ...");
+          informer.setText("Inapakia ...");
           break;
         case 10:
-          textIndicator.setText("Inapakia maneno ...");
+          informer.setText("Inapakia maneno ...");
           break;
         case 20:
-          textIndicator.setText("Kuwa mvumilivu ...");
+          informer.setText("Kuwa mvumilivu ...");
           break;
         case 40:
-          textIndicator.setText("Mvumilivu hula mbivu ...");
+          informer.setText("Mvumilivu hula mbivu ...");
+          break;
+        case 50:
+          informer.setText("Kama una haraka, shuka ukimbie ...");
           break;
         case 75:
-          textIndicator.setText("Asante kwa uvumilivu wako!");
+          informer.setText("Asante kwa uvumilivu wako!");
           break;
         case 85:
-          textIndicator.setText("Hatimaye");
+          informer.setText("Hatimaye");
+          break;
+        case 90:
+          informer.setText("Inapakia maneno ...");
           break;
         case 95:
-          textIndicator.setText("Karibu tumalizie");
+          informer.setText("Karibu tunamalizia");
           break;
       }
 
@@ -269,12 +206,9 @@ class CcInitLoadState extends State<CcInitLoad> {
 
   Future<void> saveGenericData(String table, List<Generic> genericlist) async {
     for (int i = 0; i < genericlist.length; i++) {
-      int progress = (i / genericlist.length * 100).toInt();
-      String progresStr = (progress / 100).toStringAsFixed(1);
-
-      textProgress.setText(progress.toString() + " %");
-      lineProgress.setProgress(double.parse(progresStr));
-      textIndicator.setText(">> Inapakia " + table + " ...");
+      int progressValue = (i / genericlist.length * 100).toInt();
+      progress.setProgress(progressValue);
+      informer.setText(">> Inapakia " + table + " ...");
       Generic item = genericlist[i];
 
       GenericModel generic = new GenericModel(item.title, item.maana);

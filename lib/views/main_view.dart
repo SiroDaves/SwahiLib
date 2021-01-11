@@ -136,5 +136,5 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
       ],
     );
   }
-  static Widget buildProgressIndicator(BuildContext context) => const Center(child: CircularProgressIndicator());
+  static Widget buildProgressIndicator(BuildContext context) => const Center();
 }

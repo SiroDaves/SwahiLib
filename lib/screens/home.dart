@@ -1,52 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:anisi_controls/anisi_bottom_navigation.dart';
 
-import 'package:kamusi/screens/games.dart';
 import 'package:kamusi/screens/search.dart';
 import 'package:kamusi/screens/favourites.dart';
+import 'package:kamusi/screens/trivia/trivia.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key key}) : super(key: key);
+
   @override
-  HomeState createState() => HomeState();
+  State<StatefulWidget> createState() => _HomeState();
 }
 
-class HomeState extends State<Home> {
-  int _currentIndex = 1;
+class _HomeState extends State<Home>
+    with SingleTickerProviderStateMixin {
+  TabController _tabController;
+
+  static const _kTabs = <Tab>[
+    Tab(icon: Icon(Icons.star), text: 'VIPENDWA'),
+    Tab(icon: Icon(Icons.search), text: 'TAFUTA'),
+    Tab(icon: Icon(Icons.help), text: 'TRIVIA'),
+  ];
+
+  List<Widget> _kTabPages = [Favourites(), Search(), Trivia()];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      length: _kTabPages.length,
+      vsync: this,
+      initialIndex: 1,
+    );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    ScreenSizes.height = MediaQuery.of(context).size.height;
-    ScreenSizes.padding = MediaQuery.of(context).padding;
-    ScreenSizes.devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
-
-    List<Widget> tabs = [Favourites(), Search(), Games()];
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: tabs[_currentIndex],
-      bottomNavigationBar: AnisiBottomNavigation(
-        barHeight: 55,
-        arcHeight: 50,
-        arcWidth: 75,
-        circleHeight: 50,
-        initialSelection: 1,
-        tabs: [
-          TabData(iconData: Icons.star, title: 'VIPENDWA'),
-          TabData(iconData: Icons.search, title: 'TAFUTA'),
-          TabData(iconData: Icons.games, title: 'MICHEZO'),
-        ],
-        onTabChangedListener: (position) {
-          setState(() {
-            _currentIndex = position;
-          });
-        },
+      appBar: null,
+      body: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
+        children: _kTabPages,
+        controller: _tabController,
+      ),
+      bottomNavigationBar: Material(
+        color: Colors.blue,
+        child: TabBar(
+          tabs: _kTabs,
+          controller: _tabController,
+        ),
       ),
     );
   }
-}
-
-class ScreenSizes {
-  static double height;
-  static var padding;
-  static double devicePixelRatio;
 }

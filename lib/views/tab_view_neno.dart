@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:kamusi/utils/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:kamusi/utils/colors.dart';
+import 'package:anisi_controls/anisi_controls.dart';
 
+import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/models/neno_model.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
 import 'package:kamusi/views/neno_item.dart';
-import 'package:kamusi/widgets/as_loader.dart';
 
 class TabViewNeno extends StatefulWidget {
 
@@ -17,24 +18,31 @@ class TabViewNeno extends StatefulWidget {
 }
 
 class TabViewNenoState extends State<TabViewNeno> {
-  AsLoader loader = AsLoader();
   SqliteHelper db = SqliteHelper();
-
+  AsLoader loader = AsLoader.setUp(ColorUtils.primaryColor);
+  AsInformer notice = AsInformer.setUp(3, LangStrings.nothing, Colors.red, Colors.transparent, Colors.white, 10);
+  
   Future<Database> dbFuture;
   List<NenoModel> items = List<NenoModel>();
   List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z' ];
   String letterSearch;
 
   TabViewNenoState();
-
+  
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => updateListView(context));
+    WidgetsBinding.instance.addPostFrameCallback((_) => initBuild(context));
   }
 
-  void updateListView(BuildContext context) {
+  /// Method to run anything that needs to be run immediately after Widget build
+  void initBuild(BuildContext context) async {
+    loadListView();
+  }
+  
+  void loadListView() async {
     loader.showWidget();
+    
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
       Future<List<NenoModel>> itemListFuture = db.getNenoList();
@@ -42,6 +50,26 @@ class TabViewNenoState extends State<TabViewNeno> {
         setState(() {
           items = resultList;
           loader.hideWidget();
+          if (items.length == 0) notice.showWidget();
+          else notice.hideWidget();
+        });
+      });
+    });
+  }
+
+  void setSearchingLetter(String _letter) async {
+    loader.showWidget();
+    letterSearch = _letter;
+    items.clear();
+    dbFuture = db.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<NenoModel>> itemListFuture = db.getNenoSearch(_letter, true);
+      itemListFuture.then((resultList) {
+        setState(() {
+          items = resultList;
+          loader.hideWidget();
+          if (items.length == 0) notice.showWidget();
+          else notice.hideWidget();
         });
       });
     });
@@ -60,11 +88,6 @@ class TabViewNenoState extends State<TabViewNeno> {
             ),
       child: Stack(
         children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height - 200,
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: loader,
-          ),
           Container(
             height: MediaQuery.of(context).size.height - 130,
             padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -92,6 +115,17 @@ class TabViewNenoState extends State<TabViewNeno> {
                   ),
                 ),
               ],
+            ),
+          ),
+          Container(
+            height: 200,
+            child: notice,
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 50),
+            height: 200,
+            child: Center(
+              child: loader,
             ),
           ),
         ],
@@ -128,20 +162,6 @@ class TabViewNenoState extends State<TabViewNeno> {
         ),
       ),
     );
-  }
-
-  void setSearchingLetter(String _letter) {
-    letterSearch = _letter;
-    items.clear();
-    dbFuture = db.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<NenoModel>> itemListFuture = db.getNenoSearch(_letter, true);
-      itemListFuture.then((resultList) {
-        setState(() {
-          items = resultList;
-        });
-      });
-    });
   }
 
 }

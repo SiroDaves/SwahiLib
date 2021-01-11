@@ -33,6 +33,8 @@ class LangStrings {
   static const String views = 'views';
   static const String notes = 'notes';
 
+  static const String nothing = 'Ala! Yaani hivi kumbe hamna chochote huku!\nHebu fanya jambo ...';
+
   static const String copyThis = "Nakili kwa Clipboard";
   static const String shareThis = "Shiriki";
 
@@ -85,6 +87,13 @@ class LangStrings {
   static const String howToSearch2 = "Guza sehemu nyeupe iliyoonyeshwa kwa mstari mwekundu ili kufungua skrini ya kutafuta maneno. " +
   "Tafadhali zingatia kuwa utafutaji ni wa maneno pekee";
   static const String aboutApp = "Kuhusu Kitumizi";
+
+  static const String favoritesTab = "Vipendwa";
+  static const String searchTab = "Tafuta";
+  static const String triviaTab = "Trivia";
+
+  static const String triviaPage = "Chemsha Bongo";
+  static const String triviaPageInstruction = "Chagua kundi ili kuanza";
 }
 
 /// Strings used in the database queries
