@@ -18,17 +18,17 @@ Kiswahili Dictionary app made with Flutter.
     <td><img src="screenshots/Screenshot_3.jpg" width="240px" /></td>
     <td>
         <img src="screenshots/phone.png" width="200px" height="380px"
-        style='background: url("screenshots/Screenshot_1.jpg"); 
+        style='background: url("screenshots/screenshot_1.jpg"); 
         background-position: 22px 8px; background-size: 155px 344px; background-repeat: no-repeat;' />
     </td>
     <td>
         <img src="screenshots/phone.png" width="200px" height="380px"
-        style='background: url("screenshots/Screenshot_2.jpg"); 
+        style='background: url("screenshots/screenshot_2.jpg"); 
         background-position: 22px 8px; background-size: 155px 344px; background-repeat: no-repeat;' />
     </td>
     <td>
         <img src="screenshots/phone.png" width="200px" height="380px"
-        style='background: url("screenshots/Screenshot_3.jpg"); 
+        style='background: url("screenshots/screenshot_3.jpg"); 
         background-position: 22px 8px; background-size: 155px 344px; background-repeat: no-repeat;' />
     </td>
   </tr>
