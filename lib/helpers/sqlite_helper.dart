@@ -1,6 +1,7 @@
 // This file declares functions that manages the database that is created in the app
 // when the app is installed for the first time
 
+import 'package:kamusi/models/trivia/category.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'dart:io';
@@ -217,4 +218,26 @@ class SqliteHelper {
     }
     return itemList;
   }
+
+  
+  //QUIZ SEARCH
+  Future<List<Map<String, dynamic>>> getQuizSearchMapList(String searchString) async {
+    Database db = await this.database;
+    String sqlQuery = LangStrings.title + " LIKE '$searchString%'";
+
+    var result = db.query(LangStrings.maneno, where: sqlQuery);
+    return result;
+  }
+
+  Future<List<NenoModel>> getQuizSearch(Category category, int total, String difficulty) async {
+    var itemMapList = await getQuizSearchMapList(category.name, );
+
+    List<NenoModel> itemList = List<NenoModel>();
+    // For loop to create a 'item List' from a 'Map List'
+    for (int i = 0; i < itemMapList.length; i++) {
+      itemList.add(NenoModel.fromMapObject(itemMapList[i]));
+    }
+    return itemList;
+  }
+
 }

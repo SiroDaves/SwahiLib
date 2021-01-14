@@ -94,6 +94,13 @@ class LangStrings {
 
   static const String triviaPage = "Chemsha Bongo";
   static const String triviaPageInstruction = "Chagua kundi ili kuanza";
+  static const String triviaQuizInstruction = "Chagua Idadi ya Maswali";
+  static const String triviaLevelInstruction = "Chagua Kiwango cha Ugumu";
+  static const String triviaStart = "Anza!";
+  static const String triviaCategory = "Kundi: ";
+  static const String triviaEasy = "Rahisi";
+  static const String triviaMedium = "Wastani";
+  static const String triviaHard = "Ngumu";
 }
 
 /// Strings used in the database queries

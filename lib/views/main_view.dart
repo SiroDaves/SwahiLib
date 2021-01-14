@@ -96,7 +96,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
                   physics: NeverScrollableScrollPhysics(),
                   children: tabChildernPages,
                 ),
-                AppPrompterBuilder(
+                /*AppPrompterBuilder(
                   builder: builder,
                   onInitialized: (context, appPrompter) {                    
                     if (appPrompter.shouldOpenDialog) {
@@ -128,7 +128,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
                       );
                     }
                   },
-                ),
+                ),*/
               ]
             ),
           ),
