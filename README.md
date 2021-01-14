@@ -13,9 +13,6 @@ Kiswahili Dictionary app made with Flutter.
 ## Screenshots
 <table>
   <tr>
-    <td><img src="screenshots/Screenshot_1.jpg" width="240px" /></td>
-    <td><img src="screenshots/Screenshot_2.jpg" width="240px" /></td>
-    <td><img src="screenshots/Screenshot_3.jpg" width="240px" /></td>
     <td>
         <img src="screenshots/phone.png" width="200px" height="380px"
         style='background: url("screenshots/screenshot_1.jpg"); 
