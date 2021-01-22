@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
-import 'package:kamusi/screens/content_view.dart';
+import 'package:kamusi/screens/word_view_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/utils/colors.dart';
-import 'package:kamusi/models/neno_model.dart';
+import 'package:kamusi/models/word_model.dart';
 
-class NenoItem extends StatelessWidget {
+class WordItem extends StatelessWidget {
 
   final String heroTag;
-  final NenoModel item;
+  final WordModel item;
   final BuildContext context;
 
-  NenoItem(this.heroTag, this.item, this.context);
+  WordItem(this.heroTag, this.item, this.context);
   String itemBook;
 
   @override
   Widget build(BuildContext context) {
     String strContent = "<b>" + item.title + "</b>";
-    String strMeaning = item.maana;
+    String strMeaning = item.meaning;
 
     try {
       if (strMeaning.length == 0) {
         return Container();
       } else {
-        strMeaning = strMeaning.replaceAll("\\u201c", "");
         strMeaning = strMeaning.replaceAll("\\", "");
         strMeaning = strMeaning.replaceAll('"', '');
 
@@ -44,10 +43,10 @@ class NenoItem extends StatelessWidget {
           strContent = strContent + "<li>" + strExtra[0] + "</li>";
         }
         strContent = strContent + '</ul>';
-        if (item.visawe.length > 1)
+        if (item.synonyms.length > 1)
           strContent = strContent +
               "<br><p><b>Visawe:</b> <i>" +
-              item.visawe +
+              item.synonyms +
               "</i></p>";
 
         return Card(
@@ -69,7 +68,7 @@ class NenoItem extends StatelessWidget {
               },
             ),
             onTap: () {
-              navigateToNeno(item);
+              navigateToWord(item);
             },
           ),
         );
@@ -79,9 +78,9 @@ class NenoItem extends StatelessWidget {
     }
   }
   
-  void navigateToNeno(NenoModel neno) async {
+  void navigateToWord(WordModel word) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return ContentView(neno);
+      return WordViewScreen(word);
     }));
   }
   

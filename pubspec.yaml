@@ -12,7 +12,6 @@ dependencies:
 
   animated_floatactionbuttons: ^0.1.0
   anisi_controls: ^0.0.7
-  app_prompter: ^0.0.2
   async: ^2.4.0
   auto_size_text: ^2.0.0+2
   change_app_package_name: ^0.1.2

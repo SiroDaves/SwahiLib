@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'package:kamusi/screens/home.dart';
+import 'package:kamusi/screens/home_screen.dart';
 
-void pushHomeScreen(BuildContext context) {
+void pushHomeScreenScreen(BuildContext context) {
   Navigator.of(context).pushAndRemoveUntil(
     PageTransition(
-      child: Home(),
+      child: HomeScreen(),
       type: PageTransitionType.rightToLeftWithFade,
       duration: Duration(milliseconds: 800),
       curve: Curves.bounceOut,

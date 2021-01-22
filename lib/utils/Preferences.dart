@@ -23,12 +23,12 @@ class Preferences {
 
   static Future<bool> isKamusidbLoaded() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(SharedPreferenceKeys.Kamusidb_Loaded);
+    return prefs.getBool(SharedPreferenceKeys.AppDb_loaded);
   }
 
   static Future<void> setKamusidbLoaded(bool isKamusidbLoaded) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setBool(
-        SharedPreferenceKeys.Kamusidb_Loaded, isKamusidbLoaded);
+        SharedPreferenceKeys.AppDb_loaded, isKamusidbLoaded);
   }
 }

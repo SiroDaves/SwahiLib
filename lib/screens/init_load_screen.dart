@@ -6,24 +6,24 @@ import 'package:sqflite/sqflite.dart';
 import 'package:anisi_controls/anisi_controls.dart';
 
 import 'package:kamusi/models/generic_model.dart';
-import 'package:kamusi/models/neno_model.dart';
+import 'package:kamusi/models/word_model.dart';
 import 'package:kamusi/models/callbacks/Generic.dart';
-import 'package:kamusi/models/callbacks/Neno.dart';
+import 'package:kamusi/models/callbacks/Word.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/utils/preferences.dart';
 import 'package:kamusi/helpers/sqlite_assets.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
-import 'package:kamusi/screens/app_start.dart';
+import 'package:kamusi/screens/start_screen.dart';
 
-class CcInitLoad extends StatefulWidget {
+class InitLoadScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return CcInitLoadState();
   }
 }
 
-class CcInitLoadState extends State<CcInitLoad> {
+class CcInitLoadState extends State<InitLoadScreen> {
   final globalKey = new GlobalKey<ScaffoldState>();
   
   AsLineProgress progress = AsLineProgress.setUp(0, Colors.black, Colors.black, ColorUtils.secondaryColor);
@@ -32,10 +32,10 @@ class CcInitLoadState extends State<CcInitLoad> {
   SqliteHelper db = SqliteHelper();
   SqliteAssets adb = SqliteAssets();
 
-  List<Neno> nenos =List<Neno>();
-  List<Generic> nahau =List<Generic>();
-  List<Generic> misemo =List<Generic>();
-  List<Generic> methali =List<Generic>();
+  List<Word> words =List<Word>();
+  List<Generic> idioms =List<Generic>();
+  List<Generic> sayings =List<Generic>();
+  List<Generic> proverbs =List<Generic>();
 
   Future<Database> dbAssets;
   Future<Database> dbFuture;
@@ -99,10 +99,10 @@ class CcInitLoadState extends State<CcInitLoad> {
   void requestData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Neno>> nenoListAsset = adb.getNenoList();
-      nenoListAsset.then((nenoList) {
+      Future<List<Word>> wordListAsset = adb.getWordList();
+      wordListAsset.then((wordList) {
         setState(() {
-          nenos = nenoList;
+          words = wordList;
           requestNahauData();
         });
       });
@@ -112,11 +112,11 @@ class CcInitLoadState extends State<CcInitLoad> {
   void requestNahauData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> nahauListAsset =
-          adb.getGenericList(LangStrings.nahau);
-      nahauListAsset.then((nahauList) {
+      Future<List<Generic>> idiomsListAsset =
+          adb.getGenericList(LangStrings.idioms);
+      idiomsListAsset.then((idiomsList) {
         setState(() {
-          nahau = nahauList;
+          idioms = idiomsList;
           requestMisemoData();
         });
       });
@@ -126,11 +126,11 @@ class CcInitLoadState extends State<CcInitLoad> {
   void requestMisemoData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> misemoListAsset =
-          adb.getGenericList(LangStrings.misemo);
-      misemoListAsset.then((misemoList) {
+      Future<List<Generic>> sayingsListAsset =
+          adb.getGenericList(LangStrings.sayings);
+      sayingsListAsset.then((sayingsList) {
         setState(() {
-          misemo = misemoList;
+          sayings = sayingsList;
           requestMethaliData();
         });
       });
@@ -140,20 +140,20 @@ class CcInitLoadState extends State<CcInitLoad> {
   void requestMethaliData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> methaliListAsset =
-          adb.getGenericList(LangStrings.methali);
-      methaliListAsset.then((methaliList) {
+      Future<List<Generic>> proverbsListAsset =
+          adb.getGenericList(LangStrings.proverbs);
+      proverbsListAsset.then((proverbsList) {
         setState(() {
-          methali = methaliList;
+          proverbs = proverbsList;
           _goToNextScreen();
         });
       });
     });
   }
 
-  Future<void> saveManenoData() async {
-    for (int i = 0; i < nenos.length; i++) {
-      int progressValue = (i / nenos.length * 100).toInt();
+  Future<void> saveMawordData() async {
+    for (int i = 0; i < words.length; i++) {
+      int progressValue = (i / words.length * 100).toInt();
       progress.setProgress(progressValue);
 
       switch (progressValue) {
@@ -188,19 +188,19 @@ class CcInitLoadState extends State<CcInitLoad> {
           informer.setText("Hatimaye");
           break;
         case 90:
-          informer.setText("Inapakia maneno ...");
+          informer.setText("Inapakia words ...");
           break;
         case 95:
           informer.setText("Karibu tunamalizia");
           break;
       }
 
-      Neno item = nenos[i];
+      Word item = words[i];
 
-      NenoModel neno =
-          new NenoModel(item.title, item.maana, item.visawe, item.mnyambuliko);
+      WordModel word =
+          new WordModel(item.title, item.meaning, item.synonyms, item.conjugation);
 
-      await db.insertNeno(neno);
+      await db.insertWord(word);
     }
   }
 
@@ -211,20 +211,20 @@ class CcInitLoadState extends State<CcInitLoad> {
       informer.setText(">> Inapakia " + table + " ...");
       Generic item = genericlist[i];
 
-      GenericModel generic = new GenericModel(item.title, item.maana);
+      GenericModel generic = new GenericModel(item.title, item.meaning);
 
       await db.insertGeneric(table, generic);
     }
   }
 
   Future<void> _goToNextScreen() async {
-    await saveManenoData();
-    await saveGenericData(LangStrings.nahau, nahau);
-    await saveGenericData(LangStrings.misemo, misemo);
-    await saveGenericData(LangStrings.methali, methali);
+    await saveMawordData();
+    await saveGenericData(LangStrings.idioms, idioms);
+    await saveGenericData(LangStrings.sayings, sayings);
+    await saveGenericData(LangStrings.proverbs, proverbs);
 
     Preferences.setKamusidbLoaded(true);
     Navigator.pushReplacement(
-        context, new MaterialPageRoute(builder: (context) => new AppStart()));
+        context, new MaterialPageRoute(builder: (context) => new StartScreen()));
   }
 }

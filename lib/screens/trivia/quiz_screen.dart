@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:kamusi/models/trivia/category.dart';
 import 'package:kamusi/models/trivia/question.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:kamusi/screens/trivia/quiz_finished.dart';
+import 'package:kamusi/screens/trivia/finish_screen.dart';
 import 'package:html_unescape/html_unescape.dart';
 
-class QuizPage extends StatefulWidget {
+class QuizScreen extends StatefulWidget {
   final List<Question> questions;
   final Category category;
 
-  const QuizPage({Key key, @required this.questions, this.category})
+  const QuizScreen({Key key, @required this.questions, this.category})
       : super(key: key);
 
   @override
   _QuizPageState createState() => _QuizPageState();
 }
 
-class _QuizPageState extends State<QuizPage> {
+class _QuizPageState extends State<QuizScreen> {
   final TextStyle _questionStyle = TextStyle(
       fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white);
 
@@ -133,7 +133,7 @@ class _QuizPageState extends State<QuizPage> {
       });
     } else {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => QuizFinishedPage(
+          builder: (_) => FinishScreen(
               questions: widget.questions, answers: _answers)));
     }
   }

@@ -6,13 +6,13 @@ import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/widgets/quiz_options.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-class Trivia extends StatefulWidget {
+class TriviaScreen extends StatefulWidget {
 
   @override
   TriviaState createState() => TriviaState();
 }
 
-class TriviaState extends State<Trivia> {
+class TriviaState extends State<TriviaScreen> {
 
   final List<Color> tileColors = [
     Colors.green,

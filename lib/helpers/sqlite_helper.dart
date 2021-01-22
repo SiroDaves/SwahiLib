@@ -8,7 +8,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:kamusi/models/generic_model.dart';
-import 'package:kamusi/models/neno_model.dart';
+import 'package:kamusi/models/word_model.dart';
 import 'package:kamusi/utils/constants.dart';
 
 class SqliteHelper {
@@ -35,7 +35,7 @@ class SqliteHelper {
   Future<Database> initializeDatabase() async {
     // Get the directory path for both Android and iOS to store database.
     Directory docsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(docsDirectory.path, "Kamusi.db");
+    String path = join(docsDirectory.path, "AppDatabase.db");
 
     // Open/create the database at a given path
     var vsbDatabase = await openDatabase(path, version: 1, onCreate: _createDb);
@@ -43,18 +43,20 @@ class SqliteHelper {
   }
 
   void _createDb(Database db, int newVersion) async {
-    await db.execute(Queries.createManenoTable);
-    await db.execute(Queries.createMethaliTable);
-    await db.execute(Queries.createMisemoTable);
-    await db.execute(Queries.createNahauTable);
+    await db.execute(Queries.createIdiomsTable);
+    await db.execute(Queries.createProverbsTable);
+    await db.execute(Queries.createSayingsTable);
+    await db.execute(Queries.createSearchesTable);
+    await db.execute(Queries.createTriviaTable);
+    await db.execute(Queries.createWordsTable);
   }
 
   //QUERIES FOR NENO
-  Future<int> insertNeno(NenoModel item) async {
+  Future<int> insertWord(WordModel item) async {
     Database db = await this.database;
     item.isfav = item.views = 0;
 
-    var result = await db.insert(LangStrings.maneno, item.toMap());
+    var result = await db.insert(LangStrings.wordsTable, item.toMap());
     return result;
   }
 
@@ -67,27 +69,27 @@ class SqliteHelper {
     return result;
   }
 
-  Future<int> favouriteNeno(NenoModel item, bool isFavorited) async {
+  Future<int> favouriteWord(WordModel item, bool isFavorited) async {
     var db = await this.database;
     if (isFavorited) item.isfav = 1;
     else item.isfav = 0;
-    var result = await db.rawUpdate('UPDATE ' + LangStrings.maneno +
+    var result = await db.rawUpdate('UPDATE ' + LangStrings.wordsTable +
         ' SET ' + LangStrings.isfav + '=' + item.isfav.toString() +
         ' WHERE ' + LangStrings.id + '=' + item.id.toString());
     return result;
   }
 
-  Future<int> deleteNeno(int itemID) async {
+  Future<int> deleteWord(int itemID) async {
     var db = await this.database;
-    int result = await db.rawDelete('DELETE FROM ' + LangStrings.maneno +
+    int result = await db.rawDelete('DELETE FROM ' + LangStrings.wordsTable +
       ' WHERE ' + LangStrings.id + '=' + itemID.toString());
     return result;
   }
 
-  Future<int> getNenoCount() async {
+  Future<int> getWordCount() async {
     Database db = await this.database;
     List<Map<String, dynamic>> x =
-        await db.rawQuery('SELECT COUNT (*) from ' + LangStrings.maneno);
+        await db.rawQuery('SELECT COUNT (*) from ' + LangStrings.wordsTable);
     int result = Sqflite.firstIntValue(x);
     return result;
   }
@@ -122,7 +124,7 @@ class SqliteHelper {
     String sqlQuery = LangStrings.title + " LIKE '$searchString%'";
 
     if (!searchByTitle)
-      sqlQuery = sqlQuery + " OR " + LangStrings.maana + " LIKE '$searchString%'";
+      sqlQuery = sqlQuery + " OR " + LangStrings.meaning + " LIKE '$searchString%'";
 
     var result = db.query(table, where: sqlQuery);
     return result;
@@ -140,40 +142,40 @@ class SqliteHelper {
   }
 
   //NENO LISTS
-  Future<List<Map<String, dynamic>>> getNenoMapList() async {
+  Future<List<Map<String, dynamic>>> getWordMapList() async {
     Database db = await this.database;
-    var result = db.query(LangStrings.maneno);
+    var result = db.query(LangStrings.wordsTable);
     return result;
   }
 
-  Future<List<NenoModel>> getNenoList() async {
-    var itemMapList = await getNenoMapList();
-    List<NenoModel> itemList = List<NenoModel>();
+  Future<List<WordModel>> getWordList() async {
+    var itemMapList = await getWordMapList();
+    List<WordModel> itemList = List<WordModel>();
     for (int i = 0; i < itemMapList.length; i++) {
-      itemList.add(NenoModel.fromMapObject(itemMapList[i]));
+      itemList.add(WordModel.fromMapObject(itemMapList[i]));
     }
     return itemList;
   }
 
   //NENO SEARCH
-  Future<List<Map<String, dynamic>>> getNenoSearchMapList(String searchString, bool searchByTitle) async {
+  Future<List<Map<String, dynamic>>> getWordSearchMapList(String searchString, bool searchByTitle) async {
     Database db = await this.database;
     String sqlQuery = LangStrings.title + " LIKE '$searchString%'";
 
     if (!searchByTitle)
-      sqlQuery = sqlQuery + " OR " + LangStrings.maana + " LIKE '$searchString%'";
+      sqlQuery = sqlQuery + " OR " + LangStrings.meaning + " LIKE '$searchString%'";
 
-    var result = db.query(LangStrings.maneno, where: sqlQuery);
+    var result = db.query(LangStrings.wordsTable, where: sqlQuery);
     return result;
   }
 
-  Future<List<NenoModel>> getNenoSearch(String searchString, bool searchByTitle) async {
-    var itemMapList = await getNenoSearchMapList(searchString, searchByTitle);
+  Future<List<WordModel>> getWordSearch(String searchString, bool searchByTitle) async {
+    var itemMapList = await getWordSearchMapList(searchString, searchByTitle);
 
-    List<NenoModel> itemList = List<NenoModel>();
+    List<WordModel> itemList = List<WordModel>();
     // For loop to create a 'item List' from a 'Map List'
     for (int i = 0; i < itemMapList.length; i++) {
-      itemList.add(NenoModel.fromMapObject(itemMapList[i]));
+      itemList.add(WordModel.fromMapObject(itemMapList[i]));
     }
     return itemList;
   }
@@ -181,16 +183,16 @@ class SqliteHelper {
   //FAVOURITES LISTS
   Future<List<Map<String, dynamic>>> getFavoritesList() async {
     Database db = await this.database;
-    var result = db.query(LangStrings.maneno, where: LangStrings.isfav + "=1");
+    var result = db.query(LangStrings.wordsTable, where: LangStrings.isfav + "=1");
     return result;
   }
 
-  Future<List<NenoModel>> getFavorites() async {
+  Future<List<WordModel>> getFavorites() async {
     var itemMapList = await getFavoritesList();
 
-    List<NenoModel> itemList = List<NenoModel>();
+    List<WordModel> itemList = List<WordModel>();
     for (int i = 0; i < itemMapList.length; i++) {
-      itemList.add(NenoModel.fromMapObject(itemMapList[i]));
+      itemList.add(WordModel.fromMapObject(itemMapList[i]));
     }
 
     return itemList;
@@ -202,19 +204,19 @@ class SqliteHelper {
     Database db = await this.database;
     String extraQuery = 'AND ' + LangStrings.isfav + "=1 ";
     String sqlQuery = LangStrings.title + ' LIKE "$searchString%" $extraQuery OR ' +
-        LangStrings.maana + ' LIKE "$searchString%" $extraQuery';
+        LangStrings.meaning + ' LIKE "$searchString%" $extraQuery';
 
-    var result = db.query(LangStrings.maneno, where: sqlQuery);
+    var result = db.query(LangStrings.wordsTable, where: sqlQuery);
     return result;
   }
 
-  Future<List<NenoModel>> getFavSearch(String searchString) async {
+  Future<List<WordModel>> getFavSearch(String searchString) async {
     var itemMapList = await getFavSearchMapList(searchString);
 
-    List<NenoModel> itemList = List<NenoModel>();
+    List<WordModel> itemList = List<WordModel>();
     // For loop to create a 'item List' from a 'Map List'
     for (int i = 0; i < itemMapList.length; i++) {
-      itemList.add(NenoModel.fromMapObject(itemMapList[i]));
+      itemList.add(WordModel.fromMapObject(itemMapList[i]));
     }
     return itemList;
   }
@@ -225,17 +227,17 @@ class SqliteHelper {
     Database db = await this.database;
     String sqlQuery = LangStrings.title + " LIKE '$searchString%'";
 
-    var result = db.query(LangStrings.maneno, where: sqlQuery);
+    var result = db.query(LangStrings.wordsTable, where: sqlQuery);
     return result;
   }
 
-  Future<List<NenoModel>> getQuizSearch(Category category, int total, String difficulty) async {
+  Future<List<WordModel>> getQuizSearch(Category category, int total, String difficulty) async {
     var itemMapList = await getQuizSearchMapList(category.name, );
 
-    List<NenoModel> itemList = List<NenoModel>();
+    List<WordModel> itemList = List<WordModel>();
     // For loop to create a 'item List' from a 'Map List'
     for (int i = 0; i < itemMapList.length; i++) {
-      itemList.add(NenoModel.fromMapObject(itemMapList[i]));
+      itemList.add(WordModel.fromMapObject(itemMapList[i]));
     }
     return itemList;
   }

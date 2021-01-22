@@ -4,8 +4,8 @@ import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/models/trivia/category.dart';
 import 'package:kamusi/models/trivia/question.dart';
 import 'package:kamusi/helpers/api_provider.dart';
-import 'package:kamusi/screens/trivia/error.dart';
-import 'package:kamusi/screens/trivia/quiz_page.dart';
+import 'package:kamusi/screens/trivia/error_screen.dart';
+import 'package:kamusi/screens/trivia/quiz_screen.dart';
 import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:provider/provider.dart';
@@ -189,21 +189,21 @@ class _QuizOptionsDialogState extends State<QuizOptionsDialog> {
       Navigator.pop(context);
       if(questions.length < 1) {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => ErrorPage(message: "There are not enough questions in the category, with the options you selected.",)
+          builder: (_) => ErrorScreen(message: "There are not enough questions in the category, with the options you selected.",)
         ));
         return;
       }
       Navigator.push(context, MaterialPageRoute(
-        builder: (_) => QuizPage(questions: questions, category: widget.category,)
+        builder: (_) => QuizScreen(questions: questions, category: widget.category,)
       ));
     }on SocketException catch (_) {
       Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (_) => ErrorPage(message: "Can't reach the servers, \n Please check your internet connection.",)
+        builder: (_) => ErrorScreen(message: "Can't reach the servers, \n Please check your internet connection.",)
       ));
     } catch(e){
       print(e.message);
       Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (_) => ErrorPage(message: "Unexpected error trying to connect to the API",)
+        builder: (_) => ErrorScreen(message: "Unexpected error trying to connect to the API",)
       ));
     }
     setState(() {

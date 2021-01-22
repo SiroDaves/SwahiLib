@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kamusi/models/trivia/question.dart';
-import 'package:kamusi/screens/trivia/check_answers.dart';
+import 'package:kamusi/screens/trivia/answers_screen.dart';
 
-class QuizFinishedPage extends StatelessWidget {
+class FinishScreen extends StatelessWidget {
   final List<Question> questions;
   final Map<int, dynamic> answers;
   
   int correctAnswers;
-  QuizFinishedPage({Key key, @required this.questions, @required this.answers}): super(key: key) {
+  FinishScreen({Key key, @required this.questions, @required this.answers}): super(key: key) {
     
   }
 
@@ -104,7 +104,7 @@ class QuizFinishedPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     color: Theme.of(context).accentColor.withOpacity(0.8),
-                    child: Text("Goto Home"),
+                    child: Text("Goto HomeScreen"),
                     onPressed: () => Navigator.pop(context),
                   ),
                   RaisedButton(
@@ -116,7 +116,7 @@ class QuizFinishedPage extends StatelessWidget {
                     child: Text("Check Answers"),
                     onPressed: (){
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => CheckAnswersPage(questions: questions, answers: answers,)
+                        builder: (_) => AnswersScreen(questions: questions, answers: answers,)
                       ));
                     },
                   ),

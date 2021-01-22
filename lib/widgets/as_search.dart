@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'package:kamusi/helpers/app_search_delegate.dart';
 import 'package:kamusi/helpers/app_settings.dart';
-import 'package:kamusi/models/neno_model.dart';
+import 'package:kamusi/models/word_model.dart';
 import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:provider/provider.dart';
 
-import 'package:kamusi/screens/donate.dart';
-import 'package:kamusi/screens/help_desk.dart';
-import 'package:kamusi/screens/how_to_use.dart';
-import 'package:kamusi/screens/about_app.dart';
+import 'package:kamusi/screens/donate_screen.dart';
+import 'package:kamusi/screens/help_desk_screen.dart';
+import 'package:kamusi/screens/howto_use_screen.dart';
+import 'package:kamusi/screens/about_screen.dart';
 
 class AsSearch extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
-  final List<NenoModel> itemList;
+  final List<WordModel> itemList;
   AsSearch(this.scaffoldKey, this.itemList);
 
   @override
@@ -117,26 +117,26 @@ class AsSearch extends StatelessWidget {
     switch (menu) {
       case 1:
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return Donate();
+          return DonateScreen();
           })
         );
         break;
 
       case 2:
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return HelpDesk();
+          return HelpDeskScreen();
           })
         );
         break;
       case 3:
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return HowToUse();
+          return HowtoUseScreen();
           })
         );
         break;
       case 4:
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return AboutApp();
+          return AboutScreen();
           })
         );
         break;

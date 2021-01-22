@@ -4,16 +4,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kamusi/screens/init_load.dart';
+import 'package:kamusi/screens/init_load_screen.dart';
 import 'package:kamusi/utils/navigation.dart';
 import 'package:kamusi/utils/preferences.dart';
 
-class AppStart extends StatefulWidget {
+class StartScreen extends StatefulWidget {
   @override
   createState() => new SplashPageState();
 }
 
-class SplashPageState extends State<AppStart> {
+class SplashPageState extends State<StartScreen> {
   final globalKey = new GlobalKey<ScaffoldState>();
 
 @override
@@ -43,10 +43,10 @@ class SplashPageState extends State<AppStart> {
       setState(() {
         if (kamusidbLoaded != null && kamusidbLoaded)
         {
-          pushHomeScreen(context);
+          pushHomeScreenScreen(context);
         }
         else {
-          Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new CcInitLoad()));
+          Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new InitLoadScreen()));
         }
       });
     }

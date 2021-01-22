@@ -6,8 +6,8 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:kamusi/helpers/app_settings.dart';
-import 'package:kamusi/screens/app_splash.dart';
-import 'package:kamusi/screens/app_start.dart';
+import 'package:kamusi/screens/splash_screen.dart';
+import 'package:kamusi/screens/start_screen.dart';
 import 'package:kamusi/utils/themes.dart';
 
 void main() {
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       future: SharedPreferences.getInstance(),
       builder:
           (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
-        if (!snapshot.hasData) return AppSplash();
+        if (!snapshot.hasData) return SplashScreen();
 
         return ChangeNotifierProvider<AppSettings>.value(
           value: AppSettings(snapshot.data),
@@ -44,7 +44,7 @@ class _MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Kamusi',
       theme: Provider.of<AppSettings>(context).isDarkMode ? asDarkTheme : asLightTheme,
-      home: new AppStart(),
+      home: new StartScreen(),
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: analytics),
       ],

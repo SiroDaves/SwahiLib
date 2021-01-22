@@ -24,7 +24,7 @@ class AsTabBar extends StatelessWidget {
         unselectedLabelColor: Colors.grey,
         tabs: _allPages.map((AsPage page) {
           return Tab(
-            text: page.text.toUpperCase(),
+            text: page.title.toUpperCase(),
           );
         }).toList(),
       ),

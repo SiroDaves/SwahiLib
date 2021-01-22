@@ -11,35 +11,35 @@ import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
-import 'package:kamusi/models/neno_model.dart';
+import 'package:kamusi/models/word_model.dart';
 
-class ContentView extends StatefulWidget {
-  final NenoModel neno;
+class WordViewScreen extends StatefulWidget {
+  final WordModel word;
 
-  ContentView(this.neno);
+  WordViewScreen(this.word);
 
   @override
   State<StatefulWidget> createState() {
-    return EeContentViewState(this.neno);
+    return EeWordViewScreenState(this.word);
   }
 }
 
-class EeContentViewState extends State<ContentView> {
-  EeContentViewState(this.neno);
+class EeWordViewScreenState extends State<WordViewScreen> {
+  EeWordViewScreenState(this.word);
   final globalKey = new GlobalKey<ScaffoldState>();
   SqliteHelper db = SqliteHelper();
 
-  var appBar = AppBar(), nenoVerses;
-  NenoModel neno;
-  int curNeno = 0;
-  String nenoContent;
+  var appBar = AppBar(), wordVerses;
+  WordModel word;
+  int curWord = 0;
+  String wordContent;
   List<String> meanings, synonyms;
-  List<NenoModel> nenos;
+  List<WordModel> words;
 
   @override
   Widget build(BuildContext context) {
-    curNeno = neno.id;
-    nenoContent = neno.title + " ni neno la Kiswahili lenye maana:";
+    curWord = word.id;
+    wordContent = word.title + " ni word la Kiswahili lenye meaning:";
     bool isFavourited(int favorite) => favorite == 1 ?? false;
 
     if (meanings == null) {
@@ -60,7 +60,7 @@ class EeContentViewState extends State<ContentView> {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                isFavourited(neno.isfav) ? Icons.star : Icons.star_border,
+                isFavourited(word.isfav) ? Icons.star : Icons.star_border,
               ),
               onPressed: () => favoriteThis(),
             )
@@ -90,7 +90,7 @@ class EeContentViewState extends State<ContentView> {
           new Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Html(
-              data: "<h3>" + neno.title + "</h3>",
+              data: "<h3>" + word.title + "</h3>",
               style: {
                 "h3": Style(
                     fontSize: FontSize(30.0),
@@ -116,17 +116,17 @@ class EeContentViewState extends State<ContentView> {
   }
 
   Widget listView(BuildContext context, int index) {
-    if (neno.visawe == meanings[index]) {
-      nenoContent = nenoContent +
-          LangStrings.visawe_vya +
-          neno.title +
+    if (word.synonyms == meanings[index]) {
+      wordContent = wordContent +
+          LangStrings.synonyms_for +
+          word.title +
           " ni: " +
-          neno.visawe;
+          word.synonyms;
 
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Html(
-          data: "<p><b>Visawe:</b> <i>" + neno.visawe + "</i></p>",
+          data: "<p><b>Visawe:</b> <i>" + word.synonyms + "</i></p>",
           style: {
             "p": Style(
               fontSize: FontSize(25.0),
@@ -145,10 +145,10 @@ class EeContentViewState extends State<ContentView> {
             strContents[1] +
             "</i></p>";
 
-        nenoContent = nenoContent + "\n- " + strContents[0] + " kwa mfano: ";
-        nenoContent = nenoContent + strContents[1];
+        wordContent = wordContent + "\n- " + strContents[0] + " kwa mfano: ";
+        wordContent = wordContent + strContents[1];
       } else
-        nenoContent = nenoContent + "\n - " + meanings[index];
+        wordContent = wordContent + "\n - " + meanings[index];
 
       return Card(
         elevation: 2,
@@ -187,26 +187,26 @@ class EeContentViewState extends State<ContentView> {
   }
 
   void copyItem() {
-    Clipboard.setData(ClipboardData(text: nenoContent + LangStrings.campaign));
+    Clipboard.setData(ClipboardData(text: wordContent + LangStrings.campaign));
     globalKey.currentState.showSnackBar(new SnackBar(
-      content: new Text(LangStrings.nenoCopied),
+      content: new Text(LangStrings.wordCopied),
     ));
   }
 
   void shareItem() {
     Share.share(
-      nenoContent + LangStrings.campaign,
-      subject: "Shiriki neno: " + neno.title,
+      wordContent + LangStrings.campaign,
+      subject: "Shiriki word: " + word.title,
     );
   }
 
   void favoriteThis() {
-    if (neno.isfav == 1)
-      db.favouriteNeno(neno, false);
+    if (word.isfav == 1)
+      db.favouriteWord(word, false);
     else
-      db.favouriteNeno(neno, true);
+      db.favouriteWord(word, true);
     globalKey.currentState.showSnackBar(new SnackBar(
-      content: new Text(neno.title + " " + LangStrings.nenoLiked),
+      content: new Text(word.title + " " + LangStrings.wordLiked),
     ));
     //notifyListeners();
   }
@@ -216,13 +216,12 @@ class EeContentViewState extends State<ContentView> {
   }
 
   void processData() async {
-    nenoContent = neno.title;
+    wordContent = word.title;
     meanings = [];
     synonyms = [];
 
     try {
-      String strMeaning = neno.maana;
-      strMeaning = strMeaning.replaceAll("\\u201c", "");
+      String strMeaning = word.meaning;
       strMeaning = strMeaning.replaceAll("\\", "");
       strMeaning = strMeaning.replaceAll('"', '');
 
@@ -236,10 +235,10 @@ class EeContentViewState extends State<ContentView> {
         meanings.add(strMeanings[0]);
       }
     } catch (Exception) {}
-    if (neno.visawe.length > 1) meanings.add(neno.visawe);
+    if (word.synonyms.length > 1) meanings.add(word.synonyms);
 
     try {
-      var strSynonyms = neno.maana.split("|");
+      var strSynonyms = word.meaning.split("|");
 
       if (strSynonyms.length > 1) {
         for (int i = 0; i < strSynonyms.length; i++) {

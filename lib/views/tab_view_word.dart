@@ -7,27 +7,27 @@ import 'package:anisi_controls/anisi_controls.dart';
 
 import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/helpers/app_settings.dart';
-import 'package:kamusi/models/neno_model.dart';
+import 'package:kamusi/models/word_model.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
-import 'package:kamusi/views/neno_item.dart';
+import 'package:kamusi/views/word_item.dart';
 
-class TabViewNeno extends StatefulWidget {
+class TabViewWord extends StatefulWidget {
 
   @override
-  TabViewNenoState createState() => TabViewNenoState();
+  TabViewWordState createState() => TabViewWordState();
 }
 
-class TabViewNenoState extends State<TabViewNeno> {
+class TabViewWordState extends State<TabViewWord> {
   SqliteHelper db = SqliteHelper();
   AsLoader loader = AsLoader.setUp(ColorUtils.primaryColor);
   AsInformer notice = AsInformer.setUp(3, LangStrings.nothing, Colors.red, Colors.transparent, Colors.white, 10);
   
   Future<Database> dbFuture;
-  List<NenoModel> items = List<NenoModel>();
+  List<WordModel> items = List<WordModel>();
   List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z' ];
   String letterSearch;
 
-  TabViewNenoState();
+  TabViewWordState();
   
   @override
   void initState() {
@@ -45,7 +45,7 @@ class TabViewNenoState extends State<TabViewNeno> {
     
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<NenoModel>> itemListFuture = db.getNenoList();
+      Future<List<WordModel>> itemListFuture = db.getWordList();
       itemListFuture.then((resultList) {
         setState(() {
           items = resultList;
@@ -63,7 +63,7 @@ class TabViewNenoState extends State<TabViewNeno> {
     items.clear();
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<NenoModel>> itemListFuture = db.getNenoSearch(_letter, true);
+      Future<List<WordModel>> itemListFuture = db.getWordSearch(_letter, true);
       itemListFuture.then((resultList) {
         setState(() {
           items = resultList;
@@ -96,7 +96,7 @@ class TabViewNenoState extends State<TabViewNeno> {
               physics: BouncingScrollPhysics(),
               itemCount: items.length,
               itemBuilder: (BuildContext context, int index) {
-                return NenoItem('ItemIndex_' + items[index].id.toString(), items[index], context);
+                return WordItem('ItemIndex_' + items[index].id.toString(), items[index], context);
               }
             ),
           ),

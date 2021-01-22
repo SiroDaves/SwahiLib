@@ -162,9 +162,9 @@ class TabViewGenericState extends State<TabViewGeneric> {
     String strContent = "<b>" + items[index].title + "</b>";
 
     try {
-      if (items[index].maana.length > 1) {
+      if (items[index].meaning.length > 1) {
         strContent = strContent + '<ul>';
-        var strContents = items[index].maana.split(";");
+        var strContents = items[index].meaning.split(";");
 
         if (strContents.length > 1) {
           try {
@@ -200,7 +200,7 @@ class TabViewGenericState extends State<TabViewGeneric> {
     }
   }
 
-  void navigateToViewer(GenericModel neno) async {
+  void navigateToViewer(GenericModel word) async {
   }
 }
 

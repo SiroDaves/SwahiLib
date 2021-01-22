@@ -8,7 +8,7 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:kamusi/models/callbacks/Generic.dart';
-import 'package:kamusi/models/callbacks/Neno.dart';
+import 'package:kamusi/models/callbacks/Word.dart';
 import 'package:kamusi/utils/constants.dart';
 
 class SqliteAssets {
@@ -58,19 +58,19 @@ class SqliteAssets {
     return assetDatabase;
   }
 
-  Future<List<Map<String, dynamic>>> getNenoMapList() async {
+  Future<List<Map<String, dynamic>>> getWordMapList() async {
     Database db = await this.database;
-    var result = db.query(LangStrings.maneno);
+    var result = db.query(LangStrings.words);
     return result;
   }
 
-  Future<List<Neno>> getNenoList() async {
-    var nenoMapList = await getNenoMapList();
-    List<Neno> nenoList = List<Neno>();
-    for (int i = 0; i < nenoMapList.length; i++) {
-      nenoList.add(Neno.fromMapObject(nenoMapList[i]));
+  Future<List<Word>> getWordList() async {
+    var wordMapList = await getWordMapList();
+    List<Word> wordList = List<Word>();
+    for (int i = 0; i < wordMapList.length; i++) {
+      wordList.add(Word.fromMapObject(wordMapList[i]));
     }
-    return nenoList;
+    return wordList;
   }
 
   Future<List<Map<String, dynamic>>> getGenericMapList(String table) async {

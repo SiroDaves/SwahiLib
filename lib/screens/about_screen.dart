@@ -5,13 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/utils/constants.dart';
 
-class AboutApp extends StatefulWidget {
+class AboutScreen extends StatefulWidget {
 
   @override
   AboutAppState createState() => AboutAppState();
 }
 
-class AboutAppState extends State<AboutApp> {
+class AboutAppState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

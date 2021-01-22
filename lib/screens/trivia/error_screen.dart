@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ErrorPage extends StatelessWidget {
+class ErrorScreen extends StatelessWidget {
   final String message;
 
-  const ErrorPage({Key key, this.message = "There was an unknown error." }) : super(key: key);
+  const ErrorScreen({Key key, this.message = "There was an unknown error." }) : super(key: key);
 
 
   @override

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:kamusi/helpers/app_settings.dart';
-import 'package:kamusi/models/neno_model.dart';
+import 'package:kamusi/models/word_model.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/utils/colors.dart';
-import 'package:kamusi/views/neno_item.dart';
+import 'package:kamusi/views/word_item.dart';
 
 class AppSearchDelegate extends SearchDelegate<List> {
 
-	List<NenoModel> itemList, filtered;
+	List<WordModel> itemList, filtered;
 
 	AppSearchDelegate(BuildContext context, this.itemList) {
     filtered = itemList;
@@ -89,7 +89,7 @@ class AppSearchDelegate extends SearchDelegate<List> {
       child: ListView.builder(
         itemCount: filtered.length,
         itemBuilder: (context, index) {
-          return NenoItem('ItemSearch_' + filtered[index].id.toString(), filtered[index], context);
+          return WordItem('ItemSearch_' + filtered[index].id.toString(), filtered[index], context);
         }
       ),
     );
@@ -98,11 +98,11 @@ class AppSearchDelegate extends SearchDelegate<List> {
   void filterNow() async {
     if (query.isNotEmpty)
     {
-      List<NenoModel> tmpList = new List<NenoModel>();
+      List<WordModel> tmpList = new List<WordModel>();
       for(int i = 0; i < itemList.length; i++) {        
         if (
           itemList[i].title.toLowerCase().startsWith(query.toLowerCase())
-          //|| itemList[i].maana.toLowerCase().contains(query.toLowerCase())
+          //|| itemList[i].meaning.toLowerCase().contains(query.toLowerCase())
         ) tmpList.add(itemList[i]);
       }
       filtered = tmpList;

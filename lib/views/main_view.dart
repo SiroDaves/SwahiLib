@@ -1,20 +1,17 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:kamusi/screens/donate.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/widgets/as_tab_bar.dart';
-import 'package:kamusi/views/tab_view_neno.dart';
+import 'package:kamusi/views/tab_view_word.dart';
 import 'package:kamusi/views/tab_view_generic.dart';
 import 'package:kamusi/models/page.dart';
-import 'package:app_prompter/app_prompter.dart';
 
 List<AsPage> _allPages = <AsPage>[
-  AsPage(text: LangStrings.maneno, category: 'category-name'),
-  AsPage(text: LangStrings.misemo, category: 'category-name'),
-  AsPage(text: LangStrings.nahau, category: 'category-name'),
-  AsPage(text: LangStrings.methali, category: 'category-name'),
+  AsPage(title: LangStrings.words, content: LangStrings.wordsTable, category: 'category-name'),
+  AsPage(title: LangStrings.sayings, content: LangStrings.sayingsTable, category: 'category-name'),
+  AsPage(title: LangStrings.idioms, content: LangStrings.idiomsTable, category: 'category-name'),
+  AsPage(title: LangStrings.proverbs, content: LangStrings.proverbsTable, category: 'category-name'),
 ];
 
 class MainView extends StatefulWidget {
@@ -28,15 +25,6 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin {
   TabController _controller;
-  WidgetBuilder builder = buildProgressIndicator;
-
-  AppPrompter appPrompter = AppPrompter(
-    preferencesPrefix: 'appPrompter_',
-    minDays: 0,
-    minLaunches: 3,
-    remindDays: 2,
-    remindLaunches: 3
-  );
 
   Key _key = new PageStorageKey({});
   double _offset = 0.0;
@@ -73,8 +61,8 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
     final List<Widget> tabChildernPages = <Widget>[];
     _allPages.forEach((AsPage page)
     {
-      if (page.text == LangStrings.maneno) tabChildernPages.add(TabViewNeno());
-      else tabChildernPages.add(TabViewGeneric(page.text));
+      if (page.content == LangStrings.wordsTable) tabChildernPages.add(TabViewWord());
+      else tabChildernPages.add(TabViewGeneric(page.content));
     });
 
     return Column(
@@ -96,39 +84,6 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
                   physics: NeverScrollableScrollPhysics(),
                   children: tabChildernPages,
                 ),
-                /*AppPrompterBuilder(
-                  builder: builder,
-                  onInitialized: (context, appPrompter) {                    
-                    if (appPrompter.shouldOpenDialog) {
-                      appPrompter.showPromptDialog(
-                        context,
-                        title: LangStrings.donateDialogTitle, // The dialog title.
-                        message: LangStrings.donateDialogMessage, // The dialog message.
-                        actionButton: LangStrings.donateActionButton, // The dialog "action" button text.
-                        noButton: "", // The dialog "no" button text.
-                        laterButton: LangStrings.laterActionButton, // The dialog "later" button text.
-                        listener: (button) { // The button click listener (useful if you want to cancel the click event).
-                          switch(button) {
-                            case AppPrompterDialogButton.action:
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return Donate();
-                                })
-                              );
-                              break;
-                            case AppPrompterDialogButton.later:
-                            case AppPrompterDialogButton.no:
-                              //print('Clicked on "Later".');
-                              break;
-                          }
-                          
-                          return true; // Return false if you want to cancel the click event.
-                        },
-                        dialogStyle: DialogStyle(), // Custom dialog styles.
-                        onDismissed: () => appPrompter.callEvent(AppPrompterEventType.laterButtonPressed),
-                      );
-                    }
-                  },
-                ),*/
               ]
             ),
           ),
@@ -136,5 +91,4 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
       ],
     );
   }
-  static Widget buildProgressIndicator(BuildContext context) => const Center();
 }

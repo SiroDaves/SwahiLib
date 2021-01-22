@@ -6,23 +6,23 @@ import 'package:anisi_controls/anisi_controls.dart';
 import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
-import 'package:kamusi/models/neno_model.dart';
-import 'package:kamusi/views/neno_item.dart';
+import 'package:kamusi/models/word_model.dart';
+import 'package:kamusi/views/word_item.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 
-class Favourites extends StatefulWidget {
+class FavouriteScreen extends StatefulWidget {
   @override
-  FavouritesState createState() => FavouritesState();
+  FavouriteScreenState createState() => FavouriteScreenState();
 }
 
-class FavouritesState extends State<Favourites> {
+class FavouriteScreenState extends State<FavouriteScreen> {
   AsLoader loader = AsLoader.setUp(ColorUtils.primaryColor);
   AsInformer notice = AsInformer.setUp(3, LangStrings.nothing, Colors.red, Colors.transparent, Colors.white, 10);
   
   SqliteHelper db = SqliteHelper();
 
   Future<Database> dbFuture;
-  List<NenoModel> items = List<NenoModel>();
+  List<WordModel> items = List<WordModel>();
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class FavouritesState extends State<Favourites> {
 
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<NenoModel>> itemListFuture = db.getFavorites();
+      Future<List<WordModel>> itemListFuture = db.getFavorites();
       itemListFuture.then((resultList) {
         setState(() {
           items = resultList;
@@ -82,7 +82,7 @@ class FavouritesState extends State<Favourites> {
               physics: BouncingScrollPhysics(),
               itemCount: items.length,
               itemBuilder: (BuildContext context, int index) {
-                return NenoItem('ItemLiked_' + items[index].id.toString(), items[index], context);
+                return WordItem('ItemLiked_' + items[index].id.toString(), items[index], context);
               }
             ),
           ),

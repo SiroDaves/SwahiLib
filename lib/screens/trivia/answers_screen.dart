@@ -3,11 +3,11 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:kamusi/models/trivia/question.dart';
 
-class CheckAnswersPage extends StatelessWidget {
+class AnswersScreen extends StatelessWidget {
   final List<Question> questions;
   final Map<int,dynamic> answers;
 
-  const CheckAnswersPage({Key key, @required this.questions, @required this.answers}) : super(key: key);
+  const AnswersScreen({Key key, @required this.questions, @required this.answers}) : super(key: key);
 
   @override
   Widget build(BuildContext context){

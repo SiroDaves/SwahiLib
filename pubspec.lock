@@ -29,13 +29,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.7"
-  app_prompter:
-    dependency: "direct main"
-    description:
-      name: app_prompter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.2"
   archive:
     dependency: transitive
     description:

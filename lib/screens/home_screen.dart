@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'package:kamusi/screens/search.dart';
-import 'package:kamusi/screens/favourites.dart';
-import 'package:kamusi/screens/trivia/trivia.dart';
+import 'package:kamusi/screens/search_screen.dart';
+import 'package:kamusi/screens/favourite_screen.dart';
+import 'package:kamusi/screens/trivia/trivia_screen.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _HomeState();
+  State<StatefulWidget> createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home>
+class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
 
@@ -21,7 +21,7 @@ class _HomeState extends State<Home>
     Tab(icon: Icon(Icons.help), text: 'TRIVIA'),
   ];
 
-  List<Widget> _kTabPages = [Favourites(), Search(), Trivia()];
+  List<Widget> _kTabPages = [FavouriteScreen(), SearchScreen(), TriviaScreen()];
 
   @override
   void initState() {

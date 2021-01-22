@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 
 import 'package:kamusi/widgets/as_search.dart';
 import 'package:kamusi/views/main_view.dart';
-import 'package:kamusi/models/neno_model.dart';
+import 'package:kamusi/models/word_model.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
-class Search extends StatefulWidget {
+class SearchScreen extends StatefulWidget {
   @override
   SearchState createState() => SearchState();
 }
 
-class SearchState extends State<Search> {
+class SearchState extends State<SearchScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = new ScrollController();
   double offset = 0.0;
 
   SqliteHelper db = SqliteHelper();
-  List<NenoModel> itemList;
+  List<WordModel> itemList;
 
   void updateItemList() {
     final Future<Database> dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<NenoModel>> nenoListFuture = db.getNenoList();
-      nenoListFuture.then((itemList) {
+      Future<List<WordModel>> wordListFuture = db.getWordList();
+      wordListFuture.then((itemList) {
         setState(() {
           this.itemList = itemList;
         });

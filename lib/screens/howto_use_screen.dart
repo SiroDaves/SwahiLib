@@ -3,13 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/utils/constants.dart';
 
-class HowToUse extends StatefulWidget {
+class HowtoUseScreen extends StatefulWidget {
 
   @override
-  HowToUseState createState() => HowToUseState();
+  HowtoUseScreenState createState() => HowtoUseScreenState();
 }
 
-class HowToUseState extends State<HowToUse> {
+class HowtoUseScreenState extends State<HowtoUseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
