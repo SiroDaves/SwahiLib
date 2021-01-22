@@ -33,9 +33,9 @@ class CcInitLoadState extends State<InitLoadScreen> {
   SqliteAssets adb = SqliteAssets();
 
   List<Word> words =List<Word>();
-  List<Generic> idioms =List<Generic>();
-  List<Generic> sayings =List<Generic>();
-  List<Generic> proverbs =List<Generic>();
+  List<Generic> idiomsList =List<Generic>();
+  List<Generic> sayingsList =List<Generic>();
+  List<Generic> proverbsList =List<Generic>();
 
   Future<Database> dbAssets;
   Future<Database> dbFuture;
@@ -112,11 +112,10 @@ class CcInitLoadState extends State<InitLoadScreen> {
   void requestNahauData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> idiomsListAsset =
-          adb.getGenericList(LangStrings.idioms);
+      Future<List<Generic>> idiomsListAsset = adb.getGenericList(LangStrings.idiomsTable);
       idiomsListAsset.then((idiomsList) {
         setState(() {
-          idioms = idiomsList;
+          idiomsList = idiomsList;
           requestMisemoData();
         });
       });
@@ -126,11 +125,10 @@ class CcInitLoadState extends State<InitLoadScreen> {
   void requestMisemoData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> sayingsListAsset =
-          adb.getGenericList(LangStrings.sayings);
-      sayingsListAsset.then((sayingsList) {
+      Future<List<Generic>> sayingsListAsset = adb.getGenericList(LangStrings.sayingsTable);
+      sayingsListAsset.then((itemsList) {
         setState(() {
-          sayings = sayingsList;
+          sayingsList = itemsList;
           requestMethaliData();
         });
       });
@@ -140,18 +138,17 @@ class CcInitLoadState extends State<InitLoadScreen> {
   void requestMethaliData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> proverbsListAsset =
-          adb.getGenericList(LangStrings.proverbs);
-      proverbsListAsset.then((proverbsList) {
+      Future<List<Generic>> proverbsListAsset = adb.getGenericList(LangStrings.proverbsTable);
+      proverbsListAsset.then((itemsList) {
         setState(() {
-          proverbs = proverbsList;
+          proverbsList = itemsList;
           _goToNextScreen();
         });
       });
     });
   }
 
-  Future<void> saveMawordData() async {
+  Future<void> saveWordsData() async {
     for (int i = 0; i < words.length; i++) {
       int progressValue = (i / words.length * 100).toInt();
       progress.setProgress(progressValue);
@@ -197,18 +194,17 @@ class CcInitLoadState extends State<InitLoadScreen> {
 
       Word item = words[i];
 
-      WordModel word =
-          new WordModel(item.title, item.meaning, item.synonyms, item.conjugation);
+      WordModel word = new WordModel(item.title, item.meaning, item.synonyms, item.conjugation);
 
       await db.insertWord(word);
     }
   }
 
-  Future<void> saveGenericData(String table, List<Generic> genericlist) async {
+  Future<void> saveGenericData(String type, String table, List<Generic> genericlist) async {
     for (int i = 0; i < genericlist.length; i++) {
       int progressValue = (i / genericlist.length * 100).toInt();
       progress.setProgress(progressValue);
-      informer.setText(">> Inapakia " + table + " ...");
+      informer.setText(">> Inapakia " + type + " ...");
       Generic item = genericlist[i];
 
       GenericModel generic = new GenericModel(item.title, item.meaning);
@@ -218,10 +214,10 @@ class CcInitLoadState extends State<InitLoadScreen> {
   }
 
   Future<void> _goToNextScreen() async {
-    await saveMawordData();
-    await saveGenericData(LangStrings.idioms, idioms);
-    await saveGenericData(LangStrings.sayings, sayings);
-    await saveGenericData(LangStrings.proverbs, proverbs);
+    await saveWordsData();
+    await saveGenericData(LangStrings.idioms, LangStrings.idiomsTable, idiomsList);
+    await saveGenericData(LangStrings.sayings, LangStrings.sayingsTable, sayingsList);
+    await saveGenericData(LangStrings.proverbs, LangStrings.proverbsTable, proverbsList);
 
     Preferences.setKamusidbLoaded(true);
     Navigator.pushReplacement(

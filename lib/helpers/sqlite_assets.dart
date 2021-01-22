@@ -60,7 +60,7 @@ class SqliteAssets {
 
   Future<List<Map<String, dynamic>>> getWordMapList() async {
     Database db = await this.database;
-    var result = db.query(LangStrings.words);
+    var result = db.query(LangStrings.wordsTable);
     return result;
   }
 

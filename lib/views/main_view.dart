@@ -61,7 +61,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
     final List<Widget> tabChildernPages = <Widget>[];
     _allPages.forEach((AsPage page)
     {
-      if (page.content == LangStrings.wordsTable) tabChildernPages.add(TabViewWord());
+      if (page.title == LangStrings.wordsTable) tabChildernPages.add(TabViewWord());
       else tabChildernPages.add(TabViewGeneric(page.content));
     });
 
