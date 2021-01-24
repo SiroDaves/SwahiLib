@@ -5,12 +5,12 @@ import 'package:kamusi/screens/word_view_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/utils/colors.dart';
-import 'package:kamusi/models/word_model.dart';
+import 'package:kamusi/models/word.dart';
 
 class WordItem extends StatelessWidget {
 
   final String heroTag;
-  final WordModel item;
+  final Word item;
   final BuildContext context;
 
   WordItem(this.heroTag, this.item, this.context);
@@ -78,7 +78,7 @@ class WordItem extends StatelessWidget {
     }
   }
   
-  void navigateToWord(WordModel word) async {
+  void navigateToWord(Word word) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return WordViewScreen(word);
     }));

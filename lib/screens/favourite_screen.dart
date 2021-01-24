@@ -6,7 +6,7 @@ import 'package:anisi_controls/anisi_controls.dart';
 import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
-import 'package:kamusi/models/word_model.dart';
+import 'package:kamusi/models/word.dart';
 import 'package:kamusi/views/word_item.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 
@@ -22,7 +22,7 @@ class FavouriteScreenState extends State<FavouriteScreen> {
   SqliteHelper db = SqliteHelper();
 
   Future<Database> dbFuture;
-  List<WordModel> items = List<WordModel>();
+  List<Word> items = List<Word>();
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class FavouriteScreenState extends State<FavouriteScreen> {
 
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<WordModel>> itemListFuture = db.getFavorites();
+      Future<List<Word>> itemListFuture = db.getFavorites();
       itemListFuture.then((resultList) {
         setState(() {
           items = resultList;

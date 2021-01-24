@@ -58,7 +58,7 @@ class LangStrings {
   static const String copyThis = "Nakili kwa Clipboard";
   static const String shareThis = "Shiriki";
 
-  static const String wordCopied = "Word limenakiliwa kwa clipboard!";
+  static const String wordCopied = "WordCallback limenakiliwa kwa clipboard!";
   static const String wordLiked = " imependwa!";
   static const String wordDisliked = " haijapendwa!";
 

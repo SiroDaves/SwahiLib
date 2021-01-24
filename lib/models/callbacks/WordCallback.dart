@@ -1,19 +1,19 @@
 // This file declares word model that will be used to manage 
 // words from the live database
 
-class Word {
+class WordCallback {
   String title;
   String meaning;
   String synonyms;
   String conjugation;
 
-  Word(
+  WordCallback(
       {this.title,
       this.meaning,
       this.synonyms,
       this.conjugation });
 
-  Word.fromJson(Map<String, dynamic> json) {
+  WordCallback.fromJson(Map<String, dynamic> json) {
     title         = json['title'];
     meaning         = json['meaning'];
     synonyms        = json['synonyms'];
@@ -29,8 +29,8 @@ class Word {
     return data;
   }
 
-  //static Word fromMapObject(Map<String wordMapList) {}
-  Word.fromMapObject(Map<String, dynamic> map) {
+  //static WordCallback fromMapObject(Map<String wordMapList) {}
+  WordCallback.fromMapObject(Map<String, dynamic> map) {
     this.title = map['title'];
     this.meaning = map['meaning'];
     this.synonyms = map['synonyms'];

@@ -7,7 +7,7 @@ import 'package:anisi_controls/anisi_controls.dart';
 
 import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/helpers/app_settings.dart';
-import 'package:kamusi/models/word_model.dart';
+import 'package:kamusi/models/word.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
 import 'package:kamusi/views/word_item.dart';
 
@@ -23,7 +23,7 @@ class TabViewWordState extends State<TabViewWord> {
   AsInformer notice = AsInformer.setUp(3, LangStrings.nothing, Colors.red, Colors.transparent, Colors.white, 10);
   
   Future<Database> dbFuture;
-  List<WordModel> items = List<WordModel>();
+  List<Word> items = List<Word>();
   List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z' ];
   String letterSearch;
 
@@ -45,7 +45,7 @@ class TabViewWordState extends State<TabViewWord> {
     
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<WordModel>> itemListFuture = db.getWordList();
+      Future<List<Word>> itemListFuture = db.getWordList();
       itemListFuture.then((resultList) {
         setState(() {
           items = resultList;
@@ -63,7 +63,7 @@ class TabViewWordState extends State<TabViewWord> {
     items.clear();
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<WordModel>> itemListFuture = db.getWordSearch(_letter, true);
+      Future<List<Word>> itemListFuture = db.getWordSearch(_letter, true);
       itemListFuture.then((resultList) {
         setState(() {
           items = resultList;

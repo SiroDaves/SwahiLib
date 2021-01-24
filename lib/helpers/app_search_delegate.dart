@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:kamusi/helpers/app_settings.dart';
-import 'package:kamusi/models/word_model.dart';
+import 'package:kamusi/models/word.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/views/word_item.dart';
 
 class AppSearchDelegate extends SearchDelegate<List> {
 
-	List<WordModel> itemList, filtered;
+	List<Word> itemList, filtered;
 
 	AppSearchDelegate(BuildContext context, this.itemList) {
     filtered = itemList;
@@ -98,7 +98,7 @@ class AppSearchDelegate extends SearchDelegate<List> {
   void filterNow() async {
     if (query.isNotEmpty)
     {
-      List<WordModel> tmpList = new List<WordModel>();
+      List<Word> tmpList = new List<Word>();
       for(int i = 0; i < itemList.length; i++) {        
         if (
           itemList[i].title.toLowerCase().startsWith(query.toLowerCase())

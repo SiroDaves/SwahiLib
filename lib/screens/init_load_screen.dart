@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:anisi_controls/anisi_controls.dart';
 
-import 'package:kamusi/models/generic_model.dart';
-import 'package:kamusi/models/word_model.dart';
-import 'package:kamusi/models/callbacks/Generic.dart';
-import 'package:kamusi/models/callbacks/Word.dart';
+import 'package:kamusi/models/item.dart';
+import 'package:kamusi/models/word.dart';
+import 'package:kamusi/models/callbacks/ItemCallback.dart';
+import 'package:kamusi/models/callbacks/WordCallback.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/utils/preferences.dart';
@@ -32,10 +32,10 @@ class CcInitLoadState extends State<InitLoadScreen> {
   SqliteHelper db = SqliteHelper();
   SqliteAssets adb = SqliteAssets();
 
-  List<Word> words =List<Word>();
-  List<Generic> idiomsList =List<Generic>();
-  List<Generic> sayingsList =List<Generic>();
-  List<Generic> proverbsList =List<Generic>();
+  List<WordCallback> words =List<WordCallback>();
+  List<ItemCallback> idiomsList =List<ItemCallback>();
+  List<ItemCallback> sayingsList =List<ItemCallback>();
+  List<ItemCallback> proverbsList =List<ItemCallback>();
 
   Future<Database> dbAssets;
   Future<Database> dbFuture;
@@ -99,7 +99,7 @@ class CcInitLoadState extends State<InitLoadScreen> {
   void requestData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Word>> wordListAsset = adb.getWordList();
+      Future<List<WordCallback>> wordListAsset = adb.getWordList();
       wordListAsset.then((wordList) {
         setState(() {
           words = wordList;
@@ -112,7 +112,7 @@ class CcInitLoadState extends State<InitLoadScreen> {
   void requestNahauData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> idiomsListAsset = adb.getGenericList(LangStrings.idiomsTable);
+      Future<List<ItemCallback>> idiomsListAsset = adb.getGenericList(LangStrings.idiomsTable);
       idiomsListAsset.then((idiomsList) {
         setState(() {
           idiomsList = idiomsList;
@@ -125,7 +125,7 @@ class CcInitLoadState extends State<InitLoadScreen> {
   void requestMisemoData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> sayingsListAsset = adb.getGenericList(LangStrings.sayingsTable);
+      Future<List<ItemCallback>> sayingsListAsset = adb.getGenericList(LangStrings.sayingsTable);
       sayingsListAsset.then((itemsList) {
         setState(() {
           sayingsList = itemsList;
@@ -138,7 +138,7 @@ class CcInitLoadState extends State<InitLoadScreen> {
   void requestMethaliData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<Generic>> proverbsListAsset = adb.getGenericList(LangStrings.proverbsTable);
+      Future<List<ItemCallback>> proverbsListAsset = adb.getGenericList(LangStrings.proverbsTable);
       proverbsListAsset.then((itemsList) {
         setState(() {
           proverbsList = itemsList;
@@ -192,22 +192,22 @@ class CcInitLoadState extends State<InitLoadScreen> {
           break;
       }
 
-      Word item = words[i];
+      WordCallback item = words[i];
 
-      WordModel word = new WordModel(item.title, item.meaning, item.synonyms, item.conjugation);
+      Word word = new Word(item.title, item.meaning, item.synonyms, item.conjugation);
 
       await db.insertWord(word);
     }
   }
 
-  Future<void> saveGenericData(String type, String table, List<Generic> genericlist) async {
+  Future<void> saveGenericData(String type, String table, List<ItemCallback> genericlist) async {
     for (int i = 0; i < genericlist.length; i++) {
       int progressValue = (i / genericlist.length * 100).toInt();
       progress.setProgress(progressValue);
       informer.setText(">> Inapakia " + type + " ...");
-      Generic item = genericlist[i];
+      ItemCallback item = genericlist[i];
 
-      GenericModel generic = new GenericModel(item.title, item.meaning);
+      Item generic = new Item(item.title, item.meaning);
 
       await db.insertGeneric(table, generic);
     }

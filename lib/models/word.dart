@@ -1,20 +1,26 @@
-// This file declares generic model that will be used to manage 
-// sayings, idioms, proverbs from the live database
+// This file declares word model that will be used to manage 
+// words from the live database
 
-class GenericModel {
+class Word {
   int _id;
   String _title;
   String _meaning;
+  String _synonyms;
+  String _conjugation;
   int _views;
   int _isfav;
 
-  GenericModel(
+  Word(
       this._title,
-      this._meaning);
+      this._meaning,
+      this._synonyms,
+      this._conjugation);
 
   int get id => _id;
   String get title => _title;
   String get meaning => _meaning;
+  String get synonyms => _synonyms;
+  String get conjugation => _conjugation;
   int get views => _views;
   int get isfav => _isfav;
 
@@ -28,6 +34,14 @@ class GenericModel {
 
   set meaning(String newMaana) {
     this._meaning = newMaana;
+  }
+
+  set synonyms(String newVisawe) {
+    this._synonyms = newVisawe;
+  }
+
+  set conjugation(String newMnyambuliko) {
+    this._conjugation = newMnyambuliko;
   }
 
   set views(int newViews) {
@@ -46,6 +60,8 @@ class GenericModel {
     }
     map['title'] = _title;
     map['meaning'] = _meaning;
+    map['synonyms'] = _synonyms;
+    map['conjugation'] = _conjugation;
     map['views'] = _views;
     map['isfav'] = _isfav;
 
@@ -53,9 +69,11 @@ class GenericModel {
   }
 
   // Extract a Note object from a Map object
-  GenericModel.fromMapObject(Map<String, dynamic> map) {
+  Word.fromMapObject(Map<String, dynamic> map) {
     this._title = map['title'];
     this._meaning = map['meaning'];
+    this._synonyms = map['synonyms'];
+    this._conjugation = map['conjugation'];
     this._views = map['views'];
     this._isfav = map['isfav'];
   }

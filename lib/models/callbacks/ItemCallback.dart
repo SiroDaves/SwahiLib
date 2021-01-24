@@ -1,15 +1,15 @@
 // This file declares generic model that will be used to manage 
 // sayings, idioms, proverbs from the asset database
 
-class Generic {
+class ItemCallback {
   String title;
   String meaning;
 
-  Generic(
+  ItemCallback(
       {this.title,
       this.meaning });
 
-  Generic.fromJson(Map<String, dynamic> json) {
+  ItemCallback.fromJson(Map<String, dynamic> json) {
     title         = json['title'];
     meaning         = json['meaning'];
   }
@@ -21,8 +21,8 @@ class Generic {
     return data;
   }
 
-  //static Generic fromMapObject(Map<String wordMapList) {}
-  Generic.fromMapObject(Map<String, dynamic> map) {
+  //static ItemCallback fromMapObject(Map<String wordMapList) {}
+  ItemCallback.fromMapObject(Map<String, dynamic> map) {
     this.title = map['title'];
     this.meaning = map['meaning'];
   }

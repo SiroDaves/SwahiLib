@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:kamusi/helpers/app_search_delegate.dart';
 import 'package:kamusi/helpers/app_settings.dart';
-import 'package:kamusi/models/word_model.dart';
+import 'package:kamusi/models/word.dart';
 import 'package:kamusi/utils/colors.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,7 @@ import 'package:kamusi/screens/about_screen.dart';
 
 class AsSearch extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
-  final List<WordModel> itemList;
+  final List<Word> itemList;
   AsSearch(this.scaffoldKey, this.itemList);
 
   @override

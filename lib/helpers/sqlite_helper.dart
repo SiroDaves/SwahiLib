@@ -7,8 +7,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:kamusi/models/generic_model.dart';
-import 'package:kamusi/models/word_model.dart';
+import 'package:kamusi/models/item.dart';
+import 'package:kamusi/models/word.dart';
 import 'package:kamusi/utils/constants.dart';
 
 class SqliteHelper {
@@ -52,7 +52,7 @@ class SqliteHelper {
   }
 
   //QUERIES FOR NENO
-  Future<int> insertWord(WordModel item) async {
+  Future<int> insertWord(Word item) async {
     Database db = await this.database;
     item.isfav = item.views = 0;
 
@@ -61,7 +61,7 @@ class SqliteHelper {
   }
 
   //QUERIES FOR NENO
-  Future<int> insertGeneric(String table, GenericModel generic) async {
+  Future<int> insertGeneric(String table, Item generic) async {
     Database db = await this.database;
     generic.isfav = generic.views = 0;
 
@@ -69,7 +69,7 @@ class SqliteHelper {
     return result;
   }
 
-  Future<int> favouriteWord(WordModel item, bool isFavorited) async {
+  Future<int> favouriteWord(Word item, bool isFavorited) async {
     var db = await this.database;
     if (isFavorited) item.isfav = 1;
     else item.isfav = 0;
@@ -101,11 +101,11 @@ class SqliteHelper {
     return result;
   }
 
-  Future<List<GenericModel>> getGenericList(String table) async {
+  Future<List<Item>> getGenericList(String table) async {
     var genericMapList = await getGenericMapList(table);
-    List<GenericModel> genericList = List<GenericModel>();
+    List<Item> genericList = List<Item>();
     for (int i = 0; i < genericMapList.length; i++) {
-      genericList.add(GenericModel.fromMapObject(genericMapList[i]));
+      genericList.add(Item.fromMapObject(genericMapList[i]));
     }
     return genericList;
   }
@@ -130,13 +130,13 @@ class SqliteHelper {
     return result;
   }
 
-  Future<List<GenericModel>> getGenericSearch(String searchString, String table, bool searchByTitle) async {
+  Future<List<Item>> getGenericSearch(String searchString, String table, bool searchByTitle) async {
     var itemMapList = await getGenericSearchMapList(searchString, table, searchByTitle);
 
-    List<GenericModel> itemList = List<GenericModel>();
+    List<Item> itemList = List<Item>();
     // For loop to create a 'item List' from a 'Map List'
     for (int i = 0; i < itemMapList.length; i++) {
-      itemList.add(GenericModel.fromMapObject(itemMapList[i]));
+      itemList.add(Item.fromMapObject(itemMapList[i]));
     }
     return itemList;
   }
@@ -148,11 +148,11 @@ class SqliteHelper {
     return result;
   }
 
-  Future<List<WordModel>> getWordList() async {
+  Future<List<Word>> getWordList() async {
     var itemMapList = await getWordMapList();
-    List<WordModel> itemList = List<WordModel>();
+    List<Word> itemList = List<Word>();
     for (int i = 0; i < itemMapList.length; i++) {
-      itemList.add(WordModel.fromMapObject(itemMapList[i]));
+      itemList.add(Word.fromMapObject(itemMapList[i]));
     }
     return itemList;
   }
@@ -169,13 +169,13 @@ class SqliteHelper {
     return result;
   }
 
-  Future<List<WordModel>> getWordSearch(String searchString, bool searchByTitle) async {
+  Future<List<Word>> getWordSearch(String searchString, bool searchByTitle) async {
     var itemMapList = await getWordSearchMapList(searchString, searchByTitle);
 
-    List<WordModel> itemList = List<WordModel>();
+    List<Word> itemList = List<Word>();
     // For loop to create a 'item List' from a 'Map List'
     for (int i = 0; i < itemMapList.length; i++) {
-      itemList.add(WordModel.fromMapObject(itemMapList[i]));
+      itemList.add(Word.fromMapObject(itemMapList[i]));
     }
     return itemList;
   }
@@ -187,12 +187,12 @@ class SqliteHelper {
     return result;
   }
 
-  Future<List<WordModel>> getFavorites() async {
+  Future<List<Word>> getFavorites() async {
     var itemMapList = await getFavoritesList();
 
-    List<WordModel> itemList = List<WordModel>();
+    List<Word> itemList = List<Word>();
     for (int i = 0; i < itemMapList.length; i++) {
-      itemList.add(WordModel.fromMapObject(itemMapList[i]));
+      itemList.add(Word.fromMapObject(itemMapList[i]));
     }
 
     return itemList;
@@ -210,13 +210,13 @@ class SqliteHelper {
     return result;
   }
 
-  Future<List<WordModel>> getFavSearch(String searchString) async {
+  Future<List<Word>> getFavSearch(String searchString) async {
     var itemMapList = await getFavSearchMapList(searchString);
 
-    List<WordModel> itemList = List<WordModel>();
+    List<Word> itemList = List<Word>();
     // For loop to create a 'item List' from a 'Map List'
     for (int i = 0; i < itemMapList.length; i++) {
-      itemList.add(WordModel.fromMapObject(itemMapList[i]));
+      itemList.add(Word.fromMapObject(itemMapList[i]));
     }
     return itemList;
   }
@@ -231,13 +231,13 @@ class SqliteHelper {
     return result;
   }
 
-  Future<List<WordModel>> getQuizSearch(Category category, int total, String difficulty) async {
+  Future<List<Word>> getQuizSearch(Category category, int total, String difficulty) async {
     var itemMapList = await getQuizSearchMapList(category.name, );
 
-    List<WordModel> itemList = List<WordModel>();
+    List<Word> itemList = List<Word>();
     // For loop to create a 'item List' from a 'Map List'
     for (int i = 0; i < itemMapList.length; i++) {
-      itemList.add(WordModel.fromMapObject(itemMapList[i]));
+      itemList.add(Word.fromMapObject(itemMapList[i]));
     }
     return itemList;
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:kamusi/widgets/as_search.dart';
 import 'package:kamusi/views/main_view.dart';
-import 'package:kamusi/models/word_model.dart';
+import 'package:kamusi/models/word.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -17,12 +17,12 @@ class SearchState extends State<SearchScreen> {
   double offset = 0.0;
 
   SqliteHelper db = SqliteHelper();
-  List<WordModel> itemList;
+  List<Word> itemList;
 
   void updateItemList() {
     final Future<Database> dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<WordModel>> wordListFuture = db.getWordList();
+      Future<List<Word>> wordListFuture = db.getWordList();
       wordListFuture.then((itemList) {
         setState(() {
           this.itemList = itemList;

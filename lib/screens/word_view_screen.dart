@@ -11,10 +11,10 @@ import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:kamusi/utils/constants.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
-import 'package:kamusi/models/word_model.dart';
+import 'package:kamusi/models/word.dart';
 
 class WordViewScreen extends StatefulWidget {
-  final WordModel word;
+  final Word word;
 
   WordViewScreen(this.word);
 
@@ -30,11 +30,11 @@ class EeWordViewScreenState extends State<WordViewScreen> {
   SqliteHelper db = SqliteHelper();
 
   var appBar = AppBar(), wordVerses;
-  WordModel word;
+  Word word;
   int curWord = 0;
   String wordContent;
   List<String> meanings, synonyms;
-  List<WordModel> words;
+  List<Word> words;
 
   @override
   Widget build(BuildContext context) {

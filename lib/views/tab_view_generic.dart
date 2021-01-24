@@ -9,7 +9,7 @@ import 'package:anisi_controls/anisi_controls.dart';
 import 'package:kamusi/utils/colors.dart';
 
 import 'package:kamusi/helpers/app_settings.dart';
-import 'package:kamusi/models/generic_model.dart';
+import 'package:kamusi/models/item.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
 
 class TabViewGeneric extends StatefulWidget {
@@ -28,9 +28,15 @@ class TabViewGenericState extends State<TabViewGeneric> {
   String letterSearch;
 
   Future<Database> dbFuture;
-  List<GenericModel> items = List<GenericModel>();
+  List<Item> items = List<Item>();
   List<String> letters = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z' ];
   
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => initBuild(context));
+  }
+
   /// Method to run anything that needs to be run immediately after Widget build
   void initBuild(BuildContext context) async {
     loadListView();
@@ -41,7 +47,7 @@ class TabViewGenericState extends State<TabViewGeneric> {
 
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<GenericModel>> itemListFuture = db.getGenericList(widget.tabname);
+      Future<List<Item>> itemListFuture = db.getGenericList(widget.tabname);
       itemListFuture.then((resultList) {
         setState(() {
           items = resultList;
@@ -59,7 +65,7 @@ class TabViewGenericState extends State<TabViewGeneric> {
     loader.showWidget();
     dbFuture = db.initializeDatabase();
     dbFuture.then((database) {
-      Future<List<GenericModel>> itemListFuture = db.getGenericSearch(_letter, widget.tabname, true);
+      Future<List<Item>> itemListFuture = db.getGenericSearch(_letter, widget.tabname, true);
       itemListFuture.then((resultList) {
         setState(() {
           items = resultList;
@@ -200,7 +206,7 @@ class TabViewGenericState extends State<TabViewGeneric> {
     }
   }
 
-  void navigateToViewer(GenericModel word) async {
+  void navigateToViewer(Item word) async {
   }
 }
 

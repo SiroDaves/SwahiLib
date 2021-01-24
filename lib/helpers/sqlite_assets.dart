@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:path/path.dart';
-import 'package:kamusi/models/callbacks/Generic.dart';
-import 'package:kamusi/models/callbacks/Word.dart';
+import 'package:kamusi/models/callbacks/ItemCallback.dart';
+import 'package:kamusi/models/callbacks/WordCallback.dart';
 import 'package:kamusi/utils/constants.dart';
 
 class SqliteAssets {
@@ -64,11 +64,11 @@ class SqliteAssets {
     return result;
   }
 
-  Future<List<Word>> getWordList() async {
+  Future<List<WordCallback>> getWordList() async {
     var wordMapList = await getWordMapList();
-    List<Word> wordList = List<Word>();
+    List<WordCallback> wordList = List<WordCallback>();
     for (int i = 0; i < wordMapList.length; i++) {
-      wordList.add(Word.fromMapObject(wordMapList[i]));
+      wordList.add(WordCallback.fromMapObject(wordMapList[i]));
     }
     return wordList;
   }
@@ -79,11 +79,11 @@ class SqliteAssets {
     return result;
   }
 
-  Future<List<Generic>> getGenericList(String table) async {
+  Future<List<ItemCallback>> getGenericList(String table) async {
     var genericMapList = await getGenericMapList(table);
-    List<Generic> genericList = List<Generic>();
+    List<ItemCallback> genericList = List<ItemCallback>();
     for (int i = 0; i < genericMapList.length; i++) {
-      genericList.add(Generic.fromMapObject(genericMapList[i]));
+      genericList.add(ItemCallback.fromMapObject(genericMapList[i]));
     }
     return genericList;
   }

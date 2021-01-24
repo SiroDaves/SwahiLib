@@ -6,7 +6,7 @@
         android:label="Kamusi"
         android:allowBackup="true"
         android:supportsRtl="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true" >
         
         <activity
