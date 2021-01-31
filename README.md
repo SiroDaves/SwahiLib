@@ -10,4 +10,4 @@
 
 Kiswahili Dictionary app made with Flutter!
 
-<img src="screenshots/kamusi-banner.jpg.jpg" width="240px" />
+<img src="screenshots/kamusi-banner.jpg" width="240px" />
