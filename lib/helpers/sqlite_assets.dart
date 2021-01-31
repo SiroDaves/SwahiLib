@@ -73,14 +73,14 @@ class SqliteAssets {
     return wordList;
   }
 
-  Future<List<Map<String, dynamic>>> getGenericMapList(String table) async {
+  Future<List<Map<String, dynamic>>> getItemMapList(String table) async {
     Database db = await this.database;
     var result = db.query(table);
     return result;
   }
 
-  Future<List<ItemCallback>> getGenericList(String table) async {
-    var genericMapList = await getGenericMapList(table);
+  Future<List<ItemCallback>> getItemList(String table) async {
+    var genericMapList = await getItemMapList(table);
     List<ItemCallback> genericList = List<ItemCallback>();
     for (int i = 0; i < genericMapList.length; i++) {
       genericList.add(ItemCallback.fromMapObject(genericMapList[i]));

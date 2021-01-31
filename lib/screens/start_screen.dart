@@ -8,14 +8,12 @@ import 'package:kamusi/screens/init_load_screen.dart';
 import 'package:kamusi/utils/navigation.dart';
 import 'package:kamusi/utils/preferences.dart';
 
-import 'game_screen.dart';
-
 class StartScreen extends StatefulWidget {
   @override
-  createState() => new SplashPageState();
+  createState() => new StartScreenState();
 }
 
-class SplashPageState extends State<StartScreen> {
+class StartScreenState extends State<StartScreen> {
   final globalKey = new GlobalKey<ScaffoldState>();
 
 @override
@@ -45,8 +43,8 @@ class SplashPageState extends State<StartScreen> {
       setState(() {
         if (kamusidbLoaded != null && kamusidbLoaded)
         {
-          //pushHomeScreenScreen(context);
-          Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new GameScreen()));
+          pushHomeScreenScreen(context);
+          //Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new GameScreen()));
         }
         else {
           Navigator.pushReplacement( context, new MaterialPageRoute(builder: (context) => new InitLoadScreen()));

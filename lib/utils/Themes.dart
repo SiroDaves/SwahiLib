@@ -1,13 +1,14 @@
 //This files manages the themes of the app
 
 import 'package:flutter/material.dart';
+import 'package:kamusi/utils/colors.dart';
 
 final asLightTheme = _buildLightTheme();
 final asDarkTheme = _buildDarkTheme();
 
 ThemeData _buildLightTheme() {
-  const Color primaryColor = Colors.blue;
-  const Color secondaryColor = Colors.blueAccent;
+  const Color primaryColor = ColorUtils.primaryColor;
+  const Color secondaryColor = ColorUtils.secondaryColor;
   final ColorScheme colorScheme = const ColorScheme.light().copyWith(
     primary: primaryColor,
     secondary: secondaryColor,
@@ -17,16 +18,16 @@ ThemeData _buildLightTheme() {
     accentColorBrightness: Brightness.dark,
     colorScheme: colorScheme,
     primaryColor: primaryColor,
-    buttonColor: primaryColor,
-    indicatorColor: Colors.white,
-    toggleableActiveColor: Colors.blue,
-    splashColor: Colors.white24,
+    buttonColor: secondaryColor,
+    indicatorColor: ColorUtils.white,
+    toggleableActiveColor: ColorUtils.activeColor,
+    splashColor: ColorUtils.splashColor,
     splashFactory: InkRipple.splashFactory,
     accentColor: secondaryColor,
-    canvasColor: Colors.white,
-    scaffoldBackgroundColor: Colors.white,
-    backgroundColor: Colors.white,
-    errorColor: const Color(0xFFB00020),
+    canvasColor: ColorUtils.white,
+    scaffoldBackgroundColor: ColorUtils.white,
+    backgroundColor: ColorUtils.white,
+    errorColor: ColorUtils.errorColor,
     buttonTheme: ButtonThemeData(
       colorScheme: colorScheme,
       textTheme: ButtonTextTheme.primary,
@@ -40,8 +41,8 @@ ThemeData _buildLightTheme() {
 }
 
 ThemeData _buildDarkTheme() {
-  const Color primaryColor = Colors.grey;
-  const Color secondaryColor = Colors.black;
+  const Color primaryColor = ColorUtils.grey;
+  const Color secondaryColor = ColorUtils.black;
   final ColorScheme colorScheme = const ColorScheme.dark().copyWith(
     primary: primaryColor,
     secondary: secondaryColor,
@@ -49,17 +50,14 @@ ThemeData _buildDarkTheme() {
   final ThemeData base = ThemeData(
     brightness: Brightness.dark,
     accentColorBrightness: Brightness.dark,
-    //primaryColor: primaryColor,
-    //primaryColorDark: Colors.grey,
-    //primaryColorLight: secondaryColor,
     buttonColor: primaryColor,
-    indicatorColor: Colors.white,
-    toggleableActiveColor: const Color(0xFFfafafa),
+    indicatorColor: ColorUtils.white,
+    toggleableActiveColor: ColorUtils.activeColor2,
     accentColor: secondaryColor,
-    canvasColor: const Color(0xFF202124),
-    scaffoldBackgroundColor: const Color(0xFF202124),
-    backgroundColor: const Color(0xFF202124),
-    errorColor: const Color(0xFFB00020),
+    canvasColor: ColorUtils.baseColor2,
+    scaffoldBackgroundColor: ColorUtils.baseColor2,
+    backgroundColor: ColorUtils.baseColor2,
+    errorColor: ColorUtils.errorColor,
     buttonTheme: ButtonThemeData(
       colorScheme: colorScheme,
       textTheme: ButtonTextTheme.primary,

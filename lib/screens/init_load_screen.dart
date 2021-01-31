@@ -19,11 +19,11 @@ import 'package:kamusi/screens/start_screen.dart';
 class InitLoadScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return CcInitLoadState();
+    return InitLoadState();
   }
 }
 
-class CcInitLoadState extends State<InitLoadScreen> {
+class InitLoadState extends State<InitLoadScreen> {
   final globalKey = new GlobalKey<ScaffoldState>();
   
   AsLineProgress progress = AsLineProgress.setUp(0, Colors.black, Colors.black, ColorUtils.secondaryColor);
@@ -48,7 +48,7 @@ class CcInitLoadState extends State<InitLoadScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => initBuild(context));
   }
 
-  /// Method to run anything that needs to be run immediately after Widget build
+  /// Run anything that needs to be run immediately after Widget build
   void initBuild(BuildContext context) async {
     informer.showWidget();
     requestData();
@@ -112,7 +112,7 @@ class CcInitLoadState extends State<InitLoadScreen> {
   void requestNahauData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<ItemCallback>> idiomsListAsset = adb.getGenericList(LangStrings.idiomsTable);
+      Future<List<ItemCallback>> idiomsListAsset = adb.getItemList(LangStrings.idiomsTable);
       idiomsListAsset.then((idiomsList) {
         setState(() {
           idiomsList = idiomsList;
@@ -125,7 +125,7 @@ class CcInitLoadState extends State<InitLoadScreen> {
   void requestMisemoData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<ItemCallback>> sayingsListAsset = adb.getGenericList(LangStrings.sayingsTable);
+      Future<List<ItemCallback>> sayingsListAsset = adb.getItemList(LangStrings.sayingsTable);
       sayingsListAsset.then((itemsList) {
         setState(() {
           sayingsList = itemsList;
@@ -138,7 +138,7 @@ class CcInitLoadState extends State<InitLoadScreen> {
   void requestMethaliData() async {
     dbAssets = adb.initializeDatabase();
     dbAssets.then((database) {
-      Future<List<ItemCallback>> proverbsListAsset = adb.getGenericList(LangStrings.proverbsTable);
+      Future<List<ItemCallback>> proverbsListAsset = adb.getItemList(LangStrings.proverbsTable);
       proverbsListAsset.then((itemsList) {
         setState(() {
           proverbsList = itemsList;
@@ -200,24 +200,24 @@ class CcInitLoadState extends State<InitLoadScreen> {
     }
   }
 
-  Future<void> saveGenericData(String type, String table, List<ItemCallback> genericlist) async {
+  Future<void> saveItemData(String type, String table, List<ItemCallback> genericlist) async {
     for (int i = 0; i < genericlist.length; i++) {
       int progressValue = (i / genericlist.length * 100).toInt();
       progress.setProgress(progressValue);
-      informer.setText(">> Inapakia " + type + " ...");
-      ItemCallback item = genericlist[i];
+      informer.setText("Sasa yapakia " + type + " ...");
+      ItemCallback itemCallBack = genericlist[i];
 
-      Item generic = new Item(item.title, item.meaning);
+      Item item = new Item(itemCallBack.title, itemCallBack.meaning);
 
-      await db.insertGeneric(table, generic);
+      await db.insertItem(table, item);
     }
   }
 
   Future<void> _goToNextScreen() async {
     await saveWordsData();
-    await saveGenericData(LangStrings.idioms, LangStrings.idiomsTable, idiomsList);
-    await saveGenericData(LangStrings.sayings, LangStrings.sayingsTable, sayingsList);
-    await saveGenericData(LangStrings.proverbs, LangStrings.proverbsTable, proverbsList);
+    await saveItemData(LangStrings.idioms, LangStrings.idiomsTable, idiomsList);
+    await saveItemData(LangStrings.sayings, LangStrings.sayingsTable, sayingsList);
+    await saveItemData(LangStrings.proverbs, LangStrings.proverbsTable, proverbsList);
 
     Preferences.setKamusidbLoaded(true);
     Navigator.pushReplacement(

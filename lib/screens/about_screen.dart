@@ -8,10 +8,10 @@ import 'package:kamusi/utils/constants.dart';
 class AboutScreen extends StatefulWidget {
 
   @override
-  AboutAppState createState() => AboutAppState();
+  AboutScreenState createState() => AboutScreenState();
 }
 
-class AboutAppState extends State<AboutScreen> {
+class AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

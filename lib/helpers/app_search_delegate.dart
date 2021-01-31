@@ -25,12 +25,12 @@ class AppSearchDelegate extends SearchDelegate<List> {
 			accentIconTheme: IconThemeData(color: Colors.white),
 			primaryIconTheme: IconThemeData(color: Colors.white),
 			textTheme: TextTheme(
-				title: TextStyle(
+				subtitle1: TextStyle(
 						color: Color(0xFFFBF5E8)
 				),
 			),
 			primaryTextTheme: TextTheme(
-				title: TextStyle(
+				subtitle1: TextStyle(
           color: Colors.white
 				),
 			),

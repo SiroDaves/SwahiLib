@@ -24,13 +24,15 @@ class LangStrings {
   static const String synonyms_for = "\n\nVisawe (synonyms) vya neno ";
   static const String searchNow = "Tafuta ";
   static const String searchHint = "Tafuta Maneno ya Kiswahili";
-  static const String favourited = "Maneno Uliyopenda";
+  static const String favourited = "Maneno Uliyoyapenda";
+  static const String history = "Historia yako";
 
   static const String wordsTable = 'words';
   static const String proverbsTable = 'proverbs';
   static const String sayingsTable = 'sayings';
   static const String idiomsTable = 'idioms';
   static const String searchesTable = 'searches';
+  static const String historyTable = 'history';
   static const String triviaTable = 'trivia';
 
   static const String id = 'id';
@@ -62,7 +64,7 @@ class LangStrings {
   static const String wordLiked = " imependwa!";
   static const String wordDisliked = " haijapendwa!";
 
-  static const String mandhariMeusi = "Mandhari Meusi";
+  static const String darkMode = "Mandhari Meusi";
 
   static const String donateActionButton = "CHANGIA";
   static const String laterActionButton = "BAADAYE";
@@ -126,7 +128,7 @@ class LangStrings {
 /// Strings used in the database queries
 class Queries {
   /// Query string for creating the words table
-  static const String createWordsTable = 'CREATE TABLE ' + LangStrings.wordsTable +
+  static const String createWordsTable = 'CREATE TABLE IF NOT EXISTS ' + LangStrings.wordsTable +
     '(' + 
       LangStrings.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
       LangStrings.title + ' VARCHAR(100), ' +
@@ -139,7 +141,7 @@ class Queries {
     ');';
 
   /// Query string for creating the proverbs table
-  static const String createProverbsTable = 'CREATE TABLE ' + LangStrings.proverbsTable +
+  static const String createProverbsTable = 'CREATE TABLE IF NOT EXISTS ' + LangStrings.proverbsTable +
     '(' +
       LangStrings.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
       LangStrings.title + ' VARCHAR(100), ' +
@@ -150,7 +152,7 @@ class Queries {
     ');';
 
   /// Query string for creating the sayings table
-  static const String createSayingsTable = 'CREATE TABLE ' + LangStrings.sayingsTable +
+  static const String createSayingsTable = 'CREATE TABLE IF NOT EXISTS ' + LangStrings.sayingsTable +
     '(' +
       LangStrings.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
       LangStrings.title + ' VARCHAR(100), ' +
@@ -161,7 +163,7 @@ class Queries {
     ');';
 
   /// Query string for creating the idioms table
-  static const String createIdiomsTable = 'CREATE TABLE ' + LangStrings.idiomsTable +
+  static const String createIdiomsTable = 'CREATE TABLE IF NOT EXISTS ' + LangStrings.idiomsTable +
     '(' +
       LangStrings.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
       LangStrings.title + ' VARCHAR(100), ' +
@@ -172,7 +174,15 @@ class Queries {
     ');';
     
   /// Query string for creating the searches table
-  static const String createSearchesTable = 'CREATE TABLE ' + LangStrings.searchesTable +
+  static const String createSearchesTable = 'CREATE TABLE IF NOT EXISTS ' + LangStrings.searchesTable +
+    '(' + 
+      LangStrings.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+      LangStrings.wordid + ' INTEGER NOT NULL DEFAULT 0, ' +
+      LangStrings.created + ' VARCHAR(20)' +
+    ');';
+   
+  /// Query string for creating the searches table
+  static const String createHistoryTable = 'CREATE TABLE IF NOT EXISTS ' + LangStrings.historyTable +
     '(' + 
       LangStrings.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
       LangStrings.wordid + ' INTEGER NOT NULL DEFAULT 0, ' +
@@ -180,7 +190,7 @@ class Queries {
     ');';
  
   /// Query string for creating the trivia table
-  static const String createTriviaTable = 'CREATE TABLE ' + LangStrings.triviaTable +
+  static const String createTriviaTable = 'CREATE TABLE IF NOT EXISTS ' + LangStrings.triviaTable +
     '(' + 
       LangStrings.id + ' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
       LangStrings.triviaid + ' INTEGER NOT NULL DEFAULT 0, ' +

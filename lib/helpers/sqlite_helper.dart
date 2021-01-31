@@ -47,6 +47,7 @@ class SqliteHelper {
     await db.execute(Queries.createProverbsTable);
     await db.execute(Queries.createSayingsTable);
     await db.execute(Queries.createSearchesTable);
+    await db.execute(Queries.createHistoryTable);
     await db.execute(Queries.createTriviaTable);
     await db.execute(Queries.createWordsTable);
   }
@@ -60,12 +61,12 @@ class SqliteHelper {
     return result;
   }
 
-  //QUERIES FOR NENO
-  Future<int> insertGeneric(String table, Item generic) async {
+  //QUERIES FOR Proverbs, Sayings or Idioms
+  Future<int> insertItem(String table, Item item) async {
     Database db = await this.database;
-    generic.isfav = generic.views = 0;
+    item.isfav = item.views = 0;
 
-    var result = await db.insert(table, generic.toMap());
+    var result = await db.insert(table, item.toMap());
     return result;
   }
 
@@ -95,23 +96,23 @@ class SqliteHelper {
   }
 
   //GENERIC LISTS
-  Future<List<Map<String, dynamic>>> getGenericMapList(String table) async {
+  Future<List<Map<String, dynamic>>> getItemMapList(String table) async {
     Database db = await this.database;
     var result = db.query(table);
     return result;
   }
 
-  Future<List<Item>> getGenericList(String table) async {
-    var genericMapList = await getGenericMapList(table);
-    List<Item> genericList = List<Item>();
-    for (int i = 0; i < genericMapList.length; i++) {
-      genericList.add(Item.fromMapObject(genericMapList[i]));
+  Future<List<Item>> getItemList(String table) async {
+    var itemMapList = await getItemMapList(table);
+    List<Item> itemList = List<Item>();
+    for (int i = 0; i < itemMapList.length; i++) {
+      itemList.add(Item.fromMapObject(itemMapList[i]));
     }
-    return genericList;
+    return itemList;
   }
 
   //GENERIC SEARCH
-  Future<List<Map<String, dynamic>>> getGenericSearchMapLists(String searchString, String table) async {
+  Future<List<Map<String, dynamic>>> getItemSearchMapLists(String searchString, String table) async {
     Database db = await this.database;
     String sqlQuery = LangStrings.title + ' LIKE "$searchString%"';
 
@@ -119,7 +120,7 @@ class SqliteHelper {
     return result;
   }
 
-  Future<List<Map<String, dynamic>>> getGenericSearchMapList(String searchString, String table, bool searchByTitle) async {
+  Future<List<Map<String, dynamic>>> getItemSearchMapList(String searchString, String table, bool searchByTitle) async {
     Database db = await this.database;
     String sqlQuery = LangStrings.title + " LIKE '$searchString%'";
 
@@ -130,8 +131,8 @@ class SqliteHelper {
     return result;
   }
 
-  Future<List<Item>> getGenericSearch(String searchString, String table, bool searchByTitle) async {
-    var itemMapList = await getGenericSearchMapList(searchString, table, searchByTitle);
+  Future<List<Item>> getItemSearch(String searchString, String table, bool searchByTitle) async {
+    var itemMapList = await getItemSearchMapList(searchString, table, searchByTitle);
 
     List<Item> itemList = List<Item>();
     // For loop to create a 'item List' from a 'Map List'

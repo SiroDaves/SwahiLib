@@ -1,85 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
-import 'package:kamusi/screens/viewer_screen.dart';
 import 'package:provider/provider.dart';
+
 import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/utils/colors.dart';
-import 'package:kamusi/models/word.dart';
+import 'package:kamusi/models/item.dart';
 
-class WordItem extends StatelessWidget {
+class AnyItem extends StatelessWidget {
 
   final String heroTag;
-  final Word word;
+  final Item item;
   final BuildContext context;
 
-  WordItem(this.heroTag, this.word, this.context);
+  AnyItem(this.heroTag, this.item, this.context);
   String itemBook;
 
   @override
   Widget build(BuildContext context) {
-    String strContent = "<b>" + word.title + "</b>";
-    String strMeaning = word.meaning;
+    String strContent = "<b>" + item.title + "</b>";
+    //String strMeaning = item.meaning;
 
     try {
-      if (strMeaning.length == 0) {
-        return Container();
-      } else {
-        strMeaning = strMeaning.replaceAll("\\", "");
-        strMeaning = strMeaning.replaceAll('"', '');
-        strMeaning = strMeaning.replaceAll(',', ', ');
-        strMeaning = strMeaning.replaceAll('  ', ' ');
-
+      if (item.meaning.length > 1) {
         strContent = strContent + '<ul>';
-        var strContents = strMeaning.split("|");
+        var strContents = item.meaning.split(";");
 
         if (strContents.length > 1) {
           try {
             for (int i = 0; i < strContents.length; i++) {
               var strExtra = strContents[i].split(":");
-              strContent = strContent + "<li>" + strExtra[0] + "</li>";
+              strContent = strContent + "<li>" + strExtra[0].trim() + "</li>";
             }
           } catch (Exception) {}
         } else {
           var strExtra = strContents[0].split(":");
-          strContent = strContent + "<li>" + strExtra[0] + "</li>";
+          strContent = strContent + "<li>" + strExtra[0].trim() + "</li>";
         }
         strContent = strContent + '</ul>';
-        if (word.synonyms.length > 1)
-          strContent = strContent + '<br><p><b>Visawe:</b> <i>' + word.synonyms + '</i></p>';
+      }
 
-        return Card(
-          elevation: 2,
-          child: GestureDetector(
-            child: Html(
-              data: strContent,
-              style: {
-                "html": Style(
-                  fontSize: FontSize(20.0),
-                ),
-                "ul": Style(
-                  fontSize: FontSize(18.0),
-                ),
-                "p": Style(
-                  fontSize: FontSize(18.0),
-                  margin: EdgeInsets.only(left: 25, top: 10),
-                ),
-              },
-            ),
-            onTap: () {
-              navigateToViewer(word);
+      return Card(
+        elevation: 2,
+        child: GestureDetector(
+          child: Html(
+            data: strContent,
+            style: {
+              "html": Style(
+                fontSize: FontSize(20.0),
+              ),
+              "ul": Style(
+                fontSize: FontSize(18.0),
+              ),
+              "p": Style(
+                fontSize: FontSize(18.0),
+                margin: EdgeInsets.only(left: 25, top: 10),
+              ),
             },
           ),
-        );
-      }
+          onTap: () {
+            navigateToViewer(item);
+          },
+        ),
+      );
     } catch (Exception) {
       return Container();
     }
   }
   
-  void navigateToViewer(Word word) async {
+  void navigateToViewer(Item item) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return ViewerScreen(word);
+      //return ViewerScreen(word);
     }));
   }
   

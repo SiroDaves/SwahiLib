@@ -10,12 +10,12 @@ import 'package:kamusi/models/word.dart';
 import 'package:kamusi/views/word_item.dart';
 import 'package:kamusi/helpers/app_settings.dart';
 
-class FavouriteScreen extends StatefulWidget {
+class HistoryScreen extends StatefulWidget {
   @override
-  FavouriteScreenState createState() => FavouriteScreenState();
+  HistoryScreenState createState() => HistoryScreenState();
 }
 
-class FavouriteScreenState extends State<FavouriteScreen> {
+class HistoryScreenState extends State<HistoryScreen> {
   AsLoader loader = AsLoader.setUp(ColorUtils.primaryColor);
   AsInformer notice = AsInformer.setUp(3, LangStrings.nothing, Colors.red, Colors.transparent, Colors.white, 10);
   
@@ -32,7 +32,7 @@ class FavouriteScreenState extends State<FavouriteScreen> {
 
   /// Run anything that needs to be run immediately after Widget build
   void initBuild(BuildContext context) async {
-    loadListView();
+    //loadListView();
   }
   
   void loadListView() async {
@@ -57,7 +57,7 @@ class FavouriteScreenState extends State<FavouriteScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(LangStrings.favourited),
+        title: Text(LangStrings.history),
       ),
       body: mainBody(),
     );

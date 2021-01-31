@@ -13,19 +13,20 @@ import 'package:kamusi/helpers/app_settings.dart';
 import 'package:kamusi/helpers/sqlite_helper.dart';
 import 'package:kamusi/models/word.dart';
 
-class WordViewScreen extends StatefulWidget {
+/// Show a full View of a word meaning
+class ViewerScreen extends StatefulWidget {
   final Word word;
 
-  WordViewScreen(this.word);
+  ViewerScreen(this.word);
 
   @override
   State<StatefulWidget> createState() {
-    return EeWordViewScreenState(this.word);
+    return ViewerScreenState(this.word);
   }
 }
 
-class EeWordViewScreenState extends State<WordViewScreen> {
-  EeWordViewScreenState(this.word);
+class ViewerScreenState extends State<ViewerScreen> {
+  ViewerScreenState(this.word);
   final globalKey = new GlobalKey<ScaffoldState>();
   SqliteHelper db = SqliteHelper();
 

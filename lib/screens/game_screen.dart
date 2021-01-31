@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class GameScreen extends StatefulWidget {
   @override
-  createState() => new SplashPageState();
+  createState() => new GamePageState();
 }
 
-class SplashPageState extends State<GameScreen> {
+class GamePageState extends State<GameScreen> {
   final globalKey = new GlobalKey<ScaffoldState>();
 
 @override
