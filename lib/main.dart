@@ -5,10 +5,10 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:kamusi/helpers/app_settings.dart';
-import 'package:kamusi/screens/splash_screen.dart';
-import 'package:kamusi/screens/start_screen.dart';
-import 'package:kamusi/utils/themes.dart';
+import 'services/app_settings.dart';
+import 'ui/pages/splash_screen.dart';
+import 'ui/pages/start_screen.dart';
+import 'utils/themes.dart';
 
 void main() {
   Crashlytics.instance.enableInDevMode = true;

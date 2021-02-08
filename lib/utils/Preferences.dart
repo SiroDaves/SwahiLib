@@ -1,9 +1,9 @@
 //This files manages shared preferences of the app
 
 import 'dart:async';
-
-import 'package:kamusi/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'app_utils.dart';
 
 class Preferences {
   static Future<SharedPreferences> getInstance() async {

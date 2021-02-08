@@ -68,5 +68,6 @@ flutter:
 
   assets:
     - assets/
-    - assets/images/
+    - assets/audio/
     - assets/help/
+    - assets/images/

@@ -1,7 +1,7 @@
 //This files manages the themes of the app
 
 import 'package:flutter/material.dart';
-import 'package:kamusi/utils/colors.dart';
+import 'colors.dart';
 
 final asLightTheme = _buildLightTheme();
 final asDarkTheme = _buildDarkTheme();
@@ -21,7 +21,7 @@ ThemeData _buildLightTheme() {
     buttonColor: secondaryColor,
     indicatorColor: ColorUtils.white,
     toggleableActiveColor: ColorUtils.activeColor,
-    splashColor: ColorUtils.splashColor,
+    splashColor: ColorUtils.white2,
     splashFactory: InkRipple.splashFactory,
     accentColor: secondaryColor,
     canvasColor: ColorUtils.white,

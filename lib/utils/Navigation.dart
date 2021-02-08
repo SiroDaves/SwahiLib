@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'package:kamusi/screens/home_screen.dart';
+import '../ui/pages/home_screen.dart';
 
 void pushHomeScreenScreen(BuildContext context) {
   Navigator.of(context).pushAndRemoveUntil(
