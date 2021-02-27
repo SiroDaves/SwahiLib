@@ -8,6 +8,6 @@
    <img alt="Awesome Flutter" src="https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square" />
 </a>
 
-Kiswahili Dictionary app made with Flutter! (see also: https://codeberg.org/JacksiroKe/Kamusi-Mobile)
+Kiswahili Dictionary app made with Flutter! (see also: https://codeberg.org/jacksiro254/Kamusi-Mobile)
 
 <img src="screenshots/kamusi-banner.jpg" />
