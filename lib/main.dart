@@ -1,53 +1,55 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'services/app_settings.dart';
-import 'ui/pages/splash_screen.dart';
-import 'ui/pages/start_screen.dart';
-import 'utils/themes.dart';
+import 'package:icapps_architecture/icapps_architecture.dart';
 
-void main() {
-  Crashlytics.instance.enableInDevMode = true;
-  // Pass all uncaught errors from the framework to Crashlytics.
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
-  runApp(MyApp());
+import 'app.dart';
+import 'architecture.dart';
+import 'di/environments.dart';
+import 'di/injectable.dart';
+import 'util/env/flavor_config.dart';
+import 'util/web/app_configurator.dart'
+    if (dart.library.html) 'util/web/app_configurator_web.dart';
+
+FutureOr<R>? wrapMain<R>(FutureOr<R> Function() appCode) {
+  return runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    configureWebApp();
+    await initArchitecture();
+
+    return await appCode();
+  }, (object, trace) {
+    try {
+      WidgetsFlutterBinding.ensureInitialized();
+    } catch (_) {}
+
+    try {
+      staticLogger.e('Zone error', error: object, trace: trace);
+    } catch (_) {
+      // ignore: avoid_print
+      print(object);
+      // ignore: avoid_print
+      print(trace);
+    }
+  });
 }
 
-/// The genesis of this great app
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<SharedPreferences>(
-      future: SharedPreferences.getInstance(),
-      builder:
-          (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
-        if (!snapshot.hasData) return SplashScreen();
-
-        return ChangeNotifierProvider<AppSettings>.value(
-          value: AppSettings(snapshot.data),
-          child: _MyApp(),
-        );
-      },
+Future<void> main() async {
+  await wrapMain(() async {
+    const values = FlavorValues(
+      logNetworkInfo: true,
+      showFullErrorMessages: true,
     );
-  }
-}
-
-class _MyApp extends StatelessWidget {
-  final FirebaseAnalytics analytics = FirebaseAnalytics();
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Kamusi',
-      theme: Provider.of<AppSettings>(context).isDarkMode ? asDarkTheme : asLightTheme,
-      home: new StartScreen(),
-      navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: analytics),
-      ],
+    FlavorConfig(
+      flavor: Flavor.dev,
+      name: 'DEV',
+      color: Colors.red,
+      values: values,
     );
-  }
+    // ignore: avoid_print
+    print('Starting app from main.dart');
+    await configureDependencies(Environments.dev);
+
+    startApp();
+  });
 }

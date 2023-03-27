@@ -1,0 +1,6 @@
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Shared.xcconfig"
+PRODUCT_BUNDLE_IDENTIFIER=com.swahilib.alpha
+CFBundleName=Flota Alpha
+FLUTTER_TARGET=lib/main_alpha.dart
+PROVISIONING_PROFILE_SPECIFIER=Flota Alpha

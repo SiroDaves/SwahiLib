@@ -1,0 +1,16 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - 'lib/util/license.dart'
+  errors:
+    unused_import: ignore
+    unused_element: ignore
+    unused_local_variable: ignore
+
+linter:
+  rules:
+    unnecessary_brace_in_string_interps: false
+    avoid_returning_null_for_void: false
+    prefer_inlined_adds: false
+    prefer_const_declarations: false

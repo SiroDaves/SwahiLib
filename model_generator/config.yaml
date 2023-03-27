@@ -1,0 +1,14 @@
+##################################################################################
+#####                                TODO                                    #####
+##################################################################################
+Todo:
+  path: webservice/todo/
+  properties:
+    id:
+      type: int
+    title:
+      required: true
+      type: String
+    completed:
+      required: true
+      type: bool
