@@ -14,9 +14,9 @@ class HomeList1 extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
         padding: const EdgeInsets.only(right: 15),
-        itemCount: vm.words!.length,
+        itemCount: vm.filterWords!.length,
         itemBuilder: (BuildContext context, int index) {
-          final Word word = vm.words![index];
+          final Word word = vm.filterWords![index];
           return WordItem(
             word: word,
             onTap: () => vm.openWord(word),

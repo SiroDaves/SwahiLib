@@ -14,9 +14,9 @@ class HomeList3 extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
         padding: const EdgeInsets.only(right: 15),
-        itemCount: vm.sayings!.length,
+        itemCount: vm.filterSayings!.length,
         itemBuilder: (BuildContext context, int index) {
-          final Saying saying = vm.sayings![index];
+          final Saying saying = vm.filterSayings![index];
           var meaning = saying.meaning!
               .replaceAll("\\", "")
               .replaceAll('"', '')

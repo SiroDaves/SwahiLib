@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_cube/flutter_cube.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../navigator/main_navigator.dart';
@@ -21,56 +18,11 @@ class DataInit extends StatefulWidget {
   DataInitState createState() => DataInitState();
 }
 
-class DataInitState extends State<DataInit>
-    with SingleTickerProviderStateMixin
-    implements DataInitNavigator {
+class DataInitState extends State<DataInit> implements DataInitNavigator {
   Size? size;
   double? radius;
-  late Scene mainScene;
   Object? mainCube;
   late AnimationController animController;
-
-  void onSceneCreated(Scene scene) {
-    mainScene = scene;
-    scene.camera.position.z = 50;
-    mainCube = Object(
-      scale: Vector3(3.0, 3.0, 3.0),
-      backfaceCulling: false,
-      fileName: 'assets/cube/app.obj',
-    );
-    const int samples = 50;
-    const double radius = 12;
-    const double offset = 2 / samples;
-    final double increment = pi * (3 - sqrt(5));
-    for (var i = 0; i < samples; i++) {
-      final y = (i * offset - 1) + offset / 2;
-      final r = sqrt(1 - pow(y, 2));
-      final phi = ((i + 1) % samples) * increment;
-      final x = cos(phi) * r;
-      final z = sin(phi) * r;
-      final Object cube = Object(
-        position: Vector3(x, y, z)..scale(radius),
-        fileName: 'assets/cube/app.obj',
-      );
-      mainCube!.add(cube);
-    }
-    scene.world.add(mainCube!);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    animController = AnimationController(
-        duration: const Duration(milliseconds: 30000), vsync: this)
-      ..addListener(() {
-        if (mainCube != null) {
-          mainCube!.rotation.y = animController.value * 360;
-          mainCube!.updateTransform();
-          mainScene.update();
-        }
-      })
-      ..repeat();
-  }
 
   @override
   void dispose() {
@@ -123,9 +75,6 @@ class DataInitState extends State<DataInit>
                             ),
                           ),
                         ],
-                      ),
-                      Cube(
-                        onSceneCreated: onSceneCreated,
                       ),
                     ],
                   ),

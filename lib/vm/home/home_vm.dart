@@ -22,10 +22,10 @@ class HomeVm with ChangeNotifierEx {
   bool isLoading = false;
   HomeList setPage = HomeList.list1;
 
-  List<Word>? words = [];
-  List<Idiom>? idioms = [];
-  List<Saying>? sayings = [];
-  List<Proverb>? proverbs = [];
+  List<Word>? words = [], filterWords = [];
+  List<Idiom>? idioms = [], filterIdioms = [];
+  List<Saying>? sayings = [], filterSayings = [];
+  List<Proverb>? proverbs = [], filterProverbs = [];
 
   Future<void> init(HomeNavigator screenNavigator) async {
     navigator = screenNavigator;
@@ -38,36 +38,82 @@ class HomeVm with ChangeNotifierEx {
     if (showLoading) isLoading = true;
     notifyListeners();
 
-    words = await dbRepo.fetchWords();
+    filterWords = words = await dbRepo.fetchWords();
 
-    idioms = await dbRepo.fetchIdioms();
+    filterIdioms = idioms = await dbRepo.fetchIdioms();
 
-    sayings = await dbRepo.fetchSayings();
+    filterSayings = sayings = await dbRepo.fetchSayings();
 
-    proverbs = await dbRepo.fetchProverbs();
+    filterProverbs = proverbs = await dbRepo.fetchProverbs();
 
     isLoading = false;
     notifyListeners();
   }
 
-  void openWord(Word word) async {
+  /// Open a word view
+  Future<void> openWord(Word word) async {
     localStorage.word = word;
     navigator.goToWord();
   }
 
-  void openIdiom(Idiom idiom) async {
+  /// Open an idiom view
+  Future<void> openIdiom(Idiom idiom) async {
     localStorage.idiom = idiom;
     navigator.goToIdiom();
   }
 
-  void openSaying(Saying saying) async {
+  /// Open a saying view
+  Future<void> openSaying(Saying saying) async {
     localStorage.saying = saying;
     navigator.goToSaying();
   }
 
-  void openProverb(Proverb proverb) async {
+  /// Open a proverb view
+  Future<void> openProverb(Proverb proverb) async {
     localStorage.proverb = proverb;
     navigator.goToProverb();
+  }
+
+  Future<void> setLetter(String letter) async {
+    isLoading = true;
+    notifyListeners();
+
+    switch (setPage) {
+      case HomeList.list1:
+        filterWords = words!
+            .where((w) => w.title!.toLowerCase().startsWith(
+                  letter.toLowerCase(),
+                ))
+            .toList();
+        break;
+
+      case HomeList.list2:
+        filterIdioms = idioms!
+            .where((i) => i.title!.toLowerCase().startsWith(
+                  letter.toLowerCase(),
+                ))
+            .toList();
+        break;
+
+      case HomeList.list3:
+        filterSayings = sayings!
+            .where((s) => s.title!.toLowerCase().startsWith(
+                  letter.toLowerCase(),
+                ))
+            .toList();
+        break;
+
+      case HomeList.list4:
+        filterProverbs = proverbs!
+            .where((p) => p.title!.toLowerCase().startsWith(
+                  letter.toLowerCase(),
+                ))
+            .toList();
+        break;
+    }
+
+    isLoading = false;
+    notifyListeners();
   }
 }
 

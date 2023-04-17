@@ -14,9 +14,9 @@ class HomeList2 extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
         padding: const EdgeInsets.only(right: 15),
-        itemCount: vm.idioms!.length,
+        itemCount: vm.filterIdioms!.length,
         itemBuilder: (BuildContext context, int index) {
-          final Idiom idiom = vm.idioms![index];
+          final Idiom idiom = vm.filterIdioms![index];
           var meaning = idiom.meaning!
               .replaceAll("\\", "")
               .replaceAll('"', '')

@@ -46,6 +46,7 @@ class DataInitVm with ChangeNotifierEx {
     await saveIdioms();
 
     localStorage.setPrefBool(PrefConstants.dataLoadedCheckKey, true);
+      localStorage.setPrefString(PrefConstants.dateInstalledKey, dateNow());
     navigator.goToHome();
   }
 

@@ -41,7 +41,7 @@ class HomeScreenState extends State<HomeScreen> implements HomeNavigator {
       create: () => GetIt.I()..init(this),
       consumerWithThemeAndLocalization:
           (context, vm, child, theme, localization) {
-        var filterContainer = SizedBox(
+        final filterContainer = SizedBox(
           height: 50,
           child: ListView.builder(
             shrinkWrap: true,
@@ -80,6 +80,33 @@ class HomeScreenState extends State<HomeScreen> implements HomeNavigator {
             },
           ),
         );
+        final filterLetters = SizedBox(
+          width: 80,
+          child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: AppConstants.letters.length,
+            itemBuilder: (context, index) {
+              final letter = AppConstants.letters[index];
+              return Padding(
+                padding: const EdgeInsets.all(5),
+                child: FloatingActionButton(
+                  heroTag: 'herufi_$letter',
+                  onPressed: () => vm.setLetter(letter),
+                  child: Text(
+                    AppConstants.letters[index],
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+        
         return Scaffold(
           backgroundColor: Colors.white.withOpacity(0.8),
           appBar: AppBar(
@@ -123,30 +150,7 @@ class HomeScreenState extends State<HomeScreen> implements HomeNavigator {
                 ? const CircularProgress()
                 : Row(
                     children: <Widget>[
-                      SizedBox(
-                        width: 80,
-                        child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: AppConstants.letters.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: FloatingActionButton(
-                                heroTag: AppConstants.letters[index],
-                                onPressed: () {},
-                                child: Text(
-                                  AppConstants.letters[index],
-                                  style: const TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      filterLetters,
                       IndexedStack(
                         index: AppConstants.homeLists.indexOf(vm.setPage),
                         children: <Widget>[

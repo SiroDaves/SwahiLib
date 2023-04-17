@@ -134,7 +134,7 @@ class WordViewState extends State<WordView>
                     },
                   ),
                 SizedBox(
-                  height: size.height - 145,
+                  height: size.height - 150,
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
