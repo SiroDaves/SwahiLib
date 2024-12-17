@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'common/auth/auth_bloc.dart';
 import 'core/theme/bloc/theme_bloc.dart';
@@ -81,17 +79,10 @@ class AppViewState extends State<AppView> {
             themeMode: localStorage.getThemeMode(),
             theme: AppTheme.lightTheme(),
             darkTheme: AppTheme.darkTheme(),
-            supportedLocales: const [Locale('en'), Locale('sw')],
             debugShowCheckedModeBanner: false,
             navigatorKey: navigatorKey,
             initialRoute: MainNavigatorState.initialRoute,
             onGenerateRoute: MainNavigatorState.onGenerateRoute,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
             builder: (context, child) => BlocListener<AuthBloc, AuthState>(
               listener: (context, state) {
                 switch (state.status) {

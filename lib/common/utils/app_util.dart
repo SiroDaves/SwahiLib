@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:developer' as logging show log;
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 bool isDesktop = Platform.isWindows || Platform.isLinux || Platform.isMacOS;
@@ -45,44 +44,6 @@ String? filterString(String input) {
     return match.group(1);
   }
   return input; // Return original string if no match found
-}
-
-String feedbackMessage(String code, AppLocalizations tr) {
-  switch (code) {
-    case '0':
-      return tr.labelError0;
-    case '404':
-      return tr.labelError404;
-    case '500':
-      return tr.labelError500;
-    case '504':
-      return tr.labelError504;
-    case '999':
-      return tr.labelError999;
-    case '1000':
-      return tr.labelError1000;
-    default:
-      return code;
-  }
-}
-
-String emptyStateMessage(String code, AppLocalizations tr) {
-  switch (code) {
-    case '0':
-      return tr.labelFeedback0;
-    case '404':
-      return tr.labelFeedback404;
-    case '500':
-      return tr.labelFeedback500;
-    case '504':
-      return tr.labelFeedback504;
-    case '999':
-      return tr.labelFeedback999;
-    case '1000':
-      return tr.labelFeedback1000;
-    default:
-      return code;
-  }
 }
 
 dynamic tryJsonDecode(String source) {
