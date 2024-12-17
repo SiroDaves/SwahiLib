@@ -2,10 +2,10 @@ name: swahilib
 description: Kiswahili Kitukuzwe.
 publish_to: 'none'
 
-version: 0.0.1
+version: 1.0.1
 
 environment:
-  sdk: '>=2.19.0 <3.0.0'
+  sdk: ^3.5.4
 
 dependencies:
   card_swiper: ^2.0.4
@@ -113,10 +113,6 @@ targets:
     builders:
       json_serializable:
         options:
-          # Options configure how source code is generated for every
-          # `@JsonSerializable`-annotated class in the package.
-          #
-          # The default value for each is listed.
           any_map: false
           checked: false
           create_factory: true
