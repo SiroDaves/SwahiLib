@@ -8,7 +8,7 @@
 PRODUCT_NAME = swahilib
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.swahilib
+PRODUCT_BUNDLE_IDENTIFIER = com.example.swahilib
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 com.swahilib. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2024 com.example. All rights reserved.
