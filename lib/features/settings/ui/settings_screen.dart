@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../common/utils/app_util.dart';
 import '../../../common/repository/local_storage.dart';
@@ -25,7 +24,6 @@ class SettingsScreenState extends State<SettingsScreen> {
 
   bool updateFound = false;
   bool isTabletOrIpad = false;
-  late AppLocalizations tr;
 
   String appTheme = '';
 
@@ -45,17 +43,17 @@ class SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     var bodyWidget = BlocProvider(
-      create: (context) => SettingsBloc()..add(SettingsInit()),
+      create: (context) => SettingsBloc()..add(const SettingsInit()),
       child: BlocConsumer<SettingsBloc, SettingsState>(
         listener: (context, state) {},
         builder: (context, state) {
           return ListView(
             children: [
               Card(
-                margin: EdgeInsets.all(Sizes.xs),
+                margin: const EdgeInsets.all(Sizes.xs),
                 color: ThemeColors.bgColorBW(context),
                 child: ListTile(
-                  leading: Icon(Icons.color_lens),
+                  leading: const Icon(Icons.color_lens),
                   title: const Text('App Theme'),
                   subtitle: Text(appTheme),
                   onTap: () => selectThemeDialog(context),
@@ -68,7 +66,7 @@ class SettingsScreenState extends State<SettingsScreen> {
     );
 
     return Scaffold(
-      appBar: AppBar(title: Text('Settings')),
+      appBar: AppBar(title: const Text('Settings')),
       body: bodyWidget,
     );
   }
