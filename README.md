@@ -19,8 +19,6 @@ The Kamusi ya Kiswahili app has been rebranded to SwahiLib. If you are looking f
 - navigator
 - linting (flutter analyze)
 
-This app was made possible by the [Icapps Flutter Template](https://github.com/icapps/flutter-template) which I have written about in my article: [A Template from Icapps](https://jacksiro.hashnode.dev/a-flutter-template-from-icapps-part-1)
-
 ## How to Run
 ```
 flutter pub get
