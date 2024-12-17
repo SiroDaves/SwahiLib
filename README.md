@@ -1,5 +1,5 @@
 # SwahiLib - Kamusi ya Kiswahili
-The Kamusi ya Kiswahili app has been rebranded to SwahiLib. If you are looking for the old app you can find it in the [old-app branch](https://github.com/oyonde/SwahiLib/tree/old-app)
+The Kamusi ya Kiswahili app has been rebranded to SwahiLib. If you are looking for the old app you can find it in the [old-app branch](https://github.com/SiroDaves/SwahiLib/tree/old-app)
 
 
 <a href='https://play.google.com/store/apps/details?id=com.swahilib'>
@@ -8,11 +8,9 @@ The Kamusi ya Kiswahili app has been rebranded to SwahiLib. If you are looking f
 
 
 ## Plugins used
-- dependency injection (injectable/get it)
-- network layer (dio)
-- network logging (niddler, dio)
-- viewmodels (provider)
-- translations (icapps translations)
+- dependency injection (injectable/get_it)
+- network layer (http)
+- state management (flutter_bloc)
 - json serialization (json_serializable)
 - different environments
 - themes
