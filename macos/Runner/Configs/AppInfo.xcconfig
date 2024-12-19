@@ -11,4 +11,4 @@ PRODUCT_NAME = SwahiLib
 PRODUCT_BUNDLE_IDENTIFIER = com.swahilib
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2024 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2024 Futuristic Ke. All rights reserved.

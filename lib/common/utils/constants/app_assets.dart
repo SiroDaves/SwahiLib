@@ -2,10 +2,10 @@ class AppAssets {
   AppAssets._();
 
   static const assetsImages = 'assets/images';
+  static const assetsIcon = 'assets/icons';
 
-  static const String dcugIcon = '$assetsImages/dcug.png';
-  static const String hashtagIcon = '$assetsImages/dcug24-hashtag.png';
-  static const String droidconIcon = '$assetsImages/droidcon-uganda.png';
-  static const String droidconUgIcon = '$assetsImages/swahilib.png';
+  static const String appIcon = '$assetsIcon/app_icon.png';
+  static const String appIconWhiteBg = '$assetsIcon/app_icon_white_bg.png';
+  static const String iconProject = '$assetsIcon/project.png';
   static const String imgZeroState = '$assetsImages/empty.png';
 }

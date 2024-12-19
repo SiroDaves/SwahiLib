@@ -103,7 +103,7 @@ class _SpeakerImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var defaultPic = Image.asset(
-      AppAssets.dcugIcon,
+      AppAssets.appIcon,
       fit: BoxFit.cover,
     );
     return ClipRRect(

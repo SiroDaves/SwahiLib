@@ -11,8 +11,10 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
+    buildToolsVersion "30.0.0"
+    
     namespace = "com.swahilib"
-    compileSdk = 34
+    compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -21,26 +23,46 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = 17
     }
 
     defaultConfig {
         applicationId "com.swahilib"
-        minSdkVersion 21
-        targetSdkVersion 33
-        compileSdkVersion 33
+        minSdkVersion 24
+        targetSdkVersion 34
+        compileSdkVersion 34
         multiDexEnabled true
         versionCode 2
         versionName "1.0.0.1" 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
             storePassword keystoreProperties['storePassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+        }
+    }
+
+    flavorDimensions "flavors"
+    productFlavors { 
+        production {
+            dimension "flavors"
+            applicationIdSuffix ""
+            manifestPlaceholders = [appName: "Swahilib"]
+        }
+        staging {
+            dimension "flavors"
+            applicationIdSuffix ".stg"
+            manifestPlaceholders = [appName: "Stg Swahilib"]
+            versionCode 2
+            versionName "1.0.0.1"
+        }
+        develop {
+            dimension "flavors"
+            applicationIdSuffix ".dev"
+            manifestPlaceholders = [appName: "Dev Swahilib"]
         }
     }
 
@@ -51,9 +73,9 @@ android {
         release {
             minifyEnabled true
             signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
     }
-
 }
 
 flutter {

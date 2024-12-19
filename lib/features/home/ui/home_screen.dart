@@ -60,7 +60,7 @@ class HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           var appBar = AppBar(
             title: GestureDetector(
-              child: Image.asset(AppAssets.droidconIcon, height: 50),
+              child: Image.asset(AppAssets.appIcon, height: 50),
               onTap: () => Navigator.pushNamed(context, RouteNames.settings),
             ),
           );
