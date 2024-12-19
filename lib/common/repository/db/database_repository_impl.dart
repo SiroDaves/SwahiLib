@@ -9,72 +9,93 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   DatabaseRepositoryImpl(this._appDB);
 
   @override
-  Future<List<Bookmark>> fetchBookmarks() async {
-    return _appDB.bookmarksDao.fetchBookmarks();
+  Future<List<History>> fetchHistories() async {
+    return _appDB.historiesDao.fetchHistories();
   }
 
   @override
-  Future<void> saveBookmark(Bookmark bookmark) async {
-    return _appDB.bookmarksDao.insertBookmark(bookmark);
+  Future<void> saveHistory(History history) async {
+    return _appDB.historiesDao.insertHistory(history);
   }
 
   @override
-  Future<void> deleteBookmark(Bookmark bookmark) async {
-    return _appDB.bookmarksDao.deleteBookmark(bookmark);
+  Future<void> removeAllHistories() async {
+    return _appDB.historiesDao.deleteAllHistories();
   }
 
   @override
-  Future<void> removeAllBookmarks() async {
-    return _appDB.bookmarksDao.deleteAllBookmarks();
+  Future<List<Idiom>> fetchIdioms() async {
+    return _appDB.idiomsDao.fetchIdioms();
   }
 
   @override
-  Future<List<Room>> fetchRooms() async {
-    return _appDB.roomsDao.fetchRooms();
+  Future<void> saveIdiom(Idiom idiom) async {
+    return _appDB.idiomsDao.insertIdiom(idiom);
   }
 
   @override
-  Future<void> saveRoom(Room room) async {
-    return _appDB.roomsDao.insertRoom(room);
+  Future<void> removeAllIdioms() async {
+    return _appDB.idiomsDao.deleteAllIdioms();
   }
 
   @override
-  Future<void> removeAllRooms() async {
-    return _appDB.roomsDao.deleteAllRooms();
+  Future<List<Proverb>> fetchProverbs() async {
+    return _appDB.proverbsDao.fetchProverbs();
   }
 
   @override
-  Future<List<Speaker>> fetchSpeakers() async {
-    return _appDB.speakersDao.fetchSpeakers();
+  Future<void> saveProverb(Proverb proverb) async {
+    return _appDB.proverbsDao.insertProverb(proverb);
   }
 
   @override
-  Future<void> saveSpeaker(Speaker speaker) async {
-    return _appDB.speakersDao.insertSpeaker(speaker);
+  Future<void> removeAllProverbs() async {
+    return _appDB.proverbsDao.deleteAllProverbs();
   }
 
   @override
-  Future<void> removeAllSpeakers() async {
-    return _appDB.speakersDao.deleteAllSpeakers();
+  Future<List<Saying>> fetchSayings() async {
+    return _appDB.sayingsDao.fetchSayings();
   }
 
   @override
-  Future<List<Session>> fetchSessions() async {
-    return _appDB.sessionsDao.fetchSessions();
+  Future<void> saveSaying(Saying saying) async {
+    return _appDB.sayingsDao.insertSaying(saying);
   }
 
   @override
-  Future<void> saveSession(Session session) async {
-    return _appDB.sessionsDao.insertSession(session);
+  Future<void> removeAllSayings() async {
+    return _appDB.sayingsDao.deleteAllSayings();
   }
 
   @override
-  Future<void> bookmarkSession(int id, bool bookmark, String updated) async {
-    return _appDB.sessionsDao.bookmarkSession(id, bookmark, updated);
+  Future<List<Search>> fetchSearches() async {
+    return _appDB.searchesDao.fetchSearches();
   }
 
   @override
-  Future<void> removeAllSessions() async {
-    return _appDB.sessionsDao.deleteAllSessions();
+  Future<void> saveSearch(Search search) async {
+    return _appDB.searchesDao.insertSearch(search);
   }
+
+  @override
+  Future<void> removeAllSearches() async {
+    return _appDB.searchesDao.deleteAllSearches();
+  }
+
+  @override
+  Future<List<Word>> fetchWords() async {
+    return _appDB.wordsDao.fetchWords();
+  }
+
+  @override
+  Future<void> saveWord(Word word) async {
+    return _appDB.wordsDao.insertWord(word);
+  }
+
+  @override
+  Future<void> removeAllWords() async {
+    return _appDB.wordsDao.deleteAllWords();
+  }
+
 }

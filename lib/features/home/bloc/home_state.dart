@@ -10,18 +10,12 @@ class HomeState with _$HomeState {
 
   const factory HomeState.success() = HomeSuccessState;
 
-  const factory HomeState.fetchedOnline(
-    bool fetched,
-  ) = HomeFetchedOnlineState;
-
-  const factory HomeState.fetchedLocal(
-    List<Bookmark> bookmarks,
-    List<Room> rooms,
-    List<Speaker> speakers,
-    List<Session> sessions,
-  ) = HomeFetchedLocalState;
-
-  const factory HomeState.bookmarked(bool bookmarked) = HomeBookmarkedState;
+  const factory HomeState.fetched(
+    List<Idiom> idioms,
+    List<Proverb> proverbs,
+    List<Saying> sayings,
+    List<Word> words,
+  ) = HomeFetchedDataState;
 
   const factory HomeState.failure(String feedback) = HomeFailureState;
 }

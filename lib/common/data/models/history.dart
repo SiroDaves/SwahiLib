@@ -2,18 +2,21 @@ import 'package:floor/floor.dart';
 
 import '../../utils/constants/app_constants.dart';
 
-@Entity(tableName: AppConstants.roomsTable)
-class Room {
+@Entity(tableName: AppConstants.historiesTable)
+class History {
   @PrimaryKey()
   int? id;
-  String? name;
-  int? sort;
+  String? objectId;
+  int? item;
+  String? type;
   String? createdAt;
 
-  Room({
+  History({
     this.id,
-    this.name,
-    this.sort,
+    this.objectId,
+    this.item,
+    this.type,
     this.createdAt,
   });
+
 }

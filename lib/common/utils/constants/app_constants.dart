@@ -9,6 +9,13 @@ import '../app_util.dart';
 class AppConstants {
   AppConstants._();
   static String dbName = 'SwahiLib.db';
+  static const String historiesTable = 'histories';
+  static const String idiomsTable = 'idioms';
+  static const String proverbsTable = 'proverbs';
+  static const String sayingsTable = 'sayings';
+  static const String searchesTable = 'searches';
+  static const String wordsTable = 'words';
+
   static const String bookmarksTable = 'bookmarks';
   static const String roomsTable = 'rooms';
   static const String speakersTable = 'speakers';

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../common/widgets/text_scale_factor.dart';
 import '../../features/home/ui/home_screen.dart';
-import '../../features/sessions/ui/sessions_screen.dart';
 import '../../features/settings/ui/settings_screen.dart';
-import '../../features/speakers/ui/speakers_screen.dart';
 import '../../features/user/splash/splash_screen.dart';
 import 'route_names.dart';
 
@@ -60,8 +58,6 @@ class MainNavigatorState extends State<MainNavigator> with MainNavigationMixin {
       '': (context) => const SplashScreen(),
       RouteNames.splash: (context) => const SplashScreen(),
       RouteNames.home: (context) => const HomeScreen(),
-      RouteNames.sessions: (context) => const SessionsScreen(),
-      RouteNames.speakers: (context) => const SpeakersScreen(),
       RouteNames.settings: (context) => const SettingsScreen(),
     };
 

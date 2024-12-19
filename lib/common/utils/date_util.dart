@@ -3,8 +3,6 @@ import 'dart:io';
 
 import 'package:intl/intl.dart';
 
-import '../data/models/session.dart';
-
 String dateNow() {
   return DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
 }
@@ -25,18 +23,6 @@ String formatTime(String dateTimeString) {
   } catch (e) {
     return 'Invalid date format';
   }
-}
-
-String getDayNumber(String date, List<Session> sessions) {
-  final dateTime = DateTime.parse(date);
-
-  final firstDate =
-      DateTime.parse(sessions.first.startsAt?.substring(0, 10) ?? '');
-  return (DateTime(dateTime.year, dateTime.month, dateTime.day)
-              .difference(firstDate)
-              .inDays +
-          1)
-      .toString();
 }
 
 String truncateString(String text, int maxLength) {
@@ -102,7 +88,6 @@ String humanReadableDate(String dateString) {
   int minute = int.parse(dateString.substring(10, 12));
   int second = int.parse(dateString.substring(12, 14));
 
-  // Create a DateTime object
   DateTime date = DateTime(year, month, day, hour, minute, second);
   String formattedDate = DateFormat('dd-MM-yyyy').format(date);
   return formattedDate;
@@ -113,7 +98,6 @@ String formatDatePendingApplication(String inputDate) {
   String month = inputDate.substring(4, 6);
   String day = inputDate.substring(6, 8);
 
-  // Construct a DateTime object
   DateTime dateTime =
       DateTime(int.parse(year), int.parse(month), int.parse(day));
 
@@ -218,7 +202,6 @@ List<String> getAllMonths() {
 }
 
 String mapMonthToMonthNo(int year, String month) {
-  // Define a map to map month names to their numerical representations.
   final months = {
     'Jan': '01',
     'Feb': '02',

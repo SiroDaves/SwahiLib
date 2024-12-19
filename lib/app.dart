@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/auth/auth_bloc.dart';
+import 'common/utils/constants/pref_constants.dart';
+import 'common/utils/date_util.dart';
 import 'core/theme/bloc/theme_bloc.dart';
 import 'core/theme/theme_data.dart';
 import 'common/repository/auth_repository.dart';
@@ -69,6 +71,8 @@ class AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     var localStorage = getIt<LocalStorage>();
+    bool isSelected = localStorage.getPrefBool(PrefConstants.dataIsSelectedKey);
+    bool isLoaded = localStorage.getPrefBool(PrefConstants.dataIsLoadedKey);
 
     return BlocProvider(
       create: (context) => ThemeBloc(),
@@ -91,10 +95,29 @@ class AppViewState extends State<AppView> {
                   case AuthStatus.unverified:
                     navigator.pushNamed<void>(RouteNames.login);
                   case AuthStatus.authenticated:
-                    navigator.pushNamedAndRemoveUntil<void>(
-                      RouteNames.home,
-                      (route) => false,
-                    );
+                    if (isLoaded) {
+                      navigator.pushNamedAndRemoveUntil<void>(
+                        RouteNames.home,
+                        (route) => false,
+                      );
+                    } else {
+                      if (isSelected) {
+                        navigator.pushNamedAndRemoveUntil<void>(
+                          RouteNames.step2Selection,
+                          (route) => false,
+                        );
+                      } else {
+                        localStorage.setPrefString(
+                          PrefConstants.dateInstalledKey,
+                          dateNow(),
+                        );
+
+                        navigator.pushNamedAndRemoveUntil<void>(
+                          RouteNames.step1Selection,
+                          (route) => false,
+                        );
+                      }
+                    }
                 }
               },
               child: child,
