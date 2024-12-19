@@ -1,31 +1,40 @@
 import '../../data/models/models.dart';
 
 abstract class DatabaseRepository {
-  Future<List<Bookmark>> fetchBookmarks();
+  Future<List<History>> fetchHistories();
 
-  Future<void> saveBookmark(Bookmark bookmark);
+  Future<void> saveHistory(History history);
 
-  Future<void> deleteBookmark(Bookmark bookmark);
+  Future<void> removeAllHistories();
 
-  Future<void> removeAllBookmarks();
+  Future<List<Idiom>> fetchIdioms();
 
-  Future<List<Room>> fetchRooms();
+  Future<void> saveIdiom(Idiom idiom);
 
-  Future<void> saveRoom(Room room);
+  Future<void> removeAllIdioms();
 
-  Future<void> removeAllRooms();
+  Future<List<Proverb>> fetchProverbs();
 
-  Future<List<Session>> fetchSessions();
+  Future<void> saveProverb(Proverb proverb);
 
-  Future<void> saveSession(Session session);
+  Future<void> removeAllProverbs();
 
-  Future<void> bookmarkSession(int id, bool bookmark, String updated);
+  Future<List<Saying>> fetchSayings();
 
-  Future<void> removeAllSessions();
+  Future<void> saveSaying(Saying saying);
 
-  Future<List<Speaker>> fetchSpeakers();
+  Future<void> removeAllSayings();
 
-  Future<void> saveSpeaker(Speaker speaker);
+  Future<List<Search>> fetchSearches();
 
-  Future<void> removeAllSpeakers();
+  Future<void> saveSearch(Search search);
+
+
+  Future<void> removeAllSearches();
+
+  Future<List<Word>> fetchWords();
+
+  Future<void> saveWord(Word word);
+
+  Future<void> removeAllWords();
 }

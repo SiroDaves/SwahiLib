@@ -43,7 +43,7 @@ String? filterString(String input) {
   if (match != null && match.groupCount >= 1) {
     return match.group(1);
   }
-  return input; // Return original string if no match found
+  return input;
 }
 
 dynamic tryJsonDecode(String source) {
