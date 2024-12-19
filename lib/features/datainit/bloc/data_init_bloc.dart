@@ -55,48 +55,10 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     SaveData event,
     Emitter<DataInitState> emit,
   ) async {
-    emit(DataInitProgressState());
-
-    if (event.words.isNotEmpty) {
-      for (int i = 0; i < event.words.length; i++) {
-        try {
-          String feedback = '';
-          int progress = (i / event.words.length * 100).toInt();
-
-          switch (progress) {
-            case 1:
-              feedback = "On your\nmarks ...";
-              break;
-            case 5:
-              feedback = "Set,\nReady ...";
-              break;
-            case 10:
-              feedback = "Loading\nsongs ...";
-              break;
-            case 20:
-              feedback = "Patience\npays ...";
-              break;
-            case 40:
-              feedback = "Loading\nsongs ...";
-              break;
-            case 75:
-              feedback = "Thanks for\nyour patience!";
-              break;
-            case 85:
-              feedback = "Finishing up";
-              break;
-            case 95:
-              feedback = "Almost done";
-              break;
-          }
-          emit(DataInitSavingState(progress, feedback));
-          await _dbRepo.saveSong(event.songs[i]);
-        } catch (_) {}
-      }
-    }
+    emit(const DataInitProgressState());
 
     _localStorage.setPrefBool(PrefConstants.dataIsLoadedKey, true);
-    
+
     emit(const DataInitSavedState());
   }
 }
