@@ -46,7 +46,7 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
         idioms = dataList.map((item) => Idiom.fromJson(item)).toList();
       }
     } catch (e) {
-      logger('Unable to fetch idioms');
+      logger('Unable to fetch idioms: $e');
     }
     emit(DataInitFetchedState(idioms, proverbs, sayings, words));
   }
