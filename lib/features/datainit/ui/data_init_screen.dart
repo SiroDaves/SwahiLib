@@ -17,7 +17,6 @@ class DataInitScreen extends StatefulWidget {
 
 class DataInitScreenState extends State<DataInitScreen> {
   String selectedBooks = "";
-  List<String> bookNos = [];
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +57,7 @@ class DataInitScreenState extends State<DataInitScreen> {
           );
 
           if (state is DataInitProgressState) {
-            bodyWidget = const WaveProgress();
+            bodyWidget = const CircularProgress();
           } else if (state is DataInitSavingState) {
             bodyWidget = Stack(
               children: [
