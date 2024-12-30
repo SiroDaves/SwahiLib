@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../common/widgets/text_scale_factor.dart';
+import '../../features/datainit/ui/data_init_screen.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/settings/ui/settings_screen.dart';
 import '../../features/user/splash/splash_screen.dart';
@@ -9,7 +10,7 @@ import 'route_names.dart';
 class MainNavigator extends StatefulWidget {
   final Widget? child;
 
-  const MainNavigator({this.child, Key? key}) : super(key: key);
+  const MainNavigator({this.child, super.key});
 
   @override
   MainNavigatorState createState() => MainNavigatorState();
@@ -57,6 +58,7 @@ class MainNavigatorState extends State<MainNavigator> with MainNavigationMixin {
     final Map<String, WidgetBuilder> routes = {
       '': (context) => const SplashScreen(),
       RouteNames.splash: (context) => const SplashScreen(),
+      RouteNames.dataInit: (context) => const DataInitScreen(),
       RouteNames.home: (context) => const HomeScreen(),
       RouteNames.settings: (context) => const SettingsScreen(),
     };
