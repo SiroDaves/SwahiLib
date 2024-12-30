@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/models/word.dart';
 import '../utils/constants/pref_constants.dart';
 
 @singleton
@@ -10,6 +11,8 @@ abstract class LocalStorage {
   factory LocalStorage(SharedPreferences localStorage) = LocalStorageImp;
 
   ThemeMode getThemeMode();
+
+  List<Word>? words = [];
 
   Future<void> updateThemeMode(ThemeMode themeMode);
 
@@ -110,4 +113,7 @@ class LocalStorageImp implements LocalStorage {
     }
     sharedPrefs.setString(settingsKey, settingsValue);
   }
+
+  @override
+  List<Word>? words;
 }
