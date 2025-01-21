@@ -1,14 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../common/data/models/models.dart';
 import '../../../common/repository/db/database_repository.dart';
 import '../../../common/utils/app_util.dart';
-import '../../../common/utils/constants/api_constants.dart';
 import '../../../common/utils/constants/pref_constants.dart';
-import '../../../common/repository/local_storage.dart';
+import '../../../common/repository/pref_repository.dart';
 import '../../../core/di/injectable.dart';
 import '../domain/data_init_repository.dart';
 
@@ -23,8 +20,8 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     on<SaveData>(_onSaveData);
   }
 
-  final _dataInitRepo = DataInitRepository();
-  final _localStorage = getIt<LocalStorage>();
+  final _dataRepo = DataInitRepository();
+  final _prefRepo = getIt<PrefRepository>();
   final _dbRepo = getIt<DatabaseRepository>();
 
   void _onFetchData(
@@ -37,17 +34,11 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     List<Word> words = [];
     emit(const DataInitProgressState());
 
-    try {
-      var idiomsResp = await _dataInitRepo.getData(ApiConstants.idioms);
-      if (idiomsResp.statusCode == 200) {
-        List<dynamic> dataList = List<Map<String, dynamic>>.from(
-          jsonDecode(idiomsResp.body),
-        );
-        idioms = dataList.map((item) => Idiom.fromJson(item)).toList();
-      }
-    } catch (e) {
-      logger('Unable to fetch idioms: $e');
-    }
+    idioms = await _dataRepo.fetchIdioms();
+    proverbs = await _dataRepo.fetchProverbs();
+    sayings = await _dataRepo.fetchSayings();
+    words = await _dataRepo.fetchWords();
+    
     emit(DataInitFetchedState(idioms, proverbs, sayings, words));
   }
 
@@ -56,8 +47,17 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     Emitter<DataInitState> emit,
   ) async {
     emit(const DataInitProgressState());
-
-    _localStorage.setPrefBool(PrefConstants.dataIsLoadedKey, true);
+    try {
+      if (event.words.isNotEmpty) {
+        await _dbRepo.removeAllWords();
+        for (final word in event.words) {
+          await _dbRepo.saveWord(word);
+        }
+      }
+    } catch (e) {
+      logger('Unable to save words: $e');
+    }
+    _prefRepo.setPrefBool(PrefConstants.dataIsLoadedKey, true);
 
     emit(const DataInitSavedState());
   }

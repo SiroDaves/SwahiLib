@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'common/auth/auth_bloc.dart';
+import 'common/authe/authe_bloc.dart';
 import 'common/utils/constants/pref_constants.dart';
 import 'common/utils/date_util.dart';
 import 'core/theme/bloc/theme_bloc.dart';
 import 'core/theme/theme_data.dart';
-import 'common/repository/auth_repository.dart';
-import 'common/repository/local_storage.dart';
+import 'common/repository/authe_repository.dart';
+import 'common/repository/pref_repository.dart';
 import 'core/di/injectable.dart';
 import 'core/navigator/main_navigator.dart';
 import 'core/navigator/route_names.dart';
@@ -24,26 +24,26 @@ class MyAppState extends State<MyApp> {
   final navigatorKey = MainNavigatorState.navigationKey;
   NavigatorState get navigator =>
       MainNavigatorState.navigationKey.currentState!;
-  late final AuthRepository _authRepo;
+  late final AutheRepository _autheRepo;
 
   @override
   void initState() {
     super.initState();
-    _authRepo = AuthRepository();
+    _autheRepo = AutheRepository();
   }
 
   @override
   void dispose() {
-    _authRepo.dispose();
+    _autheRepo.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
-      value: _authRepo,
+      value: _autheRepo,
       child: BlocProvider(
-        create: (_) => AuthBloc(authRepo: _authRepo),
+        create: (_) => AutheBloc(autheRepo: _autheRepo),
         child: const AppView(),
       ),
     );
@@ -70,8 +70,7 @@ class AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    var localStorage = getIt<LocalStorage>();
-    bool isSelected = localStorage.getPrefBool(PrefConstants.dataIsSelectedKey);
+    var localStorage = getIt<PrefRepository>();
     bool isLoaded = localStorage.getPrefBool(PrefConstants.dataIsLoadedKey);
 
     return BlocProvider(
@@ -87,36 +86,29 @@ class AppViewState extends State<AppView> {
             navigatorKey: navigatorKey,
             initialRoute: MainNavigatorState.initialRoute,
             onGenerateRoute: MainNavigatorState.onGenerateRoute,
-            builder: (context, child) => BlocListener<AuthBloc, AuthState>(
+            builder: (context, child) => BlocListener<AutheBloc, AutheState>(
               listener: (context, state) {
                 switch (state.status) {
-                  case AuthStatus.unauthenticated:
+                  case AutheStatus.unauthenticated:
                     navigator.pushNamed<void>(RouteNames.signup);
-                  case AuthStatus.unverified:
+                  case AutheStatus.unverified:
                     navigator.pushNamed<void>(RouteNames.login);
-                  case AuthStatus.authenticated:
+                  case AutheStatus.authenticated:
                     if (isLoaded) {
                       navigator.pushNamedAndRemoveUntil<void>(
                         RouteNames.home,
                         (route) => false,
                       );
                     } else {
-                      if (isSelected) {
-                        navigator.pushNamedAndRemoveUntil<void>(
-                          RouteNames.step2Selection,
-                          (route) => false,
-                        );
-                      } else {
-                        localStorage.setPrefString(
-                          PrefConstants.dateInstalledKey,
-                          dateNow(),
-                        );
+                      localStorage.setPrefString(
+                        PrefConstants.dateInstalledKey,
+                        dateNow(),
+                      );
 
-                        navigator.pushNamedAndRemoveUntil<void>(
-                          RouteNames.step1Selection,
-                          (route) => false,
-                        );
-                      }
+                      navigator.pushNamedAndRemoveUntil<void>(
+                        RouteNames.dataInit,
+                        (route) => false,
+                      );
                     }
                 }
               },

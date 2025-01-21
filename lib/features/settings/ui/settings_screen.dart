@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../common/utils/app_util.dart';
-import '../../../common/repository/local_storage.dart';
+import '../../../common/repository/pref_repository.dart';
 import '../../../common/widgets/inputs/radio_input.dart';
 import '../../../core/di/injectable.dart';
 import '../../../core/theme/bloc/theme_bloc.dart';
@@ -20,7 +20,7 @@ class SettingsScreen extends StatefulWidget {
 class SettingsScreenState extends State<SettingsScreen> {
   late ThemeBloc _themeBloc;
   late SettingsScreenState parent;
-  late LocalStorage _localStorage;
+  late PrefRepository _prefRepo;
 
   bool updateFound = false;
   bool isTabletOrIpad = false;
@@ -30,13 +30,13 @@ class SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    _localStorage = getIt<LocalStorage>();
+    _prefRepo = getIt<PrefRepository>();
     _themeBloc = context.read<ThemeBloc>();
-    appTheme = getThemeModeString(_localStorage.getThemeMode());
+    appTheme = getThemeModeString(_prefRepo.getThemeMode());
   }
 
   void onThemeChanged(ThemeMode themeMode) {
-    _localStorage.updateThemeMode(themeMode);
+    _prefRepo.updateThemeMode(themeMode);
     _themeBloc.add(ThemeModeChanged(themeMode));
   }
 

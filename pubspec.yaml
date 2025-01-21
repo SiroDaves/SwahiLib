@@ -25,6 +25,7 @@ dependencies:
   path: ^1.9.0
   path_provider: ^2.1.5
   percent_indicator: ^4.2.4
+  realtime_client: ^2.4.1
   rxdart: ^0.28.0
   sentry_flutter: ^8.5.0
   share_plus: ^10.1.2
@@ -33,6 +34,7 @@ dependencies:
   skeleton_loader: ^2.0.0+4
   sqflite: ^2.4.1
   styled_widget: ^0.4.1
+  supabase_flutter: ^2.8.3
   textstyle_extensions: ^2.0.0-nullsafety
   url_launcher: ^6.3.1
 

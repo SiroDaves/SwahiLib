@@ -5,9 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "swa",
+            "name": "swali",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "prod",
+                "--dart-define-from-file",
+                "keys-prod.json"
+            ],
         },
     ]
 }

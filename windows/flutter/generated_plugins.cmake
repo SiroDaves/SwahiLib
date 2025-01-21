@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  app_links
   sentry_flutter
   share_plus
   url_launcher_windows

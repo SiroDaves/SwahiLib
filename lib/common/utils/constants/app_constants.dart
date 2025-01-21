@@ -54,7 +54,6 @@ class AppConstants {
   static const donationPatreaonLink = "https://www.patreon.com/SongLib";
 
   static const appKamusi = "Kamusi ya Kiswahili";
-  static const appVersion = "v0.0.1.2";
   static const appTagline = "Kiswahili Kitukuzwe";
   static const listTitle = "Song Lists";
   static const searchTitle = "Song Search";

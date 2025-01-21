@@ -5,15 +5,15 @@ import 'package:injectable/injectable.dart';
 import '../utils/app_util.dart';
 
 
-enum AuthStatus { authenticated, unauthenticated,  unverified }
+enum AutheStatus { authenticated, unauthenticated,  unverified }
 
 @lazySingleton
-class AuthRepository {
-  final _controller = StreamController<AuthStatus>();
+class AutheRepository {
+  final _controller = StreamController<AutheStatus>();
 
-  Stream<AuthStatus> get status async* {
+  Stream<AutheStatus> get status async* {
     await Future<void>.delayed(const Duration(seconds: 3));
-    yield AuthStatus.authenticated;
+    yield AutheStatus.authenticated;
     yield* _controller.stream;
   }
 
@@ -21,7 +21,7 @@ class AuthRepository {
     logger("User auth status: Unverified");
     await Future.delayed(
       const Duration(seconds: 2),
-      () => _controller.add(AuthStatus.unverified),
+      () => _controller.add(AutheStatus.unverified),
     );
   }
 
@@ -29,7 +29,7 @@ class AuthRepository {
     logger("User auth status: Authenticated");
     await Future.delayed(
       const Duration(seconds: 2),
-      () => _controller.add(AuthStatus.authenticated),
+      () => _controller.add(AutheStatus.authenticated),
     );
   }
 
@@ -37,7 +37,7 @@ class AuthRepository {
     logger("User auth status: Unauthenticated");
     await Future.delayed(
       const Duration(seconds: 2),
-      () => _controller.add(AuthStatus.unauthenticated),
+      () => _controller.add(AutheStatus.unauthenticated),
     );
   }
 
