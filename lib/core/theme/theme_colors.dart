@@ -27,37 +27,38 @@ class ThemeColors {
   static const Color trafficAmber = Color.fromARGB(255, 241, 175, 58);
   static const Color trafficRed = Color.fromARGB(255, 246, 0, 1);
   static const Color trafficGreen = Color.fromARGB(255, 0, 247, 0);
-// Supportive theme
-  static const primary = Color(0xFF002548);
-  static const primaryDark = Color(0xFF001223);
-  static const accent = Color(0xFF009AC7);
-  static const accentDark = Color(0xFF0080A8);
+
+  // Supportive theme
+  static const primary = Color(0xFF002548); // Blue
+  static const primaryDark = Color(0xFF001A33); // Dark Blue
+  static const accent = Color(0xFF1565C0); // Blue
+  static const accent1 = Color(0xFF42A5F5); // Light Blue
 
 // Light Mode Colors
   /// Main color for the app, used in branding and key elements
-  static const Color kPrimaryRed = Color(0xFFD32F2F); // Red
+  static const Color kPrimaryBlue = Color(0xFF002548); // Blue
 
   /// Used for headers and prominent UI elements
-  static const Color kDarkRed = Color(0xFFB71C1C); // Dark Red
+  static const Color kDarkBlue = Color(0xFF001A33); // Dark Blue
 
   /// Background color for sections like chats
-  static const Color kLightTeal = Color(0xFFB2DFDB); // Light Teal Green
+  static const Color kLightBlue = Color(0xFFBBDEFB); // Light Blue
 
   /// Provides variation and depth in the color scheme
-  static const Color kComplementaryRed = Color(0xFFE57373); // Light Red
+  static const Color kComplementaryBlue = Color(0xFF64B5F6); // Light Blue
 
 // Dark Mode Colors
   /// Primary background color in dark mode
   static const Color kDarkGrayBlack = Color(0xFF121212); // Dark Gray
 
   /// Used for headers and prominent UI elements in dark mode
-  static const Color kPrimaryDeepRed = Color(0xFF9C1B1B); // Deep Red
+  static const Color kPrimaryDeepBlue = Color(0xFF002244); // Deep Blue
 
   /// Used for headers and prominent UI elements in dark mode
-  static const Color kDeepRed = Color(0xFFB71C1C); // Dark Red
+  static const Color kDeepBlue = Color(0xFF001A33); // Dark Blue
 
   /// Complementary dark color for various UI elements in dark mode
-  static const Color kDarkTealGreen = Color(0xFF00695C); // Dark Teal Green
+  static const Color kDarkBlueShade = Color(0xFF0D47A1); // Dark Blue
 
   /// Background color for message bubbles and other elements in dark mode
   static const Color kMediumGray = Color(0xFF303030); // Medium Gray
@@ -66,12 +67,12 @@ class ThemeColors {
   static const Color kLightGrayDarkMode = Color(0xFFAEBAC1); // Light Gray
 
   /// Used for icons and action buttons in dark mode
-  static const Color kAccentTealGreen = Color(0xFF80CBC4); // Lighter Teal Green
+  static const Color kAccentBlue = Color(0xFF64B5F6); // Lighter Blue
 
   static Color bgColorPrimary(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
         ? ThemeColors.primary
-        : ThemeColors.kDarkTealGreen;
+        : ThemeColors.accent1;
   }
 
   static Color bgColorPrimary2(BuildContext context) {
@@ -82,7 +83,7 @@ class ThemeColors {
 
   static Color bgColorPrimary3(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
-        ? ThemeColors.accentDark
+        ? ThemeColors.accent1
         : Colors.black;
   }
 
@@ -101,7 +102,7 @@ class ThemeColors {
   static Color bgColorAccent(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
         ? ThemeColors.accent
-        : ThemeColors.kDarkTealGreen;
+        : ThemeColors.kDarkBlueShade;
   }
 
   static Color bgColorBW(BuildContext context) {

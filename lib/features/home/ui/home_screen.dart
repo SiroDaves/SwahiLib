@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:textstyle_extensions/textstyle_extensions.dart';
 
 import '../../../common/data/models/models.dart';
-import '../../../common/utils/constants/app_assets.dart';
+import '../../../common/utils/constants/app_constants.dart';
 import '../../../common/widgets/progress/general_progress.dart';
 import '../../../common/widgets/progress/skeleton.dart';
-import '../../../core/navigator/route_names.dart';
+import '../../../core/theme/theme_fonts.dart';
 import '../bloc/home_bloc.dart';
 
 //part 'widgets/sessions_preview.dart';
@@ -39,10 +40,9 @@ class HomeScreenState extends State<HomeScreen> {
         },
         builder: (context, state) {
           var appBar = AppBar(
-            title: GestureDetector(
-              child: Image.asset(AppAssets.appIcon, height: 50),
-              onTap: () => Navigator.pushNamed(context, RouteNames.settings),
-            ),
+            centerTitle: true,
+            title: Text(AppConstants.appTitle,
+                style: TextStyles.headingStyle1.bold.size(25)),
           );
           var emptyState = EmptyState(
             title: 'Sorry nothing to show here at the moment.',

@@ -8,10 +8,8 @@ import 'common/utils/env/flavor_config.dart';
 import 'common/utils/env/environments.dart';
 import 'core/di/injectable.dart';
 
-const supabaseUrl = String.fromEnvironment("supabaseUrl");
-const supabaseAnonKey = String.fromEnvironment("supabaseAnonKey");
-
 Future<void> main() async {
+  logger('Starting app from main.dart');
   WidgetsFlutterBinding.ensureInitialized();
   FlavorConfig(
     flavor: Flavor.production,
@@ -22,11 +20,15 @@ Future<void> main() async {
       showFullErrorMessages: false,
     ),
   );
-  logger('Starting app from main.dart');
-  await configureDependencies(Environments.production);
+
+  const supabaseUrl = String.fromEnvironment("supabaseUrl");
+  const supabaseAnonKey = String.fromEnvironment("supabaseAnonKey");
 
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
-  
+  logger('Supabase init started: $supabaseUrl');
+
+  await configureDependencies(Environments.production);
+
   await SentryFlutter.init(
     (options) {
       options.dsn =

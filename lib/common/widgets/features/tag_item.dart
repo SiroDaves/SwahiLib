@@ -23,7 +23,7 @@ class TagItem extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).brightness == Brightness.light
                 ? ThemeColors.primary
-                : ThemeColors.kPrimaryDeepRed,
+                : ThemeColors.kPrimaryDeepBlue,
             borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
           child: Text(tagText,

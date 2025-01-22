@@ -4,57 +4,76 @@ import '../../../common/data/models/models.dart';
 import '../../../common/utils/app_util.dart';
 
 class DataInitRepository {
-  final supabase = Supabase.instance.client;
+  final SupabaseClient supabase;
+
+  DataInitRepository(this.supabase);
 
   Future<List<Idiom>> fetchIdioms() async {
-    List<Idiom> idioms = [];
+    logger('Now fetching idioms');
     try {
-      final idiomsData = await supabase.from('idioms').select();
+      final idiomsData = await Supabase.instance.client.from('idioms').select();
       if (idiomsData.isNotEmpty) {
-        idioms = idiomsData.map((item) => Idiom.fromJson(item)).toList();
+        final idioms =
+            (idiomsData as List).map((item) => Idiom.fromJson(item)).toList();
+        logger('${idioms.length} idioms fetched');
+        return idioms;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       logger('Unable to fetch idioms: $e');
+      logger('StackTrace: $stackTrace');
     }
-    return idioms;
+    return [];
   }
 
   Future<List<Proverb>> fetchProverbs() async {
-    List<Proverb> proverbs = [];
+    logger('Now fetching proverbs');
     try {
       final proverbsData = await supabase.from('proverbs').select();
       if (proverbsData.isNotEmpty) {
-        proverbs = proverbsData.map((item) => Proverb.fromJson(item)).toList();
+        final proverbs = (proverbsData as List)
+            .map((item) => Proverb.fromJson(item))
+            .toList();
+        logger('${proverbs.length} proverbs fetched');
+        return proverbs;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       logger('Unable to fetch proverbs: $e');
+      logger('StackTrace: $stackTrace');
     }
-    return proverbs;
+    return [];
   }
 
   Future<List<Saying>> fetchSayings() async {
-    List<Saying> sayings = [];
+    logger('Now fetching sayings');
     try {
       final sayingsData = await supabase.from('sayings').select();
       if (sayingsData.isNotEmpty) {
-        sayings = sayingsData.map((item) => Saying.fromJson(item)).toList();
+        final sayings =
+            (sayingsData as List).map((item) => Saying.fromJson(item)).toList();
+        logger('${sayings.length} sayings fetched');
+        return sayings;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       logger('Unable to fetch sayings: $e');
+      logger('StackTrace: $stackTrace');
     }
-    return sayings;
+    return [];
   }
 
   Future<List<Word>> fetchWords() async {
-    List<Word> words = [];
+    logger('Now fetching words');
     try {
       final wordsData = await supabase.from('words').select();
       if (wordsData.isNotEmpty) {
-        words = wordsData.map((item) => Word.fromJson(item)).toList();
+        final words =
+            (wordsData as List).map((item) => Word.fromJson(item)).toList();
+        logger('${words.length} words fetched');
+        return words;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       logger('Unable to fetch words: $e');
+      logger('StackTrace: $stackTrace');
     }
-    return words;
+    return [];
   }
 }

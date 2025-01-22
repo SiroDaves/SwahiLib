@@ -96,7 +96,7 @@ class AppViewState extends State<AppView> {
                   case AutheStatus.authenticated:
                     if (isLoaded) {
                       navigator.pushNamedAndRemoveUntil<void>(
-                        RouteNames.home,
+                        RouteNames.dataInit,
                         (route) => false,
                       );
                     } else {

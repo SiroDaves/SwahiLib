@@ -1,11 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../common/data/models/models.dart';
 import '../../../common/repository/db/database_repository.dart';
-import '../../../common/utils/app_util.dart';
-import '../../../common/utils/constants/pref_constants.dart';
-import '../../../common/repository/pref_repository.dart';
 import '../../../core/di/injectable.dart';
 import '../domain/data_init_repository.dart';
 
@@ -19,9 +17,9 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     on<FetchData>(_onFetchData);
     on<SaveData>(_onSaveData);
   }
-
-  final _dataRepo = DataInitRepository();
-  final _prefRepo = getIt<PrefRepository>();
+  
+  final _dataRepo = DataInitRepository(Supabase.instance.client);
+  //final _prefRepo = getIt<PrefRepository>();
   final _dbRepo = getIt<DatabaseRepository>();
 
   void _onFetchData(
@@ -38,7 +36,7 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     proverbs = await _dataRepo.fetchProverbs();
     sayings = await _dataRepo.fetchSayings();
     words = await _dataRepo.fetchWords();
-    
+
     emit(DataInitFetchedState(idioms, proverbs, sayings, words));
   }
 
@@ -47,17 +45,13 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     Emitter<DataInitState> emit,
   ) async {
     emit(const DataInitProgressState());
-    try {
-      if (event.idioms.isNotEmpty) {
-        await _dbRepo.removeAllWords();
-        for (final word in event.words) {
-          await _dbRepo.saveWord(word);
-        }
-      }
-    } catch (e) {
-      logger('Unable to save words: $e');
-    }
-    _prefRepo.setPrefBool(PrefConstants.dataIsLoadedKey, true);
+
+    await _dbRepo.saveIdioms(event.idioms);
+    await _dbRepo.saveProverbs(event.proverbs);
+    await _dbRepo.saveSayings(event.sayings);
+    // _dbRepo.saveWords(event.words);
+
+    //_prefRepo.setPrefBool(PrefConstants.dataIsLoadedKey, true);
 
     emit(const DataInitSavedState());
   }
