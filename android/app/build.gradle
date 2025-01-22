@@ -33,7 +33,7 @@ android {
         compileSdkVersion 34
         multiDexEnabled true
         versionCode 2
-        versionName "1.0.0.1" 
+        versionName "1.0.0.2" 
     }
 
     signingConfigs {

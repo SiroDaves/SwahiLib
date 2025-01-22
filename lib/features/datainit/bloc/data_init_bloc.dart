@@ -48,7 +48,7 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
   ) async {
     emit(const DataInitProgressState());
     try {
-      if (event.words.isNotEmpty) {
+      if (event.idioms.isNotEmpty) {
         await _dbRepo.removeAllWords();
         for (final word in event.words) {
           await _dbRepo.saveWord(word);
