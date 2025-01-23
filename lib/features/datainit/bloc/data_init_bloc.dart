@@ -49,6 +49,19 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     emit(const DataInitSavingState("Salia kwenye skrini hii, usiondoke!"));
     _dbRepo.saveWords(event.words);
 
+    await Future<void>.delayed(const Duration(seconds: 3));
+
+    emit(const DataInitSavingState("Inapakia nahau (idioms) 527 ..."));
+    await _dbRepo.saveIdioms(event.idioms);
+
+    emit(const DataInitSavingState("Inapakia methali (proverbs) 382 ..."));
+    await _dbRepo.saveProverbs(event.proverbs);
+
+    emit(const DataInitSavingState("Inapakia misemo (sayings) 276..."));
+    await _dbRepo.saveSayings(event.sayings);
+
+    emit(const DataInitSavingState("Inapakia maneno (words) 16,641..."));
+
     Map<String, List<Word>> groupedWords = {};
 
     for (var word in event.words) {
@@ -62,20 +75,7 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     }
 
     _prefRepo.words = groupedWords.values.expand((list) => list).toList();
-
-    //await Future<void>.delayed(const Duration(seconds: 3));
-
-    emit(const DataInitSavingState("Inapakia nahau (idioms) 527 ..."));
-    await _dbRepo.saveIdioms(event.idioms);
-
-    emit(const DataInitSavingState("Inapakia methali (proverbs) 382 ..."));
-    await _dbRepo.saveProverbs(event.proverbs);
-
-    emit(const DataInitSavingState("Inapakia misemo (sayings) 276..."));
-    await _dbRepo.saveSayings(event.sayings);
-
-    emit(const DataInitSavingState("Inapakia maneno (words) 16,641..."));
-
+    await Future<void>.delayed(const Duration(seconds: 10));
     _prefRepo.setPrefBool(PrefConstants.dataIsLoadedKey, true);
 
     emit(const DataInitSavedState());

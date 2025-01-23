@@ -70,8 +70,8 @@ class AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    var localStorage = getIt<PrefRepository>();
-    bool isLoaded = localStorage.getPrefBool(PrefConstants.dataIsLoadedKey);
+    var prefRepo = getIt<PrefRepository>();
+    bool isLoaded = prefRepo.getPrefBool(PrefConstants.dataIsLoadedKey);
 
     return BlocProvider(
       create: (context) => ThemeBloc(),
@@ -79,7 +79,7 @@ class AppViewState extends State<AppView> {
         builder: (context, themeMode) {
           return MaterialApp(
             home: widget.home,
-            themeMode: localStorage.getThemeMode(),
+            themeMode: prefRepo.getThemeMode(),
             theme: AppTheme.lightTheme(),
             darkTheme: AppTheme.darkTheme(),
             debugShowCheckedModeBanner: false,
@@ -96,11 +96,11 @@ class AppViewState extends State<AppView> {
                   case AutheStatus.authenticated:
                     if (isLoaded) {
                       navigator.pushNamedAndRemoveUntil<void>(
-                        RouteNames.dataInit,
+                        RouteNames.home,
                         (route) => false,
                       );
                     } else {
-                      localStorage.setPrefString(
+                      prefRepo.setPrefString(
                         PrefConstants.dateInstalledKey,
                         dateNow(),
                       );

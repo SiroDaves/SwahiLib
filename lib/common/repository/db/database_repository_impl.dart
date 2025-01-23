@@ -1,6 +1,9 @@
+import '../../../core/di/injectable.dart';
 import '../../data/db/app_database.dart';
 import '../../data/models/models.dart';
 import '../../utils/app_util.dart';
+import '../../utils/constants/pref_constants.dart';
+import '../pref_repository.dart';
 import 'database_repository.dart';
 
 /// Implementor of Database Repository
@@ -38,7 +41,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   Future<void> saveIdioms(List<Idiom> idioms) async {
     try {
       if (idioms.isNotEmpty) {
-      logger('${idioms.length} idioms to be saved');
+        logger('${idioms.length} idioms to be saved');
         await _appDB.idiomsDao.deleteAllIdioms();
         for (final idiom in idioms) {
           await _appDB.idiomsDao.insertIdiom(idiom);
@@ -68,7 +71,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   Future<void> saveProverbs(List<Proverb> proverbs) async {
     try {
       if (proverbs.isNotEmpty) {
-      logger('${proverbs.length} proverbs to be saved');
+        logger('${proverbs.length} proverbs to be saved');
         await _appDB.proverbsDao.deleteAllProverbs();
         for (final proverb in proverbs) {
           await _appDB.proverbsDao.insertProverb(proverb);
@@ -98,7 +101,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   Future<void> saveSayings(List<Saying> sayings) async {
     try {
       if (sayings.isNotEmpty) {
-      logger('${sayings.length} sayings to be saved');
+        logger('${sayings.length} sayings to be saved');
         await _appDB.sayingsDao.deleteAllSayings();
         for (final saying in sayings) {
           await _appDB.sayingsDao.insertSaying(saying);
@@ -149,6 +152,8 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
           await _appDB.wordsDao.insertWord(word);
         }
       }
+      final prefRepo = getIt<PrefRepository>();
+      prefRepo.setPrefBool(PrefConstants.wordsAreLoadedKey, true);
     } catch (e) {
       logger('Unable to save words: $e');
     }

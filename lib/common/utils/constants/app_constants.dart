@@ -22,14 +22,6 @@ class AppConstants {
   static const String sessionsTable = 'sessions';
   static const String sessionsTableViews = 'viewsessions';
 
-  static const String sessionsExtSql =
-      'SELECT tbl1.id, tbl1.title, tbl1.description, tbl1.startsAt, tbl1.endsAt, '
-      'tbl1.speakers, tbl1.categories, tbl1.room, tbl1.bookmarked, tbl2.name'
-      'FROM sessions AS tbl1 '
-      'LEFT JOIN speakers AS tbl2 '
-      'ON tbl1.room=tbl2.id '
-      'ORDER BY tbl1.id ASC';
-
   static const appTitle = "SwahiLib";
   static const IconData whatsapp =
       IconData(0xf05a6, fontFamily: 'MaterialIcons');
@@ -47,74 +39,10 @@ class AppConstants {
 
   static const playstoreLink =
       "https://play.google.com/store/apps/details?id=com.swahilib";
-  static const tshirtOrderLink =
-      "https://docs.google.com/forms/d/e/1FAIpQLSedRl841nlaniRCLm-I60VLL1tmHRC1Rd6j-eDNZZSNA8QzXQ/viewform?usp=sf_link";
-  static const donationPaypalLink =
-      "https://www.paypal.com/donate/?hosted_button_id=FYZYTW723Q8QC";
-  static const donationPatreaonLink = "https://www.patreon.com/SongLib";
-
+  
   static const appKamusi = "Kamusi ya Kiswahili";
   static const appTagline = "Kiswahili Kitukuzwe";
-  static const listTitle = "Song Lists";
-  static const searchTitle = "Song Search";
-  static const likesTitle = "Liked Songs";
-  static const historiesTitle = "Histories";
-  static const draftTitle = "Song Drafts";
-  static const settingsTitle = "App Settings";
-  static const helpdeskTitle = "Help Desk";
-  static const donateTitle = "How to Donate";
-  static const booksTitleLoading = "Loading data ...";
-
-  static const appIconPath = "assets/app_icon.png";
-
-  static const homeTitle = "Home";
-  static const listedTitle = "Adding a new list";
-  static const editorTitle = "Drafting a new song";
-  static const songTitle = "Your song in one line";
-  static const songText = "The rest of your song";
-
-  static const hasChorus = "With a Chorus";
-  static const verses = "Verse";
-
-  static const addtoList = "Add to a List";
-  static const likeSong = "Like this song";
-  static const editSong = "Edit this song";
-  static const deleteSong = "Delete this song";
-  static const copySong = "Copy this song";
-  static const deleteList = "Delete this list";
-  static const shareSong = "Share this song";
-  static const songCopied = "song copied!";
-
-  static const copyVerse = "Copy verse";
-  static const textCopied = " copied!";
-  static const shareVerse = "Share verse";
-  static const songLiked = "song liked!";
-  static const songAddedToList = "song added to a list!";
-  static const listCreated = "song list created!";
-  static const listUpdated = "song list updated!";
-  static const deleted = "deleted!";
-  static const readyShare = "Ready for sharing";
-  static const screenshotVerse = "Screenshot verse";
-  static const screenshoted = "We have your screenshot!";
-
-  static const chooseTheme = "Choose Theme";
-  static const themeDefault = "System Default";
-  static const themeLight = "Light";
-  static const themeDark = "Dark";
-
-  static const itsEmptyHere = "Wueh! It's empty here";
-  static const itsEmptyHere1 = "Wueh! No lists here yet";
-  static const itsEmptyHereBody =
-      "All caught here, do a selection of songs once again";
-  static const itsEmptyHereBody1 =
-      "All caught here, please like a song, search or view a song or better still add a custom list to clear this emptiness here";
-  static const itsEmptyHereBody2 =
-      "All caught here, please add draft song to clear this emptiness here";
-  static const itsEmptyHereBody3 =
-      "All caught here, please like a song to clear this emptiness here";
-  static const itsEmptyHereBody4 =
-      "All caught here, you can add personal lists and add songs to them";
-
+  
   static const String inProgress = "Inaendelea ...";
   static const String gettingReady = "Subiri kiasi ...";
   static const String somePatience = "Eish! ... Subiri kidogo ...";
@@ -155,12 +83,6 @@ class AppConstants {
 
   static const filters = [words, idioms, sayings, proverbs];
 
-  /*static List<HomeList> homeLists = [
-    HomeList.list1,
-    HomeList.list2,
-    HomeList.list3,
-    HomeList.list4,
-  ];*/
   static List<String> letters = [
     'A',
     'B',
