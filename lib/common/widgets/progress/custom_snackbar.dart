@@ -18,7 +18,7 @@ class CustomSnackbar {
           backgroundColor: isSuccess ? ThemeColors.green : Colors.red,
           content: Text(
             feedback,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
             ),
           ),

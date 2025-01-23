@@ -3,5 +3,6 @@ class PrefConstants {
   static const darkModeKey = 'dark_mode';
 
   static const dataIsLoadedKey = 'data_loaded';
+  static const wordsAreLoadedKey = 'words_loaded';
   static const dateInstalledKey = 'date_installed';
 }

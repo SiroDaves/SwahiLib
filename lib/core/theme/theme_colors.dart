@@ -84,7 +84,7 @@ class ThemeColors {
   static Color bgColorPrimary3(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
         ? ThemeColors.accent1
-        : Colors.black;
+        : ThemeColors.primary;
   }
 
   static Color bgColorPrimary4(BuildContext context) {

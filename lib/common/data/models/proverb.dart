@@ -10,7 +10,7 @@ part 'proverb.g.dart';
 class Proverb {
   @PrimaryKey()
   int? id;
-  String? objectId;
+  int? rid;
   String? title;
   String? synonyms;
   String? meaning;
@@ -22,7 +22,7 @@ class Proverb {
 
   Proverb({
     this.id,
-    this.objectId,
+    this.rid,
     this.title,
     this.synonyms,
     this.meaning,

@@ -18,9 +18,8 @@ class DataInitRepository {
         logger('${idioms.length} idioms fetched');
         return idioms;
       }
-    } catch (e, stackTrace) {
+    } catch (e) {
       logger('Unable to fetch idioms: $e');
-      logger('StackTrace: $stackTrace');
     }
     return [];
   }
@@ -36,9 +35,8 @@ class DataInitRepository {
         logger('${proverbs.length} proverbs fetched');
         return proverbs;
       }
-    } catch (e, stackTrace) {
+    } catch (e) {
       logger('Unable to fetch proverbs: $e');
-      logger('StackTrace: $stackTrace');
     }
     return [];
   }
@@ -53,9 +51,8 @@ class DataInitRepository {
         logger('${sayings.length} sayings fetched');
         return sayings;
       }
-    } catch (e, stackTrace) {
+    } catch (e) {
       logger('Unable to fetch sayings: $e');
-      logger('StackTrace: $stackTrace');
     }
     return [];
   }
@@ -70,9 +67,8 @@ class DataInitRepository {
         logger('${words.length} words fetched');
         return words;
       }
-    } catch (e, stackTrace) {
+    } catch (e) {
       logger('Unable to fetch words: $e');
-      logger('StackTrace: $stackTrace');
     }
     return [];
   }

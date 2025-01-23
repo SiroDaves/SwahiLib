@@ -53,11 +53,11 @@ class AppTheme {
         onError: Colors.black,
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.black,
+        backgroundColor: ThemeColors.primaryDark,
         foregroundColor: Colors.white,
       ),
       navigationBarTheme: const NavigationBarThemeData(
-        backgroundColor: Colors.black,
+        backgroundColor: ThemeColors.primaryDark,
         indicatorColor: ThemeColors.accent,
       ),
     );

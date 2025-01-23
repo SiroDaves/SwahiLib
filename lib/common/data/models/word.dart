@@ -10,7 +10,7 @@ part 'word.g.dart';
 class Word {
   @PrimaryKey()
   int? id;
-  String? objectId;
+  int? rid;
   String? title;
   String? synonyms;
   String? meaning;
@@ -23,7 +23,7 @@ class Word {
 
   Word({
     this.id,
-    this.objectId,
+    this.rid,
     this.title,
     this.synonyms,
     this.meaning,

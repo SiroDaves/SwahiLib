@@ -10,7 +10,7 @@ part 'idiom.g.dart';
 class Idiom {
   @PrimaryKey()
   int? id;
-  String? objectId;
+  int? rid;
   String? title;
   String? meaning;
   int? views;
@@ -21,7 +21,7 @@ class Idiom {
 
   Idiom({
     this.id,
-    this.objectId,
+    this.rid,
     this.title,
     this.meaning,
     this.views,

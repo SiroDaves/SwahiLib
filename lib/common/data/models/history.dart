@@ -6,14 +6,14 @@ import '../../utils/constants/app_constants.dart';
 class History {
   @PrimaryKey()
   int? id;
-  String? objectId;
+  int? rid;
   int? item;
   String? type;
   String? createdAt;
 
   History({
     this.id,
-    this.objectId,
+    this.rid,
     this.item,
     this.type,
     this.createdAt,

@@ -6,13 +6,13 @@ import '../../utils/constants/app_constants.dart';
 class Search {
   @PrimaryKey()
   int? id;
-  String? objectId;
+  int? rid;
   String? title;
   String? createdAt;
 
   Search({
     this.id,
-    this.objectId,
+    this.rid,
     this.title,
     this.createdAt,
   });

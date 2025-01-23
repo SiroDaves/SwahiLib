@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:textstyle_extensions/textstyle_extensions.dart';
 
@@ -9,7 +10,7 @@ import '../../utils/constants/app_assets.dart';
 import '../action/base_buttons.dart';
 
 class CircularProgress extends StatelessWidget {
-  const CircularProgress({Key? key}) : super(key: key);
+  const CircularProgress({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class CircularProgress extends StatelessWidget {
 }
 
 class SmallCircularProgress extends StatelessWidget {
-  const SmallCircularProgress({Key? key}) : super(key: key);
+  const SmallCircularProgress({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +48,13 @@ class EmptyState extends StatelessWidget {
   final bool showRetry;
   final VoidCallback? onRetry;
   const EmptyState({
-    Key? key,
+    super.key,
     this.title =
         'Sorry, no data is available at the moment. Please check back later.',
     this.titleRetry = 'RETRY',
     this.showRetry = false,
     this.onRetry,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +100,53 @@ class BottomLoader extends StatelessWidget {
         height: 24,
         width: 24,
         child: CircularProgressIndicator(strokeWidth: 1.5),
+      ),
+    );
+  }
+}
+
+class LoadingProgress extends StatelessWidget {
+  final String title;
+  const LoadingProgress({
+    super.key,
+    this.title = 'Processing data ...',
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    const loadingIndicator1 = LoadingIndicator(
+      indicatorType: Indicator.lineScalePulseOut,
+      colors: [
+        Colors.red,
+        Colors.orange,
+        Colors.yellow,
+        Colors.green,
+        Colors.blue,
+        Colors.indigo,
+        Colors.purple,
+        Color(0xFFFF00FF),
+      ],
+      pathBackgroundColor: Colors.black,
+    );
+    return Center(
+      child: SizedBox(
+        height: size.height / 1.5,
+        child: Column(
+          children: [
+            SizedBox(
+              height: size.height / 3,
+              child: loadingIndicator1,
+            ),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style:
+                  TextStyles.pageTitle1.size(size.height / 22).textHeight(1.5),
+            ).padding(all: 30),
+          ],
+        ),
       ),
     );
   }

@@ -10,7 +10,7 @@ part 'saying.g.dart';
 class Saying {
   @PrimaryKey()
   int? id;
-  String? objectId;
+  int? rid;
   String? title;
   String? meaning;
   int? views;
@@ -21,7 +21,7 @@ class Saying {
 
   Saying({
     this.id,
-    this.objectId,
+    this.rid,
     this.title,
     this.meaning,
     this.views,
