@@ -1,8 +1,8 @@
 part of '../home_screen.dart';
 
 class ProverbsList extends StatelessWidget {
-  final List<Proverb> proverbs;
-  const ProverbsList({super.key, required this.proverbs});
+  final HomeScreenState parent;
+  const ProverbsList({super.key, required this.parent});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +13,9 @@ class ProverbsList extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
         padding: const EdgeInsets.only(right: 15),
-        itemCount: vm.filterProverbs!.length,
+        itemCount: parent.filteredProverbs.length,
         itemBuilder: (BuildContext context, int index) {
-          final Proverb proverb = vm.filterProverbs![index];
+          final Proverb proverb = parent.filteredProverbs[index];
           var meaning = proverb.meaning!
               .replaceAll("\\", "")
               .replaceAll('"', '')
@@ -31,12 +31,12 @@ class ProverbsList extends StatelessWidget {
             meaning = "$meaning\n ~ ${extra[0].trim()}.";
           }
           final synonyms = proverb.synonyms!.split(',');
-          final titleTxtStyle = TextStyles.CalloutFocus.bold
+          final titleTxtStyle = TextStyles.headingStyle3.bold
               .size(22)
               .textColor(ThemeColors.primary)
               .textHeight(1.2);
           final bodyTxtStyle =
-              TextStyles.Body1.size(18).textColor(Colors.black);
+              TextStyles.bodyStyle2.size(18).textColor(Colors.black);
           final synonymsContainer = Row(
             children: <Widget>[
               Text(
@@ -61,7 +61,7 @@ class ProverbsList extends StatelessWidget {
           return Card(
             elevation: 2,
             child: ListTile(
-              onTap: () => vm.openProverb(proverb),
+              onTap: () {},//=> vm.openProverb(proverb),
               title: Text(proverb.title!, style: titleTxtStyle),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

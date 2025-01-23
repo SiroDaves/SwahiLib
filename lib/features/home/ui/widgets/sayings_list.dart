@@ -1,8 +1,8 @@
 part of '../home_screen.dart';
 
 class SayingsList extends StatelessWidget {
-  final List<Saying> sayings;
-  const SayingsList({super.key, required this.sayings});
+  final HomeScreenState parent;
+  const SayingsList({super.key, required this.parent});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +13,9 @@ class SayingsList extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
         padding: const EdgeInsets.only(right: 15),
-        itemCount: vm.filterSayings!.length,
+        itemCount: parent.filteredSayings.length,
         itemBuilder: (BuildContext context, int index) {
-          final Saying saying = vm.filterSayings![index];
+          final Saying saying = parent.filteredSayings[index];
           var meaning = saying.meaning!
               .replaceAll("\\", "")
               .replaceAll('"', '')
@@ -30,17 +30,17 @@ class SayingsList extends StatelessWidget {
             extra = contents[1].split(":");
             meaning = "$meaning\n ~ ${extra[0].trim()}.";
           }
-          final titleTxtStyle = TextStyles.CalloutFocus.bold
+          final titleTxtStyle = TextStyles.headingStyle2.bold
               .size(22)
               .textColor(ThemeColors.primary)
               .textHeight(1.2);
           final bodyTxtStyle =
-              TextStyles.Body1.size(18).textColor(Colors.black);
+              TextStyles.bodyStyle2.size(18).textColor(Colors.black);
 
           return Card(
             elevation: 2,
             child: ListTile(
-              onTap: () => vm.openSaying(saying),
+              onTap: () {},//=> vm.openSaying(saying),
               title: Text(saying.title!, style: titleTxtStyle),
               subtitle: saying.meaning!.isNotEmpty
                   ? Column(

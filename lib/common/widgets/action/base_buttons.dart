@@ -279,10 +279,10 @@ class IconTextBtn extends StatelessWidget {
   final Function()? onPressed;
 
   const IconTextBtn({
-    Key? key,
+    super.key,
     required this.title,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

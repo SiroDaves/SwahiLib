@@ -1,8 +1,8 @@
 part of '../home_screen.dart';
 
 class WordsList extends StatelessWidget {
-  final List<Word> words;
-  const WordsList({super.key, required this.words});
+  final HomeScreenState parent;
+  const WordsList({super.key, required this.parent});
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +13,12 @@ class WordsList extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
         padding: const EdgeInsets.only(right: 15),
-        itemCount: vm.filterWords!.length,
+        itemCount: parent.filteredWords.length,
         itemBuilder: (BuildContext context, int index) {
-          final Word word = vm.filterWords![index];
+          final Word word = parent.filteredWords[index];
           return WordItem(
             word: word,
-            onTap: () => vm.openWord(word),
+            onTap: () {},//=> vm.openWord(word),
           );
         },
       ),

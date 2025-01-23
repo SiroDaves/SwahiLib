@@ -8,14 +8,17 @@ import '../../../common/data/models/models.dart';
 import '../../../common/repository/pref_repository.dart';
 import '../../../common/utils/constants/app_constants.dart';
 import '../../../common/utils/constants/pref_constants.dart';
+import '../../../common/widgets/action/list_items.dart';
+import '../../../common/widgets/general/labels.dart';
 import '../../../common/widgets/progress/general_progress.dart';
 import '../../../common/widgets/progress/skeleton.dart';
 import '../../../core/di/injectable.dart';
+import '../../../core/theme/theme_colors.dart';
 import '../../../core/theme/theme_fonts.dart';
 import '../bloc/home_bloc.dart';
 
 part 'widgets/filter_letters.dart';
-part 'widgets/words_list.dart';
+part 'widgets/words_lists.dart';
 part 'widgets/idioms_list.dart';
 part 'widgets/sayings_list.dart';
 part 'widgets/proverbs_list.dart';
@@ -34,10 +37,11 @@ class HomeScreenState extends State<HomeScreen> {
   late HomeBloc _bloc;
   final _prefRepo = getIt<PrefRepository>();
 
-  List<Idiom> idioms = [];
-  List<Proverb> proverbs = [];
-  List<Saying> sayings = [];
-  List<Word> words = [];
+  List<Word> words = [], filteredWords = [];
+  List<Idiom> idioms = [], filteredIdioms = [];
+  List<Saying> sayings = [], filteredSayings = [];
+  List<Proverb> proverbs = [], filteredProverbs = [];
+
   int selectedPage = 0, selectedBook = 0;
 
   @override
@@ -86,7 +90,7 @@ class HomeScreenState extends State<HomeScreen> {
                 style: TextStyles.headingStyle1.bold.size(25)),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(50),
-              child: filterContainer,
+              child: FilterContainer(parent: this),
             ),
             /*leading: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -131,14 +135,14 @@ class HomeScreenState extends State<HomeScreen> {
               body: SafeArea(
                 child: Row(
                   children: <Widget>[
-                    filterLetters,
+                    FilterLetters(parent: this),
                     IndexedStack(
                       index: selectedPage,
                       children: <Widget>[
-                        WordsList(words: words),
-                        IdiomsList(idioms: idioms),
-                        SayingsList(sayings: sayings),
-                        ProverbsList(proverbs: proverbs),
+                        WordsList(parent: this),
+                        IdiomsList(parent: this),
+                        SayingsList(parent: this),
+                        ProverbsList(parent: this),
                       ],
                     )
                   ],

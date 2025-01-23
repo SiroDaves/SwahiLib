@@ -1,8 +1,8 @@
 part of '../home_screen.dart';
 
 class IdiomsList extends StatelessWidget {
-  final List<Idiom> idioms;
-  const IdiomsList({super.key, required this.idioms});
+  final HomeScreenState parent;
+  const IdiomsList({super.key, required this.parent});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +13,9 @@ class IdiomsList extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
         padding: const EdgeInsets.only(right: 15),
-        itemCount: vm.filterIdioms!.length,
+        itemCount: parent.filteredIdioms.length,
         itemBuilder: (BuildContext context, int index) {
-          final Idiom idiom = vm.filterIdioms![index];
+          final Idiom idiom = parent.filteredIdioms[index];
           var meaning = idiom.meaning!
               .replaceAll("\\", "")
               .replaceAll('"', '')
@@ -30,17 +30,17 @@ class IdiomsList extends StatelessWidget {
             extra = contents[1].split(":");
             meaning = "$meaning\n ~ ${extra[0].trim()}.";
           }
-          final titleTxtStyle = TextStyles.CalloutFocus.bold
+          final titleTxtStyle = TextStyles.headingStyle2.bold
               .size(22)
               .textColor(ThemeColors.primary)
               .textHeight(1.2);
           final bodyTxtStyle =
-              TextStyles.Body1.size(18).textColor(Colors.black);
+              TextStyles.bodyStyle2.size(18).textColor(Colors.black);
 
           return Card(
             elevation: 2,
             child: ListTile(
-              onTap: () => vm.openIdiom(idiom),
+              onTap: () {},//=> vm.openIdiom(idiom),
               title: Text(idiom.title!, style: titleTxtStyle),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

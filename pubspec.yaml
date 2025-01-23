@@ -14,6 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_html: ^3.0.0-beta.2
   freezed_annotation: ^2.4.4
   get_it: ^8.0.2
   injectable: ^2.5.0
