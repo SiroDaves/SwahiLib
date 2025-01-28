@@ -115,5 +115,9 @@ class PrefRepositoryImp implements PrefRepository {
   }
 
   @override
+<<<<<<< HEAD:lib/common/repository/pref_repository.dart
   List<Word>? words = [];
+=======
+  List<Word>? words;
+>>>>>>> 47b0ffa5674b4aca7eca9910a6d358c4a559c457:lib/common/repository/local_storage.dart
 }
