@@ -177,7 +177,7 @@ class WordViewerState extends State<WordViewer> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              wordMeaning,
+                              //wordMeaning,
                               if (synonyms.isNotEmpty)
                                 const Padding(
                                   padding: EdgeInsets.all(5),

@@ -17,11 +17,12 @@ import '../../../core/theme/theme_colors.dart';
 import '../../../core/theme/theme_fonts.dart';
 import '../bloc/home_bloc.dart';
 
-part 'widgets/filter_letters.dart';
-part 'widgets/words_lists.dart';
-part 'widgets/idioms_list.dart';
-part 'widgets/sayings_list.dart';
-part 'widgets/proverbs_list.dart';
+part 'widgets/views/home_appbar.dart';
+part 'widgets/views/home_body.dart';
+part 'widgets/lists/words_lists.dart';
+part 'widgets/lists/idioms_list.dart';
+part 'widgets/lists/sayings_list.dart';
+part 'widgets/lists/proverbs_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -79,47 +80,12 @@ class HomeScreenState extends State<HomeScreen> {
           }
         },
         builder: (context, state) {
-          var appBar1 = AppBar(
+          var appBar = AppBar(
             centerTitle: true,
             title: Text(AppConstants.appTitle,
                 style: TextStyles.headingStyle1.bold.size(25)),
           );
-          var appBar2 = AppBar(
-            centerTitle: true,
-            title: Text(AppConstants.appTitle,
-                style: TextStyles.headingStyle1.bold.size(25)),
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(50),
-              child: FilterContainer(parent: this),
-            ),
-            /*leading: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: InkWell(
-                onTap: () async {},
-                child: const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Icon(Icons.settings),
-                ),
-              ),
-            ),*/
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: InkWell(
-                  onTap: () async {
-                    /*await showSearch(
-                      context: context,
-                      delegate: SearchList1(context, vm, size!.height),
-                    );*/
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Icon(Icons.search),
-                  ),
-                ),
-              ),
-            ],
-          );
+
           var emptyState = EmptyState(
             title: 'Samahani hamna chochote hapa',
             showRetry: true,
@@ -127,27 +93,12 @@ class HomeScreenState extends State<HomeScreen> {
           );
 
           return state.maybeWhen(
-            orElse: () => Scaffold(appBar: appBar1, body: emptyState),
+            orElse: () => Scaffold(appBar: appBar, body: emptyState),
             progress: () => const Scaffold(body: SkeletonLoading()),
-            failure: (feedback) => Scaffold(appBar: appBar1, body: emptyState),
+            failure: (feedback) => Scaffold(appBar: appBar, body: emptyState),
             fetched: (idioms, proverbs, sayings, words) => Scaffold(
-              appBar: appBar2,
-              body: SafeArea(
-                child: Row(
-                  children: <Widget>[
-                    FilterLetters(parent: this),
-                    IndexedStack(
-                      index: selectedPage,
-                      children: <Widget>[
-                        WordsList(parent: this),
-                        IdiomsList(parent: this),
-                        SayingsList(parent: this),
-                        ProverbsList(parent: this),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+              appBar: HomeAppBar(parent: this),
+              body: HomeBody(parent: this),
             ),
           );
         },

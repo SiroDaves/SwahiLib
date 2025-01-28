@@ -1,8 +1,8 @@
-part of '../home_screen.dart';
+part of '../../home_screen.dart';
 
-class SayingsList extends StatelessWidget {
+class IdiomsList extends StatelessWidget {
   final HomeScreenState parent;
-  const SayingsList({super.key, required this.parent});
+  const IdiomsList({super.key, required this.parent});
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +13,10 @@ class SayingsList extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
         padding: const EdgeInsets.only(right: 15),
-        itemCount: parent.filteredSayings.length,
+        itemCount: parent.filteredIdioms.length,
         itemBuilder: (BuildContext context, int index) {
-          final Saying saying = parent.filteredSayings[index];
-          var meaning = saying.meaning!
+          final Idiom idiom = parent.filteredIdioms[index];
+          var meaning = idiom.meaning!
               .replaceAll("\\", "")
               .replaceAll('"', '')
               .replaceAll(',', ', ')
@@ -40,17 +40,15 @@ class SayingsList extends StatelessWidget {
           return Card(
             elevation: 2,
             child: ListTile(
-              onTap: () {},//=> vm.openSaying(saying),
-              title: Text(saying.title!, style: titleTxtStyle),
-              subtitle: saying.meaning!.isNotEmpty
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(meaning, style: bodyTxtStyle, maxLines: 2),
-                        const SizedBox(height: 10),
-                      ],
-                    )
-                  : Container(),
+              onTap: () {},//=> vm.openIdiom(idiom),
+              title: Text(idiom.title!, style: titleTxtStyle),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(meaning, style: bodyTxtStyle, maxLines: 2),
+                  const SizedBox(height: 10),
+                ],
+              ),
             ),
           );
         },

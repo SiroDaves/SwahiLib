@@ -1,4 +1,4 @@
-part of '../home_screen.dart';
+part of '../../home_screen.dart';
 
 class WordsList extends StatelessWidget {
   final HomeScreenState parent;

@@ -1,8 +1,10 @@
 part of '../word_viewer.dart';
 
+// ignore: must_be_immutable
 class WordMeaning extends StatelessWidget {
   final Word word;
-  WordMeaning({super.key, required this.word});
+  final List<String> meanings;
+  WordMeaning({super.key, required this.word, required this.meanings});
 
   TextStyle bodyTxtStyle =
       TextStyles.bodyStyle1.size(20).textColor(ThemeColors.primary);
@@ -11,9 +13,9 @@ class WordMeaning extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: vm.meanings.length,
+        itemCount: meanings.length,
         itemBuilder: (context, index) {
-          final meaning = vm.meanings[index]!;
+          final meaning = meanings[index];
           final extra = meaning.split(":");
           if (extra.length == 2) {
             return Card(
