@@ -70,13 +70,8 @@ class AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     var prefRepo = getIt<PrefRepository>();
     bool isLoaded = prefRepo.getPrefBool(PrefConstants.dataIsLoadedKey);
-=======
-    var localStorage = getIt<LocalStorage>();
-    bool isLoaded = localStorage.getPrefBool(PrefConstants.dataIsLoadedKey);
->>>>>>> 47b0ffa5674b4aca7eca9910a6d358c4a559c457
 
     return BlocProvider(
       create: (context) => ThemeBloc(),
@@ -105,11 +100,7 @@ class AppViewState extends State<AppView> {
                         (route) => false,
                       );
                     } else {
-<<<<<<< HEAD
                       prefRepo.setPrefString(
-=======
-                      localStorage.setPrefString(
->>>>>>> 47b0ffa5674b4aca7eca9910a6d358c4a559c457
                         PrefConstants.dateInstalledKey,
                         dateNow(),
                       );
