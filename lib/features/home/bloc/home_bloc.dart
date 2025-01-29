@@ -43,4 +43,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeFetchedDataState(idioms, proverbs, sayings, words));
     }
   }
+
 }

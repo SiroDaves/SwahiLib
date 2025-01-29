@@ -167,3 +167,11 @@ String truncateWithEllipsis(int cutoff, String myString) {
       ? myString
       : '${myString.substring(0, cutoff)}...';
 }
+
+String cleanMeaning(String? meaning) {
+  return (meaning ?? "")
+      .replaceAll("\\", "")
+      .replaceAll('"', '')
+      .replaceAll(',', ', ')
+      .replaceAll('  ', ' ');
+}

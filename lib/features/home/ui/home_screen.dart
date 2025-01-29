@@ -6,9 +6,9 @@ import 'package:textstyle_extensions/textstyle_extensions.dart';
 
 import '../../../common/data/models/models.dart';
 import '../../../common/repository/pref_repository.dart';
+import '../../../common/utils/app_util.dart';
 import '../../../common/utils/constants/app_constants.dart';
 import '../../../common/utils/constants/pref_constants.dart';
-import '../../../common/widgets/action/list_items.dart';
 import '../../../common/widgets/general/labels.dart';
 import '../../../common/widgets/progress/general_progress.dart';
 import '../../../common/widgets/progress/skeleton.dart';
@@ -43,6 +43,7 @@ class HomeScreenState extends State<HomeScreen> {
   List<Saying> sayings = [], filteredSayings = [];
   List<Proverb> proverbs = [], filteredProverbs = [];
 
+  String selectedLetter = '', query = '';
   int selectedPage = 0, selectedBook = 0;
 
   @override
@@ -68,10 +69,15 @@ class HomeScreenState extends State<HomeScreen> {
         listener: (context, state) {
           _bloc = context.read<HomeBloc>();
           if (state is HomeFetchedDataState) {
+            words = state.words;
             idioms = state.idioms;
             proverbs = state.proverbs;
             sayings = state.sayings;
-            words = state.words;
+
+            filteredWords = words;
+            filteredIdioms = idioms;
+            filteredProverbs = proverbs;
+            filteredSayings = sayings;
 
             if (!periodicSyncStarted) {
               _bloc.add(const FetchData());

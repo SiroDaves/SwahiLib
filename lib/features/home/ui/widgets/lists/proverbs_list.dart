@@ -8,36 +8,56 @@ class ProverbsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
+    var emptyState = const EmptyState(title: 'Samahani hamna chochote hapa');
+
+    var listView = ListView.builder(
+      padding: const EdgeInsets.only(right: 15),
+      itemCount: parent.filteredProverbs.length,
+      itemBuilder: (BuildContext context, int index) {
+        final Proverb proverb = parent.filteredProverbs[index];
+        return ProverbItem(
+          proverb: proverb,
+          onTap: () {}, //=> vm.openProverb(proverb),
+        );
+      },
+    );
+
     return Container(
       width: size.width - 85,
       padding: const EdgeInsets.only(top: 10),
-      child: ListView.builder(
-        padding: const EdgeInsets.only(right: 15),
-        itemCount: parent.filteredProverbs.length,
-        itemBuilder: (BuildContext context, int index) {
-          final Proverb proverb = parent.filteredProverbs[index];
-          var meaning = proverb.meaning!
-              .replaceAll("\\", "")
-              .replaceAll('"', '')
-              .replaceAll(',', ', ')
-              .replaceAll('  ', ' ');
-          final contents = meaning.split("|");
-          var extra = contents[0].split(":");
+      child: parent.filteredProverbs.isEmpty ? emptyState : listView,
+    );
+  }
+}
 
-          meaning = " ~ ${extra[0].trim()}.";
+class ProverbItem extends StatelessWidget {
+  final Proverb proverb;
+  final VoidCallback? onTap;
+  const ProverbItem({super.key, required this.proverb, this.onTap});
 
-          if (contents.length > 1) {
-            extra = contents[1].split(":");
-            meaning = "$meaning\n ~ ${extra[0].trim()}.";
-          }
-          final synonyms = proverb.synonyms!.split(',');
-          final titleTxtStyle = TextStyles.headingStyle3.bold
-              .size(22)
-              .textColor(ThemeColors.primary)
-              .textHeight(1.2);
-          final bodyTxtStyle =
-              TextStyles.bodyStyle2.size(18).textColor(Colors.black);
-          final synonymsContainer = Row(
+  @override
+  Widget build(BuildContext context) {
+    final titleTxtStyle = TextStyles.headingStyle4.bold
+        .size(22)
+        .textColor(ThemeColors.primary)
+        .textHeight(1.2);
+    final bodyTxtStyle = TextStyles.bodyStyle1.size(18).textColor(Colors.black);
+
+    var meaning = cleanMeaning(proverb.meaning ?? "");
+
+    final contents = meaning.split("|");
+    var extra = contents.isNotEmpty ? contents[0].split(":") : [];
+    meaning = extra.isNotEmpty ? " ~ ${extra[0].trim()}." : "";
+
+    if (contents.length > 1) {
+      extra = contents[1].split(":");
+      meaning = "$meaning\n ~ ${extra[0].trim()}.";
+    }
+
+    final synonyms =
+        (proverb.synonyms ?? "").split(',').where((s) => s.isNotEmpty).toList();
+    final synonymsContainer = synonyms.isNotEmpty
+        ? Row(
             children: <Widget>[
               Text(
                 "${synonyms.length == 1 ? 'KISAWE ' : 'VISAWE '}${synonyms.length}:",
@@ -57,25 +77,25 @@ class ProverbsList extends StatelessWidget {
                 ),
               ),
             ],
-          );
-          return Card(
-            elevation: 2,
-            child: ListTile(
-              onTap: () {},//=> vm.openProverb(proverb),
-              title: Text(proverb.title!, style: titleTxtStyle),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  if (proverb.meaning!.isNotEmpty)
-                    Text(meaning, style: bodyTxtStyle, maxLines: 2),
-                  if (proverb.synonyms!.isNotEmpty) const SizedBox(height: 5),
-                  if (proverb.synonyms!.isNotEmpty) synonymsContainer,
-                  const SizedBox(height: 10),
-                ],
-              ),
-            ),
-          );
-        },
+          )
+        : const SizedBox.shrink();
+
+    return Card(
+      elevation: 2,
+      color: Colors.white,
+      child: ListTile(
+        onTap: onTap,
+        title: Text(proverb.title ?? "", style: titleTxtStyle),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            if (meaning.isNotEmpty)
+              Text(meaning, style: bodyTxtStyle, maxLines: 2),
+            if (synonyms.isNotEmpty) const SizedBox(height: 5),
+            if (synonyms.isNotEmpty) synonymsContainer,
+            const SizedBox(height: 10),
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -23,8 +22,7 @@ class AppConstants {
   static const String sessionsTableViews = 'viewsessions';
 
   static const appTitle = "SwahiLib";
-  static const IconData whatsapp =
-      IconData(0xf05a6, fontFamily: 'MaterialIcons');
+  static const appTitle1 = "Kamusi ya Kiswahili";
 
   static Future<String> get databaseFile async {
     Directory dbFolder = await getApplicationDocumentsDirectory();
