@@ -6,31 +6,28 @@ The Kamusi ya Kiswahili app has been rebranded to SwahiLib. If you are looking f
   <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width='200'/>
 </a>
 
+<a href="https://apps.apple.com/us/app/id6446771678">
+  <img alt='Get it on AppStore' src='https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2019-04-02&kind=iossoftware&bubble=ios_apps' width='200'>
+</a>
 
-## Plugins used
-- dependency injection (injectable/get it)
-- network layer (dio)
-- network logging (niddler, dio)
-- viewmodels (provider)
-- translations (icapps translations)
-- json serialization (json_serializable)
-- different environments
-- themes
-- navigator
-- linting (flutter analyze)
+Swahilib - Kamusi ya Kiswahili for Android, iOS
 
 ## Getting Started
 
 Follow this guide to set up and run the SwahiLib App:
 
-### Setting Up the App:
+## Getting Started
+
+Follow this guide to set up and run SwahiLib:
+
+### Setting Up SwahiLib:
 
 1. **Install Flutter and Dependencies:** Ensure Flutter is installed on your system. Download the Flutter SDK from the official website and set up your preferred IDE (e.g., Android Studio or Visual Studio Code) with the Flutter plugin.
 
-2. **Clone the Repository:** Clone the SwahiLib App repository from GitHub using Git:
+2. **Clone the Repository:** Clone SwahiLib repository from GitHub using Git:
 
     ```bash
-    git clone https://github.com/SiroDaves/SwahiLib.git
+    git clone git@github.com:SiroDaves/SwahiLibApp.git
     ```
 
 3. **Install Packages:** Navigate to the project directory and run:
@@ -39,7 +36,7 @@ Follow this guide to set up and run the SwahiLib App:
     flutter pub get
     ```
 
-### Running the SwahiLib App:
+### Running SwahiLib:
 
 1. **Device Setup:** Connect an emulator or physical device to your development environment. Check connected devices:
 
@@ -47,33 +44,33 @@ Follow this guide to set up and run the SwahiLib App:
     flutter devices
     ```
 
-2. **Run the App:** Execute the following command from the project directory:
+2. **Update Dependencies:**
 
     ```bash
-    flutter run --dart-define-from-file keys-prod.json
+    flutter pub get
     ```
 
-    - **Update Code generation files:**
+3. **Update Code Generated Files:**
 
-        ```bash
-        dart run build_runner build --delete-conflicting-outputs
-        ```
+    ```bash
+    dart run build_runner build --delete-conflicting-outputs
+    ```
 
-    - **Update Localization Strings:**
+4. **Update Localization Strings:**
 
-        ```bash
-        flutter gen-l10n
-        ```
+    ```bash
+    flutter gen-l10n
+    ```
+5. **Running SwahiLib:**
+    ```bash
+    flutter run
+    ```
 
-3. **Build the App:**
+### Building SwahiLib
 
-    - **AppTester Develop Version (Firebase Distribution):**
+1. **Android:**
 
-        ```bash
-        flutter build apk --flavor apptester -t lib/main_dev.dart --dart-define-from-file keys-prod.json --no-tree-shake-icons
-        ```
-
-    - **AppTester Production Version (Firebase Distribution):**
+    - **Staging: AppTester (Firebase Distribution):**
 
         ```bash
         flutter build apk --flavor staging -t lib/main_stg.dart --dart-define-from-file keys-prod.json --no-tree-shake-icons
@@ -82,13 +79,21 @@ Follow this guide to set up and run the SwahiLib App:
     - **Production (For Play Store):**
 
         ```bash
-        flutter build appbundle --flavor prod -t lib/main_prod.dart --dart-define-from-file keys-prod.json --no-tree-shake-icons
+        flutter build appbundle --flavor production -t lib/main_prod.dart --dart-define-from-file keys-prod.json --no-tree-shake-icons
         ```
+    
+2. **iOS:**
 
-    - **Production (For Apple App Store):**
+    - **Production (For Play Store):**
 
         ```bash
-        flutter build ios -t lib/main_prod.dart --dart-define-from-file keys-prod.json --no-tree-shake-icons --build-name {version-name}
+        flutter build ipa -t lib/main_prod.dart --dart-define-from-file keys-prod.json --no-tree-shake-icons
         ```
+    To upload to the App Store either:
+    - Drag and drop the "build/ios/ipa/*.ipa" bundle into the Apple Transporter macOS app https://apps.apple.com/us/app/transporter/id1450874784
+    - Run "xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey your_api_key --apiIssuer your_issuer_id".
+       See "man altool" for details about how to authenticate with the App Store Connect API key.
 
-Congratulations! You've successfully set up and run or built the SwahiLib App. Explore the codebase, make modifications, and contribute to creating a seamless experience for field agents in the insurance industry. Happy coding!
+---
+
+Congratulations! You've successfully set up and run or built SwahiLib. Explore the codebase, make modifications, and contribute to creating a seamless experience for the users. Happy coding!
