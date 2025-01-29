@@ -7,7 +7,7 @@ The Kamusi ya Kiswahili app has been rebranded to SwahiLib. If you are looking f
 </a>
 
 <a href="https://apps.apple.com/us/app/id6446771678">
-  <img alt='Get it on AppStore' src='https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2019-04-02&kind=iossoftware&bubble=ios_apps' width='200'>
+  <img alt='Get it on AppStore' src='https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-preferred_2x.png' width='200'>
 </a>
 
 Swahilib - Kamusi ya Kiswahili for Android, iOS
