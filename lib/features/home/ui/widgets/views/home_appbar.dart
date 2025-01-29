@@ -33,10 +33,10 @@ class HomeAppBarState extends State<HomeAppBar> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: InkWell(
           onTap: () async {
-            /*await showSearch(
-                      context: context,
-                      delegate: SearchList1(context, vm, size!.height),
-                    );*/
+            await showSearch(
+              context: context,
+              delegate: WordSearch(context, parent.words),
+            );
           },
           child: const Padding(
             padding: EdgeInsets.all(10),

@@ -5,7 +5,7 @@ class ViewerState with _$ViewerState {
   const factory ViewerState.initial() = _ViewerState;
 
   const factory ViewerState.loaded(
-    List<String> meaning,
+    List<String> meanings,
     List<String> synonyms,
   ) = ViewerLoadedState;
 

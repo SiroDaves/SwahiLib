@@ -24,6 +24,7 @@ part 'widgets/lists/words_lists.dart';
 part 'widgets/lists/idioms_list.dart';
 part 'widgets/lists/sayings_list.dart';
 part 'widgets/lists/proverbs_list.dart';
+part 'search/word_search.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -64,6 +65,10 @@ class HomeScreenState extends State<HomeScreen> {
 
   void onTabChanged(int index) {
     setState(() => setPage = index);
+  }
+
+  void onLetterTapped(String letter) {
+    setState(() => setLetter = letter);
   }
 
   @override

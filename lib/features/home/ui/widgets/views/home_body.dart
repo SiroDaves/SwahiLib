@@ -11,7 +11,12 @@ class HomeBody extends StatelessWidget {
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemCount: AppConstants.letters.length,
-        itemBuilder: (context, index) => LetterItem(index: index),
+        itemBuilder: (context, index) => LetterItem(
+          index: index,
+          onTap: () {
+            parent.onLetterTapped(AppConstants.letters[index]);
+          },
+        ),
       ),
     );
 
@@ -47,10 +52,10 @@ class LetterItem extends StatelessWidget {
       padding: const EdgeInsets.all(5),
       child: FloatingActionButton(
         heroTag: 'herufi_$letter',
-        onPressed: () {},
+        onPressed: onTap,
         child: Text(
           AppConstants.letters[index!],
-          style:  TextStyle(
+          style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
             color: ThemeColors.bgColorPrimary3(context),

@@ -11,7 +11,7 @@ import '../../../core/theme/theme_colors.dart';
 import '../../../core/theme/theme_fonts.dart';
 import '../bloc/viewer_bloc.dart';
 
-part 'widgets/word_widgets.dart';
+part 'widgets/word_details.dart';
 
 class WordViewer extends StatefulWidget {
   final Word word;
@@ -28,23 +28,13 @@ class WordViewer extends StatefulWidget {
 }
 
 class WordViewerState extends State<WordViewer> {
-  bool isTabletOrIpad = false, isLiked = false, likeChanged = false;
   late Word word;
-  late List<Word> words;
-  List<String?> synonyms = [], meanings = [];
-
   IconData likeIcon = Icons.favorite_border;
-  TextStyle titleTxtStyle =
-      TextStyles.headingStyle2.bold.size(25).textColor(ThemeColors.primary);
-  TextStyle bodyTxtStyle =
-      TextStyles.bodyStyle1.size(20).textColor(ThemeColors.primary);
+  bool isLiked = false, likeChanged = false;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    isTabletOrIpad = size.shortestSide > 550;
     word = widget.word;
-    words = widget.words;
 
     return BlocProvider(
       create: (context) => ViewerBloc()..add(LoadWord(widget.word)),
@@ -69,46 +59,29 @@ class WordViewerState extends State<WordViewer> {
                 '${word.title} removed from your likes',
               );
             }
-          } else if (state is ViewerLoadedState) {
-            setState(() {
-              //songVerses = state.songVerses!;
-              //widgetTabs = state.widgetTabs!;
-              //widgetContent = state.widgetContent!;
-            });
           }
         },
         builder: (context, state) {
-          return state.maybeWhen(
-            progress: () => const Scaffold(body: CircularProgress()),
-            orElse: () => PopScope(
-              canPop: false,
-              onPopInvokedWithResult: (bool didPop, dynamic result) async {
-                if (didPop) {
-                  return;
-                }
-                if (context.mounted) {
-                  Navigator.pop(context, likeChanged);
-                }
-              },
-              child: Scaffold(
-                appBar: AppBar(
-                  title: const Text(AppConstants.appKamusi),
-                  actions: <Widget>[
-                    InkWell(
-                      onTap: () {
-                        context.read<ViewerBloc>().add(LikeWord(word));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Icon(word.liked!
-                            ? Icons.favorite
-                            : Icons.favorite_border),
-                      ),
-                    ),
-                  ],
-                ),
-                body: const SizedBox(),
+          return Scaffold(
+            backgroundColor: ThemeColors.bgColorPrimary3(context),
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                '${AppConstants.appTitle} - ${AppConstants.appTitle1}',
+                style: TextStyles.headingStyle1.bold.size(25),
               ),
+            ),
+            body: state.maybeWhen(
+              failure: (feedback) => EmptyState(title: feedback),
+              orElse: () => const EmptyState(title: 'Hamna chochote hapa'),
+              progress: () => const LoadingProgress(title: "Inapakia data ..."),
+              loaded: (meanings, synonyms) {
+                return WordDetails(
+                  word: word,
+                  meanings: meanings,
+                  synonyms: synonyms,
+                );
+              },
             ),
           );
         },
