@@ -73,7 +73,7 @@ Follow this guide to set up and run SwahiLib:
     - **Production (For Play Store):**
 
         ```bash
-        flutter build appbundle --dart-define-from-file keys-prod.json --no-tree-shake-icons
+        flutter build appbundle --flavor production -t lib/main.dart --dart-define-from-file keys-prod.json --no-tree-shake-icons
         ```
     
 2. **iOS:**
@@ -81,7 +81,7 @@ Follow this guide to set up and run SwahiLib:
     - **Production (For Play Store):**
 
         ```bash
-        flutter build ipa --dart-define-from-file keys-prod.json --no-tree-shake-icons
+        flutter build ipa -t lib/main.dart --no-tree-shake-icons
         ```
     To upload to the App Store either:
     - Drag and drop the "build/ios/ipa/*.ipa" bundle into the Apple Transporter macOS app https://apps.apple.com/us/app/transporter/id1450874784
