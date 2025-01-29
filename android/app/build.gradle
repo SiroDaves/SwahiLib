@@ -30,8 +30,8 @@ android {
         targetSdkVersion 34
         compileSdkVersion 34
         multiDexEnabled true
-        versionCode 2
-        versionName "1.0.0.2" 
+        versionCode 3
+        versionName "1.0.0.3" 
     }
 
     signingConfigs {
