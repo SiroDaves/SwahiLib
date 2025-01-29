@@ -15,6 +15,7 @@ import '../../../common/widgets/progress/skeleton.dart';
 import '../../../core/di/injectable.dart';
 import '../../../core/theme/theme_colors.dart';
 import '../../../core/theme/theme_fonts.dart';
+import '../../viewer/ui/word_viewer.dart';
 import '../bloc/home_bloc.dart';
 
 part 'widgets/views/home_appbar.dart';
@@ -43,8 +44,8 @@ class HomeScreenState extends State<HomeScreen> {
   List<Saying> sayings = [], filteredSayings = [];
   List<Proverb> proverbs = [], filteredProverbs = [];
 
-  String selectedLetter = '', query = '';
-  int selectedPage = 0, selectedBook = 0;
+  String setLetter = '', query = '';
+  int setPage = 0;
 
   @override
   void dispose() {
@@ -59,6 +60,10 @@ class HomeScreenState extends State<HomeScreen> {
     _syncTimer = Timer.periodic(const Duration(minutes: 5), (_) async {
       if (wordsLoaded) _bloc.add(const FetchData());
     });
+  }
+
+  void onTabChanged(int index) {
+    setState(() => setPage = index);
   }
 
   @override

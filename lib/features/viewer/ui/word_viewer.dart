@@ -1,14 +1,10 @@
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:textstyle_extensions/textstyle_extensions.dart';
 
 import '../../../common/data/models/models.dart';
-import '../../../common/utils/app_util.dart';
-import '../../../common/utils/constants/app_assets.dart';
 import '../../../common/utils/constants/app_constants.dart';
-import '../../../common/widgets/action/fab_widget.dart';
 import '../../../common/widgets/progress/custom_snackbar.dart';
 import '../../../common/widgets/progress/general_progress.dart';
 import '../../../core/theme/theme_colors.dart';
@@ -49,25 +45,6 @@ class WordViewerState extends State<WordViewer> {
     isTabletOrIpad = size.shortestSide > 550;
     word = widget.word;
     words = widget.words;
-
-    final wordTitle = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Text(word.title!, style: titleTxtStyle),
-    );
-
-    final wordSynoyms = ListView.builder(
-        shrinkWrap: true,
-        itemCount: synonyms.length,
-        itemBuilder: (context, index) {
-          final synonym = synonyms[index]!;
-          return Card(
-            elevation: 2,
-            child: ListTile(
-              leading: const Icon(Icons.arrow_circle_right),
-              title: Text(synonym, style: const TextStyle(fontSize: 20)),
-            ),
-          );
-        });
 
     return BlocProvider(
       create: (context) => ViewerBloc()..add(LoadWord(widget.word)),
@@ -128,77 +105,9 @@ class WordViewerState extends State<WordViewer> {
                             : Icons.favorite_border),
                       ),
                     ),
-                    /*InkWell(
-                    onTap: () async {
-                      await showModalBottomSheet<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return ListViewPopup(song: vm.song!);
-                          });
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Icon(Icons.list),
-                    ),
-                  ),*/
                   ],
                 ),
-                body: Container(
-                  constraints: const BoxConstraints.expand(),
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.white,
-                          ThemeColors.accent,
-                          ThemeColors.primary
-                        ]),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 10),
-                      wordTitle,
-                      if (word.conjugation!.isNotEmpty)
-                        Html(
-                          data:
-                              "<p><b>Mnyambuliko:</b> <i>${word.conjugation!}</i></p>",
-                          style: {
-                            "p": Style(
-                              fontSize: FontSize(20),
-                            ),
-                          },
-                        ),
-                      SizedBox(
-                        height: size.height - 150,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              //wordMeaning,
-                              if (synonyms.isNotEmpty)
-                                const Padding(
-                                  padding: EdgeInsets.all(5),
-                                  child: Divider(color: Colors.white),
-                                ),
-                              if (synonyms.isNotEmpty)
-                                Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Text(
-                                    'VISAWE',
-                                    style: titleTxtStyle,
-                                  ),
-                                ),
-                              if (synonyms.isNotEmpty) wordSynoyms,
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                body: const SizedBox(),
               ),
             ),
           );

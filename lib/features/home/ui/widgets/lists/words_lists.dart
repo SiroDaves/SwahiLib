@@ -17,7 +17,17 @@ class WordsList extends StatelessWidget {
         final Word word = parent.filteredWords[index];
         return WordItem(
           word: word,
-          onTap: () {}, //=> vm.openWord(word),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => WordViewer(
+                  word: word,
+                  words: parent.words,
+                ),
+              ),
+            );
+          },
         );
       },
     );
@@ -60,7 +70,7 @@ class WordItem extends StatelessWidget {
         ? Row(
             children: <Widget>[
               Text(
-                "${synonyms.length == 1 ? 'KISAWE ' : 'VISAWE '}${synonyms.length}:",
+                "${synonyms.length == 1 ? 'KISAWE' : 'VISAWE ${synonyms.length}'}:",
                 style: bodyTxtStyle.bold,
               ),
               const SizedBox(width: 10),

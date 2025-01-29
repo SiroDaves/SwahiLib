@@ -60,7 +60,7 @@ class ProverbItem extends StatelessWidget {
         ? Row(
             children: <Widget>[
               Text(
-                "${synonyms.length == 1 ? 'KISAWE ' : 'VISAWE '}${synonyms.length}:",
+                "${synonyms.length == 1 ? 'KISAWE' : 'VISAWE ${synonyms.length}'}:",
                 style: bodyTxtStyle.bold,
               ),
               const SizedBox(width: 10),

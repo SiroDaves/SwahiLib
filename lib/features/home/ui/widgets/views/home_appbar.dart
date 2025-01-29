@@ -55,30 +55,10 @@ class HomeAppBarState extends State<HomeAppBar> {
           scrollDirection: Axis.horizontal,
           itemCount: AppConstants.filters.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: RawMaterialButton(
-                fillColor: ThemeColors.primary,
-                highlightColor: Colors.white,
-                focusElevation: 0,
-                hoverColor: ThemeColors.primaryDark,
-                hoverElevation: 1,
-                highlightElevation: 0,
-                elevation: 0,
-                padding: EdgeInsets.zero,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    topLeft: Radius.circular(10),
-                  ),
-                ),
-                onPressed: () {},
-                child: Text(
-                  AppConstants.filters[index].toUpperCase(),
-                  style:
-                      TextStyles.buttonTextStyle.bold.textColor(Colors.white),
-                ),
-              ),
+            return TabActionItem(
+              index: index,
+              isSelected: parent.setPage == index,
+              onTapped: () => parent.onTabChanged(index),
             );
           },
         ),
@@ -94,6 +74,48 @@ class HomeAppBarState extends State<HomeAppBar> {
       //leading: leadingAction,
       actions: actionButtons,
       bottom: tabActions,
+    );
+  }
+}
+
+class TabActionItem extends StatelessWidget {
+  final int? index;
+  final bool isSelected;
+  final VoidCallback? onTapped;
+
+  const TabActionItem({
+    super.key,
+    required this.index,
+    this.isSelected = false,
+    this.onTapped,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: RawMaterialButton(
+        fillColor: isSelected ? Colors.white : ThemeColors.primary,
+        highlightColor: Colors.white,
+        focusElevation: 0,
+        hoverColor: ThemeColors.primaryDark,
+        hoverElevation: 1,
+        highlightElevation: 0,
+        elevation: 0,
+        padding: EdgeInsets.zero,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(10),
+            topLeft: Radius.circular(10),
+          ),
+        ),
+        onPressed: onTapped,
+        child: Text(
+          AppConstants.filters[index!].toUpperCase(),
+          style: TextStyles.buttonTextStyle.bold
+              .textColor(isSelected ? ThemeColors.primary : Colors.white),
+        ),
+      ),
     );
   }
 }

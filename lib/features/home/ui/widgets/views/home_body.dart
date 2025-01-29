@@ -20,7 +20,7 @@ class HomeBody extends StatelessWidget {
         children: <Widget>[
           filterLetters,
           IndexedStack(
-            index: parent.selectedPage,
+            index: parent.setPage,
             children: <Widget>[
               WordsList(parent: parent),
               IdiomsList(parent: parent),
