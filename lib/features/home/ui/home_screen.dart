@@ -15,7 +15,7 @@ import '../../../common/widgets/progress/skeleton.dart';
 import '../../../core/di/injectable.dart';
 import '../../../core/theme/theme_colors.dart';
 import '../../../core/theme/theme_fonts.dart';
-import '../../viewer/ui/word_viewer.dart';
+import '../../viewer/ui/word_screen.dart';
 import '../bloc/home_bloc.dart';
 
 part 'widgets/views/home_appbar.dart';

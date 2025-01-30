@@ -1,4 +1,4 @@
-part of '../word_viewer.dart';
+part of '../word_screen.dart';
 
 class WordDetails extends StatelessWidget {
   final Word word;
@@ -14,128 +14,89 @@ class WordDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    TextStyle titleTxtStyle =
-        TextStyles.headingStyle2.bold.size(25).textColor(ThemeColors.primary);
-    TextStyle bodyTxtStyle =
-        TextStyles.bodyStyle1.size(20).textColor(ThemeColors.primary);
-
-    final wordTitle = Padding(
-      padding: const EdgeInsets.all(10),
-      child: Text(word.title ?? "No Title", style: titleTxtStyle),
-    );
-
-    final wordConjugation = (word.conjugation?.isNotEmpty ?? false)
-        ? Html(
-            data: "<p><b>Mnyambuliko:</b> <i>${word.conjugation}</i></p>",
-            style: {"p": Style(fontSize: FontSize(20))},
-          )
-        : const SizedBox.shrink();
-    final wordMeaning = ListView.builder(
-        shrinkWrap: true,
-        itemCount: meanings.length,
-        itemBuilder: (context, index) {
-          final meaning = meanings[index];
-          final extra = meaning.split(":");
-          if (extra.length == 2) {
-            return Card(
-              elevation: 2,
-              color: Colors.white,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                child: ListTile(
-                  minLeadingWidth: 5,
-                  leading: Text('${index + 1}.', style: bodyTxtStyle),
-                  title: Text(extra[0], style: bodyTxtStyle),
-                  subtitle: Html(
-                    data: "<p><b>Mfano:</b> ${extra[1]}</p>",
-                    style: {
-                      "p": Style(
-                        fontSize: FontSize(18),
-                        color: ThemeColors.primary,
-                      )
-                    },
-                  ),
-                ),
-              ),
-            );
-          } else {
-            return Card(
-              elevation: 2,
-              color: Colors.white,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                child: ListTile(
-                  minLeadingWidth: 5,
-                  leading: Text('${index + 1}.', style: bodyTxtStyle),
-                  title: Text(extra[0], style: bodyTxtStyle),
-                ),
-              ),
-            );
-          }
-        });
-    final wordSynonyms = synonyms.isNotEmpty
-        ? ListView.builder(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (meanings.isNotEmpty) MeaningCard(meanings: meanings),
+        if (synonyms.isNotEmpty) ...[
+          const SizedBox(height: 15),
+          Text(
+            'Visawe',
+            style: TextStyles.headingStyle2.bold
+                .size(25)
+                .italic
+                .textColor(ThemeColors.primary),
+          ),
+          ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: synonyms.length,
-            itemBuilder: (context, index) {
-              final synonym = synonyms[index];
-              return Card(
-                elevation: 2,
-                color: Colors.white,
-                child: ListTile(
-                  leading: const Icon(Icons.arrow_circle_right),
-                  title: Text(
-                    synonym,
-                    style: const TextStyle(
-                        fontSize: 20, color: ThemeColors.primary),
-                  ),
-                ),
-              );
-            })
-        : const SizedBox.shrink();
+            itemBuilder: (context, index) =>
+                SynonymCard(synonym: synonyms[index]),
+          ),
+        ],
+      ],
+    );
+  }
+}
 
-    final wordBody = SizedBox(
-      height: size.height - 150,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            wordMeaning,
-            if (synonyms.isNotEmpty)
-              const Padding(
-                padding: EdgeInsets.all(5),
-                child: Divider(color: Colors.white),
-              ),
-            if (synonyms.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: Text('VISAWE', style: titleTxtStyle),
-              ),
-            wordSynonyms,
-          ],
-        ),
+class MeaningCard extends StatelessWidget {
+  final List<String> meanings;
+
+  const MeaningCard({super.key, required this.meanings});
+
+  @override
+  Widget build(BuildContext context) {
+    final String formattedHtml = meanings.asMap().entries.map((entry) {
+      final parts = entry.value.split(":");
+      return parts.length > 1
+          ? "<li>${parts.first}<br><b>Mfano:</b> <i>${parts.last}</i></li>"
+          : "<li>${parts.first}</li>";
+    }).join();
+
+    return Card(
+      elevation: 2,
+      color: Colors.white,
+      child: Html(
+        data: "<ol>$formattedHtml</ol>",
+        style: {
+          "ol": Style(
+            fontSize: FontSize(18),
+            color: ThemeColors.primary,
+          ),
+          "li": Style(
+            margin: Margins.only(bottom: 10),
+          ),
+        },
       ),
     );
+  }
+}
 
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Colors.white, ThemeColors.accent, ThemeColors.primary],
+class SynonymCard extends StatelessWidget {
+  final String synonym;
+
+  const SynonymCard({super.key, required this.synonym});
+
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle bodyTxtStyle =
+        TextStyles.bodyStyle1.size(20).textColor(ThemeColors.primary);
+
+    return Card(
+      elevation: 2,
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
+            const Icon(Icons.arrow_circle_right, color: ThemeColors.primary),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(synonym, style: bodyTxtStyle),
+            ),
+          ],
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          wordTitle,
-          wordConjugation,
-          wordBody,
-        ],
       ),
     );
   }

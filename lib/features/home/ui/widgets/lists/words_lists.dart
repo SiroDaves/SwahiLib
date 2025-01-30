@@ -21,7 +21,7 @@ class WordsList extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => WordViewer(
+                builder: (context) => WordScreen(
                   word: word,
                   words: parent.words,
                 ),

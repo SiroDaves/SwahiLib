@@ -12,22 +12,23 @@ import '../../../core/theme/theme_fonts.dart';
 import '../bloc/viewer_bloc.dart';
 
 part 'widgets/word_details.dart';
+part 'word_view.dart';
 
-class WordViewer extends StatefulWidget {
+class WordScreen extends StatefulWidget {
   final Word word;
   final List<Word> words;
 
-  const WordViewer({
+  const WordScreen({
     super.key,
     required this.word,
     required this.words,
   });
 
   @override
-  State<WordViewer> createState() => WordViewerState();
+  State<WordScreen> createState() => WordScreenState();
 }
 
-class WordViewerState extends State<WordViewer> {
+class WordScreenState extends State<WordScreen> {
   late Word word;
   IconData likeIcon = Icons.favorite_border;
   bool isLiked = false, likeChanged = false;
@@ -63,12 +64,9 @@ class WordViewerState extends State<WordViewer> {
         },
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: ThemeColors.bgColorPrimary3(context),
             appBar: AppBar(
-              centerTitle: true,
-              title: Text(
+              title: const Text(
                 '${AppConstants.appTitle} - ${AppConstants.appTitle1}',
-                style: TextStyles.headingStyle1.bold.size(25),
               ),
             ),
             body: state.maybeWhen(
@@ -76,7 +74,7 @@ class WordViewerState extends State<WordViewer> {
               orElse: () => const EmptyState(title: 'Hamna chochote hapa'),
               progress: () => const LoadingProgress(title: "Inapakia data ..."),
               loaded: (meanings, synonyms) {
-                return WordDetails(
+                return WordView(
                   word: word,
                   meanings: meanings,
                   synonyms: synonyms,
