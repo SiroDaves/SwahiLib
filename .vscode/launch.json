@@ -5,16 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "swa",
+            "name": "swadev",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main.dart",
+            "program": "lib/main_dev.dart",
             "args": [
-                "production",
+                "develop",
                 "--target",
-                "lib/main.dart",
+                "lib/main_dev.dart",
                 "--dart-define-from-file",
-                "keys-prod.json"
+                "keys-dev.json"
             ],
         },
         {

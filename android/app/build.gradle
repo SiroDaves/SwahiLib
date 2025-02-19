@@ -30,8 +30,8 @@ android {
         targetSdkVersion 34
         compileSdkVersion 34
         multiDexEnabled true
-        versionCode 4
-        versionName "1.0.0.4" 
+        versionCode 5
+        versionName "1.0.0.5" 
     }
 
     signingConfigs {
@@ -49,13 +49,6 @@ android {
             dimension "flavors"
             applicationIdSuffix ""
             manifestPlaceholders = [appName: "Swahilib"]
-        }
-        staging {
-            dimension "flavors"
-            applicationIdSuffix ".stg"
-            manifestPlaceholders = [appName: "Stg Swahilib"]
-            versionCode 2
-            versionName "1.0.0.1"
         }
         develop {
             dimension "flavors"

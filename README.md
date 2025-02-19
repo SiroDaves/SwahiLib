@@ -63,7 +63,7 @@ Follow this guide to set up and run SwahiLib:
     ```
 5. **Running SwahiLib:**
     ```bash
-    flutter run
+    flutter run --flavor develop -t lib/main_dev.dart --dart-define-from-file keys-dev.json
     ```
 
 ### Building SwahiLib
