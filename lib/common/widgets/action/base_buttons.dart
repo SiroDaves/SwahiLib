@@ -30,7 +30,7 @@ class AppButton extends StatefulWidget {
   final BorderRadius borderRadius;
 
   const AppButton({
-    Key? key,
+    super.key,
     this.label = '',
     this.prefix = const SizedBox(),
     this.suffix = const SizedBox(),
@@ -60,7 +60,7 @@ class AppButton extends StatefulWidget {
     this.shape,
     this.outlineColor = Colors.transparent,
     this.borderRadius = const BorderRadius.all(Radius.circular(Sizes.sm)),
-  }) : super(key: key);
+  });
 
   @override
   AppButtonState createState() => AppButtonState();
