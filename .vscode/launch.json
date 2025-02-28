@@ -12,7 +12,7 @@
             "args": [
                 "develop",
                 "--target",
-                "lib/main_dev.dart",
+                "lib/main.dart",
                 "--dart-define-from-file",
                 "keys-dev.json"
             ],
