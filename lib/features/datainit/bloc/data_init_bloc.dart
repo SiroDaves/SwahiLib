@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:workmanager/workmanager.dart';
 
 import '../../../common/data/models/models.dart';
 import '../../../common/repository/db/database_repository.dart';
@@ -47,9 +48,14 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     Emitter<DataInitState> emit,
   ) async {
     emit(const DataInitSavingState("Salia kwenye skrini hii, usiondoke!"));
-    _dbRepo.saveWords(event.words);
-
-    await Future<void>.delayed(const Duration(seconds: 3));
+    
+    Workmanager().registerOneOffTask(
+      "saveWordsTask",
+      "com.swahilib.initTask",
+      inputData: {
+        "words": event.words.map((word) => word.toJson()).toList(),
+      },
+    );
 
     emit(const DataInitSavingState("Inapakia nahau (idioms) 527 ..."));
     await _dbRepo.saveIdioms(event.idioms);
