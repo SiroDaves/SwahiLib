@@ -47,26 +47,28 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     SaveData event,
     Emitter<DataInitState> emit,
   ) async {
-    emit(const DataInitSavingState("Salia kwenye skrini hii, usiondoke!"));
-    
+    emit(const DataInitSavingState('Salia kwenye skrini hii, usiondoke!'));
+
+    final wordsJson = event.words.map((word) => word.toJson()).toList();
+
     Workmanager().registerOneOffTask(
-      "saveWordsTask",
-      "com.swahilib.initTask",
-      inputData: {
-        "words": event.words.map((word) => word.toJson()).toList(),
-      },
+      'saveWordsTask',
+      'com.swahilib.initTask',
+      inputData: {'words': wordsJson},
+      constraints: Constraints(networkType: NetworkType.connected),
     );
 
-    emit(const DataInitSavingState("Inapakia nahau (idioms) 527 ..."));
+    emit(const DataInitSavingState('Inapakia nahau (idioms) 527 ...'));
+
     await _dbRepo.saveIdioms(event.idioms);
 
-    emit(const DataInitSavingState("Inapakia methali (proverbs) 382 ..."));
+    emit(const DataInitSavingState('Inapakia methali (proverbs) 382 ...'));
     await _dbRepo.saveProverbs(event.proverbs);
 
-    emit(const DataInitSavingState("Inapakia misemo (sayings) 276..."));
+    emit(const DataInitSavingState('Inapakia misemo (sayings) 276...'));
     await _dbRepo.saveSayings(event.sayings);
 
-    emit(const DataInitSavingState("Inapakia maneno (words) 16,641..."));
+    emit(const DataInitSavingState('Inapakia maneno (words) 16,641...'));
 
     Map<String, List<Word>> groupedWords = {};
 

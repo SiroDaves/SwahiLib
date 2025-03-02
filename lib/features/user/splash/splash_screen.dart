@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../common/utils/constants/app_constants.dart';
 import '../../../common/utils/constants/app_assets.dart';
-import '../../../core/theme/theme_colors.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -10,7 +9,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ThemeColors.bgColorBW(context),
+      //backgroundColor: ThemeColors.bgColorBW(context),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -24,15 +23,13 @@ class SplashScreen extends StatelessWidget {
                 fontSize: 50,
                 letterSpacing: 5,
                 fontWeight: FontWeight.bold,
-                color: ThemeColors.primary,
               ),
             ),
             const SizedBox(height: 5),
             const Spacer(),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 50),
-              child: Divider(
-                  color: ThemeColors.primaryDark, thickness: 2, height: 50),
+              child: Divider(thickness: 2, height: 50),
             ),
             const Text(
               AppConstants.appTagline,
@@ -40,7 +37,6 @@ class SplashScreen extends StatelessWidget {
                 fontSize: 22,
                 letterSpacing: 3,
                 fontWeight: FontWeight.bold,
-                color: ThemeColors.primary,
               ),
             ),
             const SizedBox(height: 20),
