@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/widgets/progress/custom_snackbar.dart';
 import '../../../common/widgets/progress/general_progress.dart';
 import '../../../core/navigator/route_names.dart';
-import '../../../core/theme/theme_colors.dart';
 import '../bloc/data_init_bloc.dart';
 
 class DataInitScreen extends StatefulWidget {
@@ -43,7 +42,6 @@ class DataInitScreenState extends State<DataInitScreen> {
         builder: (context, state) {
           var bloc = context.read<DataInitBloc>();
           return Scaffold(
-            backgroundColor: ThemeColors.bgColorPrimary3(context),
             body: state.maybeWhen(
               orElse: () => const SizedBox(),
               failure: (feedback) => EmptyState(

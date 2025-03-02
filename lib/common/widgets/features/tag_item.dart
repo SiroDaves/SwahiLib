@@ -22,8 +22,8 @@ class TagItem extends StatelessWidget {
           margin: const EdgeInsets.only(right: Sizes.xs),
           decoration: BoxDecoration(
             color: Theme.of(context).brightness == Brightness.light
-                ? ThemeColors.primary
-                : ThemeColors.primary2,
+                ? ThemeColors.primaryDark1
+                : ThemeColors.primary,
             borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
           child: Text(tagText,

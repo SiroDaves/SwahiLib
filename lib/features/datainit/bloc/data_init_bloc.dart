@@ -52,10 +52,10 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     final wordsJson = event.words.map((word) => word.toJson()).toList();
 
     Workmanager().registerOneOffTask(
-      'saveWordsTask',
+      //'saveWordsTask',
+      'com.swahilib.initTask',
       'com.swahilib.initTask',
       inputData: {'words': wordsJson},
-      constraints: Constraints(networkType: NetworkType.connected),
     );
 
     emit(const DataInitSavingState('Inapakia nahau (idioms) 527 ...'));
