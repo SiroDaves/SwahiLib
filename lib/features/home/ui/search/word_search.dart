@@ -24,7 +24,7 @@ class WordSearch extends SearchDelegate<List> {
     return [
       IconButton(
         onPressed: () => query = '',
-        icon: const Icon(Icons.clear),
+        icon: const Icon(Icons.clear, color: Colors.white),
       ),
     ];
   }
@@ -33,36 +33,41 @@ class WordSearch extends SearchDelegate<List> {
   Widget buildLeading(BuildContext context) {
     return IconButton(
       onPressed: () => close(context, words),
-      icon: const Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back, color: Colors.white),
     );
   }
 
   @override
-  Widget buildResults(BuildContext context) => searchThis(context);
+  Widget buildResults(BuildContext context) => _buildSearchResults(context);
 
   @override
-  Widget buildSuggestions(BuildContext context) => searchThis(context);
+  Widget buildSuggestions(BuildContext context) => _buildSearchResults(context);
 
-  Widget searchThis(BuildContext context) {
-    final matchQuery = words.where((i) {
-      return (i.title!.toLowerCase().contains(query.toLowerCase()) ||
-          i.synonyms!.toLowerCase().contains(query.toLowerCase()) ||
-          i.meaning!.toLowerCase().contains(query.toLowerCase()));
-    }).toList();
+  Widget _buildSearchResults(BuildContext context) {
+    final filteredWords = _filterWords(query);
+
+    if (filteredWords.isEmpty) {
+      return const Center(
+        child: Text(
+          "Hakuna matokeo",
+          style: TextStyle(fontSize: 18, color: Colors.grey),
+        ),
+      );
+    }
 
     return ListView.builder(
       padding: const EdgeInsets.all(10),
-      itemCount: matchQuery.length,
+      itemCount: filteredWords.length,
       itemBuilder: (context, index) {
-        final result = matchQuery[index];
+        final word = filteredWords[index];
         return WordItem(
-          word: result,
+          word: word,
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => WordViewer(
-                  word: result,
+                builder: (context) => WordScreen(
+                  word: word,
                   words: words,
                 ),
               ),
@@ -71,5 +76,15 @@ class WordSearch extends SearchDelegate<List> {
         );
       },
     );
+  }
+
+  List<Word> _filterWords(String query) {
+    if (query.trim().isEmpty) return words;
+
+    final lowerQuery = query.trim().toLowerCase();
+
+    return words.where((word) {
+      return (word.title?.toLowerCase().contains(lowerQuery) ?? false);
+    }).toList();
   }
 }

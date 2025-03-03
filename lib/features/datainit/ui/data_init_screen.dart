@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:textstyle_extensions/textstyle_extensions.dart';
 
-import '../../../common/utils/constants/app_constants.dart';
 import '../../../common/widgets/progress/custom_snackbar.dart';
 import '../../../common/widgets/progress/general_progress.dart';
 import '../../../core/navigator/route_names.dart';
 import '../../../core/theme/theme_colors.dart';
-import '../../../core/theme/theme_fonts.dart';
 import '../bloc/data_init_bloc.dart';
 
 class DataInitScreen extends StatefulWidget {
@@ -47,11 +44,6 @@ class DataInitScreenState extends State<DataInitScreen> {
           var bloc = context.read<DataInitBloc>();
           return Scaffold(
             backgroundColor: ThemeColors.bgColorPrimary3(context),
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text(AppConstants.appTitle,
-                  style: TextStyles.headingStyle1.bold.size(25)),
-            ),
             body: state.maybeWhen(
               orElse: () => const SizedBox(),
               failure: (feedback) => EmptyState(

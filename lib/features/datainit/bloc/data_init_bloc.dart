@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:workmanager/workmanager.dart';
 
 import '../../../common/data/models/models.dart';
 import '../../../common/repository/db/database_repository.dart';
@@ -46,21 +47,28 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     SaveData event,
     Emitter<DataInitState> emit,
   ) async {
-    emit(const DataInitSavingState("Salia kwenye skrini hii, usiondoke!"));
-    _dbRepo.saveWords(event.words);
+    emit(const DataInitSavingState('Salia kwenye skrini hii, usiondoke!'));
 
-    await Future<void>.delayed(const Duration(seconds: 3));
+    final wordsJson = event.words.map((word) => word.toJson()).toList();
 
-    emit(const DataInitSavingState("Inapakia nahau (idioms) 527 ..."));
+    Workmanager().registerOneOffTask(
+      'saveWordsTask',
+      'com.swahilib.initTask',
+      inputData: {'words': wordsJson},
+      constraints: Constraints(networkType: NetworkType.connected),
+    );
+
+    emit(const DataInitSavingState('Inapakia nahau (idioms) 527 ...'));
+
     await _dbRepo.saveIdioms(event.idioms);
 
-    emit(const DataInitSavingState("Inapakia methali (proverbs) 382 ..."));
+    emit(const DataInitSavingState('Inapakia methali (proverbs) 382 ...'));
     await _dbRepo.saveProverbs(event.proverbs);
 
-    emit(const DataInitSavingState("Inapakia misemo (sayings) 276..."));
+    emit(const DataInitSavingState('Inapakia misemo (sayings) 276...'));
     await _dbRepo.saveSayings(event.sayings);
 
-    emit(const DataInitSavingState("Inapakia maneno (words) 16,641..."));
+    emit(const DataInitSavingState('Inapakia maneno (words) 16,641...'));
 
     Map<String, List<Word>> groupedWords = {};
 

@@ -19,7 +19,7 @@ class CircularProgress extends StatelessWidget {
         child: CircularProgressIndicator(
           color: ThemeColors.primary,
           strokeWidth: 5,
-          backgroundColor: Colors.white.withOpacity(0.3),
+          backgroundColor: Colors.white.withValues(alpha: 0.3),
         ),
       ),
     );

@@ -12,13 +12,6 @@ class ThemeColors {
   static const shadow = Color(0x1e000000); //black 12%
   static const error = Color(0xFFE30000);
 
-  static const whiteGrey = Color(0xFF868B9B);
-  static const gray = Color(0xFFEEEEEE);
-  static const success = Color(0xff116d5a);
-  static const error1 = Color(0xFFfadcd3);
-  static const green = Color(0xFF1A821A);
-  static const yellow = Color(0xFFF1AF3A);
-
   static const Color midGray = Color.fromARGB(255, 198, 198, 198);
   static const Color darkGray = Color.fromARGB(255, 157, 161, 174);
   static const Color textGray = Color.fromARGB(255, 134, 139, 155);
@@ -28,51 +21,55 @@ class ThemeColors {
   static const Color trafficRed = Color.fromARGB(255, 246, 0, 1);
   static const Color trafficGreen = Color.fromARGB(255, 0, 247, 0);
 
-  // Supportive theme
-  static const primary = Color(0xFF002548); // Blue
-  static const primaryDark = Color(0xFF001A33); // Dark Blue
-  static const accent = Color(0xFF1565C0); // Blue
-  static const accent1 = Color(0xFF42A5F5); // Light Blue
+  // Theme Colors
+  static const primary = Color(0xFF003297);
+  static const primary1 = Color(0xFF00287A);
+  static const primary2 = Color(0xFF001F5C);
+  static const primaryDark = Color(0xFF001A66);
+  static const primaryDark1 = Color(0xFF000F40);
+  static const primaryDark2 = Color(0xFF000A33);
+  static const accent = Color(0xFFBBDEFB);
+  static const accent1 = Color(0xFF64B5F6);
+  static const accent2 = Color(0xFF1E88E5);
 
-// Light Mode Colors
-  /// Main color for the app, used in branding and key elements
-  static const Color kPrimaryBlue = Color(0xFF002548); // Blue
+  static bool isLightTheme(BuildContext context) {
+    return MediaQuery.platformBrightnessOf(context) == Brightness.light;
+  }
 
-  /// Used for headers and prominent UI elements
-  static const Color kDarkBlue = Color(0xFF001A33); // Dark Blue
+  static Color foreColorPrimary(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light
+        ? Colors.white
+        : ThemeColors.primary2;
+  }
 
-  /// Background color for sections like chats
-  static const Color kLightBlue = Color(0xFFBBDEFB); // Light Blue
+  static Color foreColorPrimary1(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light
+        ? ThemeColors.primaryDark1
+        : ThemeColors.accent1;
+  }
 
-  /// Provides variation and depth in the color scheme
-  static const Color kComplementaryBlue = Color(0xFF64B5F6); // Light Blue
+  static Color foreColorPrimary2(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light
+        ? ThemeColors.accent1
+        : ThemeColors.primaryDark1;
+  }
 
-// Dark Mode Colors
-  /// Primary background color in dark mode
-  static const Color kDarkGrayBlack = Color(0xFF121212); // Dark Gray
+  static Color foreColorBW(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light
+        ? Colors.black
+        : Colors.white;
+  }
 
-  /// Used for headers and prominent UI elements in dark mode
-  static const Color kPrimaryDeepBlue = Color(0xFF002244); // Deep Blue
-
-  /// Used for headers and prominent UI elements in dark mode
-  static const Color kDeepBlue = Color(0xFF001A33); // Dark Blue
-
-  /// Complementary dark color for various UI elements in dark mode
-  static const Color kDarkBlueShade = Color(0xFF0D47A1); // Dark Blue
-
-  /// Background color for message bubbles and other elements in dark mode
-  static const Color kMediumGray = Color(0xFF303030); // Medium Gray
-
-  /// Text color for readability against dark background
-  static const Color kLightGrayDarkMode = Color(0xFFAEBAC1); // Light Gray
-
-  /// Used for icons and action buttons in dark mode
-  static const Color kAccentBlue = Color(0xFF64B5F6); // Lighter Blue
+  static Color foreColorWB(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light
+        ? Colors.white
+        : Colors.black;
+  }
 
   static Color bgColorPrimary(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
         ? ThemeColors.primary
-        : ThemeColors.accent1;
+        : ThemeColors.primaryDark1;
   }
 
   static Color bgColorPrimary2(BuildContext context) {
@@ -83,26 +80,26 @@ class ThemeColors {
 
   static Color bgColorPrimary3(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
-        ? ThemeColors.accent1
-        : ThemeColors.primary;
+        ? ThemeColors.primary2
+        : ThemeColors.accent;
   }
 
   static Color bgColorPrimary4(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
-        ? ThemeColors.primary
-        : ThemeColors.accent;
+        ? ThemeColors.primaryDark
+        : Colors.white;
   }
 
   static Color bgColorPrimary5(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
-        ? ThemeColors.primary
-        : Colors.black;
+        ? Colors.white
+        : ThemeColors.primaryDark;
   }
 
   static Color bgColorAccent(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
         ? ThemeColors.accent
-        : ThemeColors.kDarkBlueShade;
+        : ThemeColors.primary2;
   }
 
   static Color bgColorBW(BuildContext context) {
@@ -115,5 +112,11 @@ class ThemeColors {
     return Theme.of(context).brightness == Brightness.light
         ? Colors.black
         : Colors.white;
+  }
+
+  static Color bgColorShadow(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light
+        ? ThemeColors.accent2
+        : Colors.grey;
   }
 }

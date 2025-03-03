@@ -35,12 +35,9 @@ class AppConstants {
     return dbPath;
   }
 
-  static const playstoreLink =
-      "https://play.google.com/store/apps/details?id=com.swahilib";
-  
   static const appKamusi = "Kamusi ya Kiswahili";
   static const appTagline = "Kiswahili Kitukuzwe";
-  
+
   static const String inProgress = "Inaendelea ...";
   static const String gettingReady = "Subiri kiasi ...";
   static const String somePatience = "Eish! ... Subiri kidogo ...";
@@ -51,10 +48,8 @@ class AppConstants {
   static const String searches = 'matafuto';
   static const String trivia = 'trivia';
 
-  static const String revCatKey = 'danXhdPXSzsDcJgElNAexHaGnvsPMSqY';
-
   static const String campaign =
-      "\n\n#KamusiYaKiswahili #KiswahiliKitukuzwe \n\nhttps://play.google.com/store/apps/details?id=com.kazibora.kamusi ";
+      "\n\n#KamusiYaKiswahili #KiswahiliKitukuzwe \n\nhttps://linktr.ee/SwahilibApp ";
   static const String synonyms = "\n\nVisawe (synonyms) vya neno ";
   static const String searchNow = "Tafuta ";
   static const String searchHint = "Tafuta Kwenye Kamusi";

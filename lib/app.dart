@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'common/authe/authe_bloc.dart';
+import 'common/auth/auth_bloc.dart';
 import 'common/utils/constants/pref_constants.dart';
 import 'common/utils/date_util.dart';
 import 'core/theme/bloc/theme_bloc.dart';
@@ -24,12 +24,12 @@ class MyAppState extends State<MyApp> {
   final navigatorKey = MainNavigatorState.navigationKey;
   NavigatorState get navigator =>
       MainNavigatorState.navigationKey.currentState!;
-  late final AutheRepository _autheRepo;
+  late final AuthRepository _autheRepo;
 
   @override
   void initState() {
     super.initState();
-    _autheRepo = AutheRepository();
+    _autheRepo = AuthRepository();
   }
 
   @override
@@ -43,18 +43,13 @@ class MyAppState extends State<MyApp> {
     return RepositoryProvider.value(
       value: _autheRepo,
       child: BlocProvider(
-        create: (_) => AutheBloc(autheRepo: _autheRepo),
+        create: (_) => AuthBloc(autheRepo: _autheRepo),
         child: const AppView(),
       ),
     );
   }
 }
 
-/// A widget that builds the main view of the application. It sets up the
-/// necessary providers and handles navigation and theming.
-///
-/// The [AppView] widget can optionally take a [home] widget to display as the
-/// initial screen.
 class AppView extends StatefulWidget {
   final Widget? home;
   const AppView({super.key, this.home});
@@ -86,14 +81,14 @@ class AppViewState extends State<AppView> {
             navigatorKey: navigatorKey,
             initialRoute: MainNavigatorState.initialRoute,
             onGenerateRoute: MainNavigatorState.onGenerateRoute,
-            builder: (context, child) => BlocListener<AutheBloc, AutheState>(
+            builder: (context, child) => BlocListener<AuthBloc, AuthState>(
               listener: (context, state) {
                 switch (state.status) {
-                  case AutheStatus.unauthenticated:
+                  case AuthStatus.unauthenticated:
                     navigator.pushNamed<void>(RouteNames.signup);
-                  case AutheStatus.unverified:
+                  case AuthStatus.unverified:
                     navigator.pushNamed<void>(RouteNames.login);
-                  case AutheStatus.authenticated:
+                  case AuthStatus.authenticated:
                     if (isLoaded) {
                       navigator.pushNamedAndRemoveUntil<void>(
                         RouteNames.home,

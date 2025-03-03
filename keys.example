@@ -1,4 +1,5 @@
 {
     "supabaseUrl": "",
-    "supabaseAnonKey": ""
+    "supabaseAnonKey": "",
+    "sentryUrl": ""
 }
