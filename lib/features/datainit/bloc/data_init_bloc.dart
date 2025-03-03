@@ -9,6 +9,7 @@ import '../../../common/repository/db/database_repository.dart';
 import '../../../common/repository/pref_repository.dart';
 import '../../../common/utils/constants/pref_constants.dart';
 import '../../../core/di/injectable.dart';
+import '../common/data_init_utils.dart';
 import '../domain/data_init_repository.dart';
 
 part 'data_init_event.dart';
@@ -57,22 +58,44 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     SaveData event,
     Emitter<DataInitState> emit,
   ) async {
-    emit(const DataInitSavingState('Salia kwenye skrini hii, usiondoke!'));
+    emit(const DataInitSavingState('Salia kwenye skrini hii, usiondoke!', 0));
 
     await Future<void>.delayed(const Duration(seconds: 3));
 
-    emit(const DataInitSavingState('Inapakia nahau (idioms) 527 ...'));
-    await _dbRepo.saveIdioms(event.idioms);
+    emit(const DataInitSavingState('Inapakia nahau (idioms) 527 ...', 0));
 
-    emit(const DataInitSavingState('Inapakia methali (proverbs) 382 ...'));
-    await _dbRepo.saveProverbs(event.proverbs);
+    for (int i = 0; i < event.idioms.length; i++) {
+      emit(DataInitSavingState(
+        'Inapakia nahau (idioms)',
+        (i / event.idioms.length * 100).toInt(),
+      ));
+      await _dbRepo.saveIdiom(event.idioms[i]);
+    }
 
-    emit(const DataInitSavingState('Inapakia misemo (sayings) 276...'));
-    await _dbRepo.saveSayings(event.sayings);
+    emit(const DataInitSavingState('Inapakia methali (proverbs) 382 ...', 0));
+    for (int i = 0; i < event.proverbs.length; i++) {
+      emit(DataInitSavingState(
+        'Inapakia methali (proverbs)',
+        (i / event.proverbs.length * 100).toInt(),
+      ));
+      await _dbRepo.saveProverb(event.proverbs[i]);
+    }
 
-    emit(const DataInitSavingState('Inapakia maneno (words) 16,641 ...'));
+    emit(const DataInitSavingState('Inapakia misemo (sayings) 276...', 0));
+    for (int i = 0; i < event.proverbs.length; i++) {
+      emit(DataInitSavingState(
+        'Inapakia misemo (sayings)',
+        (i / event.sayings.length * 100).toInt(),
+      ));
+      await _dbRepo.saveSaying(event.sayings[i]);
+    }
 
-    _dbRepo.saveWords(event.words);
+    emit(const DataInitSavingState('Inapakia maneno (words) 16,641 ...', 0));
+    for (int i = 0; i < event.proverbs.length; i++) {
+      int progress = (i / event.words.length * 100).toInt();
+      emit(DataInitSavingState(progressDesc(progress), progress));
+      await _dbRepo.saveWord(event.words[i]);
+    }
 
     _prefRepo.setPrefBool(PrefConstants.dataIsLoadedKey, true);
 

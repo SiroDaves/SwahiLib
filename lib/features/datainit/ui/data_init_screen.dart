@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../common/widgets/progress/custom_snackbar.dart';
 import '../../../common/widgets/progress/general_progress.dart';
 import '../../../core/navigator/route_names.dart';
+import '../../../core/theme/theme_colors.dart';
 import '../bloc/data_init_bloc.dart';
 
 class DataInitScreen extends StatefulWidget {
@@ -50,7 +52,33 @@ class DataInitScreenState extends State<DataInitScreen> {
                 onRetry: () => bloc.add(const FetchData()),
               ),
               progress: () => const LoadingProgress(title: "Inapakia data ..."),
-              saving: (feedback) => LoadingProgress(title: feedback),
+              saving: (feedback, progress) => Column(
+                children: [
+                  const Spacer(),
+                  LoadingProgress(title: feedback),
+                  if (progress > 0.0) ...[
+                    Container(
+                      height: 50,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: LinearPercentIndicator(
+                        lineHeight: 50,
+                        percent: progress * .01,
+                        center: Text(
+                          "$progress %",
+                          style: const TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        barRadius: const Radius.circular(20),
+                        backgroundColor: ThemeColors.bgColorPrimary4(context),
+                        progressColor: Colors.green,
+                      ),
+                    ),
+                  ],
+                  const Spacer(),
+                ],
+              ),
             ),
           );
         },

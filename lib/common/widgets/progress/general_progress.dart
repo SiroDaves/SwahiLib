@@ -36,7 +36,7 @@ class SmallCircularProgress extends StatelessWidget {
       child: CircularProgressIndicator(
         color: ThemeColors.primary,
         strokeWidth: 3,
-        backgroundColor: Colors.white.withOpacity(0.3),
+        backgroundColor: Colors.white.withValues(alpha: 0.3),
       ),
     );
   }
@@ -130,24 +130,20 @@ class LoadingProgress extends StatelessWidget {
       ],
       pathBackgroundColor: Colors.black,
     );
-    return Center(
-      child: SizedBox(
-        height: size.height / 1.5,
-        child: Column(
-          children: [
-            SizedBox(
-              height: size.height / 3,
-              child: loadingIndicator1,
-            ),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style:
-                  TextStyles.pageTitle1.size(size.height / 25).textHeight(1.5),
-            ).padding(all: 30),
-          ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          height: size.height / 3,
+          child: loadingIndicator1,
         ),
-      ),
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: TextStyles.pageTitle1.size(size.height / 25).textHeight(1.5),
+        ).center().padding(all: 30),
+      ],
     );
   }
 }
