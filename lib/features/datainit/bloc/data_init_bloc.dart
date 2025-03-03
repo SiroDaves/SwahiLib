@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../common/data/models/models.dart';
 import '../../../common/repository/db/database_repository.dart';
 import '../../../common/repository/pref_repository.dart';
+import '../../../common/utils/app_util.dart';
 import '../../../common/utils/constants/pref_constants.dart';
 import '../../../core/di/injectable.dart';
 import '../common/data_init_utils.dart';
@@ -62,8 +63,8 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
 
     await Future<void>.delayed(const Duration(seconds: 3));
 
+    logger('Now saving idioms');
     emit(const DataInitSavingState('Inapakia nahau (idioms) 527 ...', 0));
-
     for (int i = 0; i < event.idioms.length; i++) {
       emit(DataInitSavingState(
         'Inapakia nahau (idioms)',
@@ -72,6 +73,7 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
       await _dbRepo.saveIdiom(event.idioms[i]);
     }
 
+    logger('Now saving proverbs');
     emit(const DataInitSavingState('Inapakia methali (proverbs) 382 ...', 0));
     for (int i = 0; i < event.proverbs.length; i++) {
       emit(DataInitSavingState(
@@ -81,8 +83,9 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
       await _dbRepo.saveProverb(event.proverbs[i]);
     }
 
+    logger('Now saving sayings');
     emit(const DataInitSavingState('Inapakia misemo (sayings) 276...', 0));
-    for (int i = 0; i < event.proverbs.length; i++) {
+    for (int i = 0; i < event.sayings.length; i++) {
       emit(DataInitSavingState(
         'Inapakia misemo (sayings)',
         (i / event.sayings.length * 100).toInt(),
@@ -90,8 +93,9 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
       await _dbRepo.saveSaying(event.sayings[i]);
     }
 
+    logger('Now saving words');
     emit(const DataInitSavingState('Inapakia maneno (words) 16,641 ...', 0));
-    for (int i = 0; i < event.proverbs.length; i++) {
+    for (int i = 0; i < event.words.length; i++) {
       int progress = (i / event.words.length * 100).toInt();
       emit(DataInitSavingState(progressDesc(progress), progress));
       await _dbRepo.saveWord(event.words[i]);

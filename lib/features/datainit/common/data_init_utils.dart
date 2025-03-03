@@ -1,12 +1,6 @@
 String progressDesc(int value) {
-  if (value == 1) {
-    return 'Moja...';
-  } else if (value == 2) {
-    return 'Mbili...';
-  } else if (value == 3) {
-    return 'Tatu ...';
-  } else if (value <= 5) {
-    return 'Inapakia ...';
+  if (value <= 5) {
+    return 'Inapakia maneno (words) 16,641 ...';
   } else if (value <= 10) {
     return 'Inapakia maneno ...';
   } else if (value <= 20) {
