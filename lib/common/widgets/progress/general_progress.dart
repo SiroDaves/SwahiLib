@@ -143,7 +143,7 @@ class LoadingProgress extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style:
-                  TextStyles.pageTitle1.size(size.height / 22).textHeight(1.5),
+                  TextStyles.pageTitle1.size(size.height / 25).textHeight(1.5),
             ).padding(all: 30),
           ],
         ),

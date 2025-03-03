@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:workmanager/workmanager.dart';
 
 import '../../../common/data/models/models.dart';
 import '../../../common/repository/db/database_repository.dart';
@@ -43,23 +44,24 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     emit(DataInitFetchedState(idioms, proverbs, sayings, words));
   }
 
+  List<List<Word>> splitIntoBatches(List<Word> words, int batchSize) {
+    List<List<Word>> batches = [];
+    for (int i = 0; i < words.length; i += batchSize) {
+      final end = (i + batchSize).clamp(0, words.length);
+      batches.add(words.sublist(i, end));
+    }
+    return batches;
+  }
+
   void _onSaveData(
     SaveData event,
     Emitter<DataInitState> emit,
   ) async {
     emit(const DataInitSavingState('Salia kwenye skrini hii, usiondoke!'));
 
-    final wordsJson = event.words.map((word) => word.toJson()).toList();
-
-    Workmanager().registerOneOffTask(
-      //'saveWordsTask',
-      'com.swahilib.initTask',
-      'com.swahilib.initTask',
-      inputData: {'words': wordsJson},
-    );
+    await Future<void>.delayed(const Duration(seconds: 3));
 
     emit(const DataInitSavingState('Inapakia nahau (idioms) 527 ...'));
-
     await _dbRepo.saveIdioms(event.idioms);
 
     emit(const DataInitSavingState('Inapakia methali (proverbs) 382 ...'));
@@ -68,22 +70,10 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     emit(const DataInitSavingState('Inapakia misemo (sayings) 276...'));
     await _dbRepo.saveSayings(event.sayings);
 
-    emit(const DataInitSavingState('Inapakia maneno (words) 16,641...'));
+    emit(const DataInitSavingState('Inapakia maneno (words) 16,641 ...'));
 
-    Map<String, List<Word>> groupedWords = {};
+    _dbRepo.saveWords(event.words);
 
-    for (var word in event.words) {
-      String firstLetter = word.title![0].toUpperCase();
-      if (!groupedWords.containsKey(firstLetter)) {
-        groupedWords[firstLetter] = [];
-      }
-      if (groupedWords[firstLetter]!.length < 10) {
-        groupedWords[firstLetter]!.add(word);
-      }
-    }
-
-    _prefRepo.words = groupedWords.values.expand((list) => list).toList();
-    await Future<void>.delayed(const Duration(seconds: 10));
     _prefRepo.setPrefBool(PrefConstants.dataIsLoadedKey, true);
 
     emit(const DataInitSavedState());
