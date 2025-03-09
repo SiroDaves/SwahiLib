@@ -1,4 +1,4 @@
-export 'basic_model.dart';
+export 'app_update.dart';
 export 'history.dart';
 export 'idiom.dart';
 export 'proverb.dart';

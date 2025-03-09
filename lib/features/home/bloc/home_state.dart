@@ -10,6 +10,11 @@ class HomeState with _$HomeState {
 
   const factory HomeState.success() = HomeSuccessState;
 
+  const factory HomeState.updateApp(
+    bool hasNewUpdate,
+    AppUpdate appUpdate,
+  ) = HomeUpdateAppState;
+
   const factory HomeState.fetched(
     List<Idiom> idioms,
     List<Proverb> proverbs,
