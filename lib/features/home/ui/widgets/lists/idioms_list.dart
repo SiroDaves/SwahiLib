@@ -19,9 +19,8 @@ class IdiomsList extends StatelessWidget {
       },
     );
 
-    return Container(
+    return SizedBox(
       width: size.width - 85,
-      padding: const EdgeInsets.only(top: 10),
       child: parent.filteredIdioms.isEmpty ? emptyState : listView,
     );
   }
@@ -35,9 +34,9 @@ class IdiomItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final titleTxtStyle = TextStyles.headingStyle4.bold
         .size(22)
-        .textColor(ThemeColors.primary)
+        .textColor(ThemeColors.foreColorPrimary(context))
         .textHeight(1.2);
-    final bodyTxtStyle = TextStyles.bodyStyle1.size(18).textColor(Colors.black);
+    final bodyTxtStyle = TextStyles.bodyStyle1.size(18).textHeight(2);
 
     var meaning = cleanMeaning(idiom.meaning ?? "");
 
@@ -52,7 +51,6 @@ class IdiomItem extends StatelessWidget {
 
     return Card(
       elevation: 2,
-      color: Colors.white,
       child: ListTile(
         title: Text(idiom.title ?? "", style: titleTxtStyle),
         subtitle: Column(

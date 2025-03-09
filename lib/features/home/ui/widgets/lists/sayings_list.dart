@@ -19,9 +19,8 @@ class SayingsList extends StatelessWidget {
       },
     );
 
-    return Container(
+    return SizedBox(
       width: size.width - 85,
-      padding: const EdgeInsets.only(top: 10),
       child: parent.filteredSayings.isEmpty ? emptyState : listView,
     );
   }
@@ -35,9 +34,9 @@ class SayingItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final titleTxtStyle = TextStyles.headingStyle4.bold
         .size(22)
-        .textColor(ThemeColors.primary)
+        .textColor(ThemeColors.foreColorPrimary(context))
         .textHeight(1.2);
-    final bodyTxtStyle = TextStyles.bodyStyle1.size(18).textColor(Colors.black);
+    final bodyTxtStyle = TextStyles.bodyStyle1.size(18);
 
     var meaning = cleanMeaning(saying.meaning ?? "");
 
@@ -52,7 +51,6 @@ class SayingItem extends StatelessWidget {
 
     return Card(
       elevation: 2,
-      color: Colors.white,
       child: ListTile(
         onTap: () {}, //=> vm.openSaying(saying),
         title: Text(saying.title ?? "", style: titleTxtStyle),

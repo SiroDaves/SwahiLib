@@ -17,7 +17,7 @@ class DataInitState with _$DataInitState {
     List<Word> words,
   ) = DataInitFetchedState;
 
-  const factory DataInitState.saving(String feedback) = DataInitSavingState;
+  const factory DataInitState.saving(String feedback, int progress) = DataInitSavingState;
 
   const factory DataInitState.saved() = DataInitSavedState;
 

@@ -5,14 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textstyle_extensions/textstyle_extensions.dart';
 
 import '../../../common/data/models/models.dart';
-import '../../../common/repository/pref_repository.dart';
 import '../../../common/utils/app_util.dart';
 import '../../../common/utils/constants/app_constants.dart';
-import '../../../common/utils/constants/pref_constants.dart';
 import '../../../common/widgets/general/labels.dart';
 import '../../../common/widgets/progress/general_progress.dart';
 import '../../../common/widgets/progress/skeleton.dart';
-import '../../../core/di/injectable.dart';
 import '../../../core/theme/theme_colors.dart';
 import '../../../core/theme/theme_fonts.dart';
 import '../../viewer/ui/word_screen.dart';
@@ -38,7 +35,6 @@ class HomeScreenState extends State<HomeScreen> {
   bool periodicSyncStarted = false;
 
   late HomeBloc _bloc;
-  final _prefRepo = getIt<PrefRepository>();
 
   List<Word> words = [], filteredWords = [];
   List<Idiom> idioms = [], filteredIdioms = [];
@@ -56,10 +52,9 @@ class HomeScreenState extends State<HomeScreen> {
 
   void startPeriodicSync() {
     periodicSyncStarted = true;
-    bool wordsLoaded = _prefRepo.getPrefBool(PrefConstants.wordsAreLoadedKey);
 
     _syncTimer = Timer.periodic(const Duration(minutes: 5), (_) async {
-      if (wordsLoaded) _bloc.add(const FetchData());
+      _bloc.add(const FetchData());
     });
   }
 
@@ -89,10 +84,10 @@ class HomeScreenState extends State<HomeScreen> {
             filteredProverbs = proverbs;
             filteredSayings = sayings;
 
-            if (!periodicSyncStarted) {
+            /*if (!periodicSyncStarted) {
               _bloc.add(const FetchData());
               startPeriodicSync();
-            }
+            }*/
           }
         },
         builder: (context, state) {

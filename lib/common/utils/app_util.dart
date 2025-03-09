@@ -14,6 +14,11 @@ $message
   ''');
 }
 
+double formatPercentage(double value) {
+  String inString = (value * 100).toStringAsFixed(0);
+  return double.parse(inString);
+}
+
 String getThemeModeString(ThemeMode themeMode) {
   switch (themeMode) {
     case ThemeMode.light:

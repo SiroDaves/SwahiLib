@@ -44,7 +44,7 @@ class AppTheme {
 
   static ThemeData darkTheme() {
     return ThemeData(
-      scaffoldBackgroundColor: ThemeColors.primaryDark1,
+      scaffoldBackgroundColor: ThemeColors.primaryDark2,
       colorScheme: const ColorScheme(
         brightness: Brightness.light,
         primary: ThemeColors.primary2,

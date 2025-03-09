@@ -95,7 +95,9 @@ class TabActionItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: RawMaterialButton(
-        fillColor: isSelected ? Colors.white : ThemeColors.primary,
+        fillColor: isSelected
+            ? ThemeColors.bgColorAccent2(context)
+            : ThemeColors.bgColorPrimary5(context),
         highlightColor: Colors.white,
         focusElevation: 0,
         hoverColor: ThemeColors.primaryDark,

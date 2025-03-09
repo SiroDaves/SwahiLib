@@ -2,7 +2,7 @@ name: swahilib
 description: Kiswahili Kitukuzwe.
 publish_to: 'none'
 
-version: 1.0.11
+version: 1.0.12+1
 
 environment:
   sdk: ^3.5.4

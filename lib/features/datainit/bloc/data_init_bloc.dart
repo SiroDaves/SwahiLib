@@ -1,13 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:workmanager/workmanager.dart';
 
 import '../../../common/data/models/models.dart';
 import '../../../common/repository/db/database_repository.dart';
 import '../../../common/repository/pref_repository.dart';
+import '../../../common/utils/app_util.dart';
 import '../../../common/utils/constants/pref_constants.dart';
 import '../../../core/di/injectable.dart';
+import '../common/data_init_utils.dart';
 import '../domain/data_init_repository.dart';
 
 part 'data_init_event.dart';
@@ -43,47 +46,61 @@ class DataInitBloc extends Bloc<DataInitEvent, DataInitState> {
     emit(DataInitFetchedState(idioms, proverbs, sayings, words));
   }
 
+  List<List<Word>> splitIntoBatches(List<Word> words, int batchSize) {
+    List<List<Word>> batches = [];
+    for (int i = 0; i < words.length; i += batchSize) {
+      final end = (i + batchSize).clamp(0, words.length);
+      batches.add(words.sublist(i, end));
+    }
+    return batches;
+  }
+
   void _onSaveData(
     SaveData event,
     Emitter<DataInitState> emit,
   ) async {
-    emit(const DataInitSavingState('Salia kwenye skrini hii, usiondoke!'));
+    emit(const DataInitSavingState('Salia kwenye skrini hii, usiondoke!', 0));
 
-    final wordsJson = event.words.map((word) => word.toJson()).toList();
+    await Future<void>.delayed(const Duration(seconds: 3));
 
-    Workmanager().registerOneOffTask(
-      'saveWordsTask',
-      'com.swahilib.initTask',
-      inputData: {'words': wordsJson},
-      constraints: Constraints(networkType: NetworkType.connected),
-    );
-
-    emit(const DataInitSavingState('Inapakia nahau (idioms) 527 ...'));
-
-    await _dbRepo.saveIdioms(event.idioms);
-
-    emit(const DataInitSavingState('Inapakia methali (proverbs) 382 ...'));
-    await _dbRepo.saveProverbs(event.proverbs);
-
-    emit(const DataInitSavingState('Inapakia misemo (sayings) 276...'));
-    await _dbRepo.saveSayings(event.sayings);
-
-    emit(const DataInitSavingState('Inapakia maneno (words) 16,641...'));
-
-    Map<String, List<Word>> groupedWords = {};
-
-    for (var word in event.words) {
-      String firstLetter = word.title![0].toUpperCase();
-      if (!groupedWords.containsKey(firstLetter)) {
-        groupedWords[firstLetter] = [];
-      }
-      if (groupedWords[firstLetter]!.length < 10) {
-        groupedWords[firstLetter]!.add(word);
-      }
+    logger('Now saving idioms');
+    emit(const DataInitSavingState('Inapakia nahau (idioms) 527 ...', 0));
+    for (int i = 0; i < event.idioms.length; i++) {
+      emit(DataInitSavingState(
+        'Inapakia nahau (idioms)',
+        (i / event.idioms.length * 100).toInt(),
+      ));
+      await _dbRepo.saveIdiom(event.idioms[i]);
     }
 
-    _prefRepo.words = groupedWords.values.expand((list) => list).toList();
-    await Future<void>.delayed(const Duration(seconds: 10));
+    logger('Now saving proverbs');
+    emit(const DataInitSavingState('Inapakia methali (proverbs) 382 ...', 0));
+    for (int i = 0; i < event.proverbs.length; i++) {
+      emit(DataInitSavingState(
+        'Inapakia methali (proverbs)',
+        (i / event.proverbs.length * 100).toInt(),
+      ));
+      await _dbRepo.saveProverb(event.proverbs[i]);
+    }
+
+    logger('Now saving sayings');
+    emit(const DataInitSavingState('Inapakia misemo (sayings) 276...', 0));
+    for (int i = 0; i < event.sayings.length; i++) {
+      emit(DataInitSavingState(
+        'Inapakia misemo (sayings)',
+        (i / event.sayings.length * 100).toInt(),
+      ));
+      await _dbRepo.saveSaying(event.sayings[i]);
+    }
+
+    logger('Now saving words');
+    emit(const DataInitSavingState('Inapakia maneno (words) 16,641 ...', 0));
+    for (int i = 0; i < event.words.length; i++) {
+      int progress = (i / event.words.length * 100).toInt();
+      emit(DataInitSavingState(progressDesc(progress), progress));
+      await _dbRepo.saveWord(event.words[i]);
+    }
+
     _prefRepo.setPrefBool(PrefConstants.dataIsLoadedKey, true);
 
     emit(const DataInitSavedState());

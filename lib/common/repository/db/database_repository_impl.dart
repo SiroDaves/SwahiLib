@@ -1,9 +1,7 @@
-import '../../../core/di/injectable.dart';
 import '../../data/db/app_database.dart';
 import '../../data/models/models.dart';
 import '../../utils/app_util.dart';
-import '../../utils/constants/pref_constants.dart';
-import '../pref_repository.dart';
+import '../../utils/date_util.dart';
 import 'database_repository.dart';
 
 /// Implementor of Database Repository
@@ -41,11 +39,12 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   Future<void> saveIdioms(List<Idiom> idioms) async {
     try {
       if (idioms.isNotEmpty) {
-        logger('${idioms.length} idioms to be saved');
         await _appDB.idiomsDao.deleteAllIdioms();
+        logger('${idioms.length} idioms to be saved ${dateNow()}');
         for (final idiom in idioms) {
           await _appDB.idiomsDao.insertIdiom(idiom);
         }
+        logger('${idioms.length} idioms have been saved ${dateNow()}');
       }
     } catch (e) {
       logger('Unable to save idioms: $e');
@@ -71,11 +70,12 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   Future<void> saveProverbs(List<Proverb> proverbs) async {
     try {
       if (proverbs.isNotEmpty) {
-        logger('${proverbs.length} proverbs to be saved');
         await _appDB.proverbsDao.deleteAllProverbs();
+        logger('${proverbs.length} proverbs to be saved ${dateNow()}');
         for (final proverb in proverbs) {
           await _appDB.proverbsDao.insertProverb(proverb);
         }
+        logger('${proverbs.length} proverbs have been saved ${dateNow()}');
       }
     } catch (e) {
       logger('Unable to save proverbs: $e');
@@ -101,11 +101,12 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   Future<void> saveSayings(List<Saying> sayings) async {
     try {
       if (sayings.isNotEmpty) {
-        logger('${sayings.length} sayings to be saved');
         await _appDB.sayingsDao.deleteAllSayings();
+        logger('${sayings.length} sayings to be saved ${dateNow()}');
         for (final saying in sayings) {
           await _appDB.sayingsDao.insertSaying(saying);
         }
+        logger('${sayings.length} sayings have been saved ${dateNow()}');
       }
     } catch (e) {
       logger('Unable to save sayings: $e');
@@ -145,15 +146,16 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   @override
   Future<void> saveWords(List<Word> words) async {
     try {
-      logger('${words.length} words to be saved');
       if (words.isNotEmpty) {
         await _appDB.wordsDao.deleteAllWords();
+        logger('${words.length} words to be saved ${dateNow()}');
         for (final word in words) {
           await _appDB.wordsDao.insertWord(word);
         }
+        logger('${words.length} words have been saved ${dateNow()}');
       }
-      final prefRepo = getIt<PrefRepository>();
-      prefRepo.setPrefBool(PrefConstants.wordsAreLoadedKey, true);
+      //final prefRepo = getIt<PrefRepository>();
+      //prefRepo.setPrefBool(PrefConstants.wordsAreLoadedKey, true);
     } catch (e) {
       logger('Unable to save words: $e');
     }
