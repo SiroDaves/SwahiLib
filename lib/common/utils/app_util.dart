@@ -180,3 +180,17 @@ String cleanMeaning(String? meaning) {
       .replaceAll(',', ', ')
       .replaceAll('  ', ' ');
 }
+
+bool isNewerVersion(String current, String latest) {
+  List<int> currentParts = current.split('.').map(int.parse).toList();
+  List<int> latestParts = latest.split('.').map(int.parse).toList();
+
+  for (int i = 0; i < latestParts.length; i++) {
+    if (i >= currentParts.length || latestParts[i] > currentParts[i]) {
+      return true;
+    } else if (latestParts[i] < currentParts[i]) {
+      return false;
+    }
+  }
+  return false;
+}

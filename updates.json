@@ -1,0 +1,12 @@
+{
+  "version": "1.0.12.2",
+  "title": "Letter filtering fixed",
+  "description": "Now words, sayings, proverbs or sayings can be filtered when you tap on the letters on the far left",
+  "appLinks": {
+      "android": "https://play.google.com/store/apps/details?id=com.swahilib",
+      "ios": "https://apps.apple.com/us/app/id6446771678",
+      "windows": "https://github.com/SiroDaves/SwahiLib",
+      "macos": "https://github.com/SiroDaves/SwahiLib",
+      "linux": "https://github.com/SiroDaves/SwahiLib"
+  }
+}

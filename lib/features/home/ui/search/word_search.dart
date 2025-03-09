@@ -10,13 +10,9 @@ class WordSearch extends SearchDelegate<List> {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    return ThemeData(
-      appBarTheme: const AppBarTheme(backgroundColor: ThemeColors.primary),
-      textTheme: const TextTheme(titleLarge: TextStyle(color: Colors.white)),
-      inputDecorationTheme: const InputDecorationTheme(
-        hintStyle: TextStyle(color: Colors.white),
-      ),
-    );
+   return Theme.of(context).brightness == Brightness.light
+        ? AppTheme.darkTheme()
+        : AppTheme.lightTheme();
   }
 
   @override

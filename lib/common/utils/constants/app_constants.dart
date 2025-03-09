@@ -8,6 +8,7 @@ import '../app_util.dart';
 class AppConstants {
   AppConstants._();
   static String dbName = 'SwahiLib.db';
+  static String githubRepo = 'https://github.com/SiroDaves/SwahiLib';
   static const String historiesTable = 'histories';
   static const String idiomsTable = 'idioms';
   static const String proverbsTable = 'proverbs';
