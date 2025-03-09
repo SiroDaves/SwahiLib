@@ -5,19 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "swa",
-            "request": "launch",
-            "type": "dart",
-            "program": "lib/main.dart",
-            "args": [
-                "production",
-                "--target",
-                "lib/main.dart",
-                "--dart-define-from-file",
-                "keys-prod.json"
-            ],
-        },
-        {
             "name": "swali",
             "request": "launch",
             "type": "dart",

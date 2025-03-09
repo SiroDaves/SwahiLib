@@ -11,9 +11,11 @@ import '../../../common/widgets/general/labels.dart';
 import '../../../common/widgets/progress/general_progress.dart';
 import '../../../common/widgets/progress/skeleton.dart';
 import '../../../core/theme/theme_colors.dart';
+import '../../../core/theme/theme_data.dart';
 import '../../../core/theme/theme_fonts.dart';
 import '../../viewer/ui/word_screen.dart';
 import '../bloc/home_bloc.dart';
+import '../common/home_utils.dart';
 
 part 'widgets/views/home_appbar.dart';
 part 'widgets/views/home_body.dart';
@@ -63,7 +65,10 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   void onLetterTapped(String letter) {
-    setState(() => setLetter = letter);
+    setState(() {
+      setLetter = letter;
+      filterList(setPage, letter, this);
+    });
   }
 
   @override
