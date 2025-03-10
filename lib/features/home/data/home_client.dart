@@ -8,7 +8,7 @@ import '../../../common/utils/constants/app_constants.dart';
 class HomeClient {
   Future<Response> fetchUpdateInfo() async {
     return await makeApiGetRequest(
-      '${AppConstants.githubRepo}main/updates.json',
+      AppConstants.githubRepoUpdateJson,
       {
         'Content-Type': 'application/json',
       },
