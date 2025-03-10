@@ -9,6 +9,7 @@ class AppConstants {
   AppConstants._();
   static String dbName = 'SwahiLib.db';
   static String githubRepo = 'https://github.com/SiroDaves/SwahiLib';
+  static String githubRepoUpdateJson = 'https://raw.githubusercontent.com/SiroDaves/SwahiLib/refs/heads/main/updates.json';
   static const String historiesTable = 'histories';
   static const String idiomsTable = 'idioms';
   static const String proverbsTable = 'proverbs';
