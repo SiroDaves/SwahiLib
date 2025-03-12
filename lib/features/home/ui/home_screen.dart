@@ -92,8 +92,10 @@ class HomeScreenState extends State<HomeScreen> {
       },
       child: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
-          if (state is HomeUpdateAppState && !state.hasNewUpdate) {
-            _bloc.add(const FetchData());
+          if (state is HomeUpdateAppState) {
+            if (!state.hasNewUpdate) {
+              _bloc.add(const FetchData());
+            }
           } else if (state is HomeFetchedDataState) {
             words = state.words;
             idioms = state.idioms;
@@ -113,8 +115,10 @@ class HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           var appBar = AppBar(
             centerTitle: true,
-            title: Text(AppConstants.appTitle,
-                style: TextStyles.headingStyle1.bold.size(25)),
+            title: Text(
+              '${AppConstants.appTitle} - ${AppConstants.appTitle1}',
+              style: TextStyles.headingStyle1.bold.size(25),
+            ),
           );
 
           var emptyState = EmptyState(
@@ -127,8 +131,10 @@ class HomeScreenState extends State<HomeScreen> {
             orElse: () => Scaffold(appBar: appBar, body: emptyState),
             progress: () => const Scaffold(body: SkeletonLoading()),
             failure: (feedback) => Scaffold(appBar: appBar, body: emptyState),
-            updateApp: (hasUpdate, appUpdate) =>
-                const Scaffold(body: UpdateNow()),
+            updateApp: (hasUpdate, appUpdate) => Scaffold(
+              appBar: appBar,
+              body: const UpdateNow(),
+            ),
             fetched: (idioms, proverbs, sayings, words) => Scaffold(
               appBar: HomeAppBar(parent: this),
               body: HomeBody(parent: this),
