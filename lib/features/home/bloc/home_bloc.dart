@@ -24,6 +24,40 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final _dbRepo = getIt<DatabaseRepository>();
   final _homeRepo = HomeRepository();
 
+  void _onCheckAppUpdates(
+    CheckAppUpdates event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(const HomeProgressState());
+    AppUpdate? appUpdate;
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String currentVersion = packageInfo.version;
+    var resp = await _homeRepo.fetchUpdateInfo();
+
+    try {
+      switch (resp.statusCode) {
+        case 200:
+          appUpdate = AppUpdate.fromJson(jsonDecode(resp.body));
+          if (isNewerVersion(currentVersion, appUpdate.version!)) {
+            logger("We need to upgrade from v$currentVersion to ${appUpdate.version}");
+            emit(HomeUpdateAppState(true, appUpdate));
+          } else {
+            logger("No never version found, sticking to $currentVersion");
+            emit(HomeUpdateAppState(false, appUpdate));
+          }
+          break;
+
+        default:
+          logger("Error finding new update info: ${resp.statusCode}");
+          emit(HomeUpdateAppState(false, appUpdate!));
+          break;
+      }
+    } catch (e) {
+      logger("Error finding new update info: $e");
+      emit(HomeUpdateAppState(false, appUpdate!));
+    }
+  }
+
   void _onFetchData(
     FetchData event,
     Emitter<HomeState> emit,
@@ -43,38 +77,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (e) {
       logger("Error log: $e");
       emit(HomeFetchedDataState(idioms, proverbs, sayings, words));
-    }
-  }
-
-  void _onCheckAppUpdates(
-    CheckAppUpdates event,
-    Emitter<HomeState> emit,
-  ) async {
-    emit(const HomeProgressState());
-    AppUpdate? appUpdate;
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String currentVersion = packageInfo.version;
-    var resp = await _homeRepo.fetchUpdateInfo();
-
-    try {
-      switch (resp.statusCode) {
-        case 200:
-          appUpdate = AppUpdate.fromJson(jsonDecode(resp.body));
-          if (isNewerVersion(currentVersion, appUpdate.version!)) {
-            emit(HomeUpdateAppState(true, appUpdate));
-          } else {
-            emit(HomeUpdateAppState(false, appUpdate));
-          }
-          break;
-
-        default:
-          logger("Error finding new update info: ${resp.statusCode}");
-          emit(HomeUpdateAppState(false, appUpdate!));
-          break;
-      }
-    } catch (e) {
-      logger("Error finding new update info: $e");
-      emit(HomeUpdateAppState(false, appUpdate!));
     }
   }
 }
