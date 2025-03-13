@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'common/auth/auth_bloc.dart';
-import 'common/utils/constants/pref_constants.dart';
-import 'common/utils/date_util.dart';
-import 'core/theme/bloc/theme_bloc.dart';
-import 'core/theme/theme_data.dart';
-import 'common/repository/authe_repository.dart';
-import 'common/repository/pref_repository.dart';
+import 'core/auth/auth_bloc.dart';
+import 'core/utils/constants/pref_constants.dart';
+import 'core/utils/date_util.dart';
+import 'presentation/theme/bloc/theme_bloc.dart';
+import 'presentation/theme/theme_data.dart';
+import 'data/repository/auth_repository.dart';
+import 'data/repository/pref_repository.dart';
 import 'core/di/injectable.dart';
-import 'core/navigator/main_navigator.dart';
-import 'core/navigator/route_names.dart';
+import 'presentation/navigator/main_navigator.dart';
+import 'presentation/navigator/route_names.dart';
 
 class MyApp extends StatefulWidget {
   final Widget? home;

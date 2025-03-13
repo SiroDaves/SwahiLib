@@ -5,11 +5,11 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../common/utils/app_util.dart';
-import '../../common/utils/constants/app_constants.dart';
-import '../../common/data/db/app_database.dart';
-import '../../common/repository/db/database_repository_impl.dart';
-import '../../common/repository/db/database_repository.dart';
+import '../utils/app_util.dart';
+import '../utils/constants/app_constants.dart';
+import '../../data/datasources/local/app_database.dart';
+import '../../data/repository/db/database_repository_impl.dart';
+import '../../data/repository/db/database_repository.dart';
 import 'injectable.config.dart';
 
 final getIt = GetIt.instance;
