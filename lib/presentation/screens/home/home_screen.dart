@@ -1,25 +1,25 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:textstyle_extensions/textstyle_extensions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../data/models/models.dart';
 import '../../../core/network/api_util.dart';
 import '../../../core/utils/app_util.dart';
-import '../../../core/utils/constants/app_assets.dart';
 import '../../../core/utils/constants/app_constants.dart';
+import '../../theme/theme_colors.dart';
+import '../../theme/theme_data.dart';
+import '../../theme/theme_fonts.dart';
 import '../../widgets/action/base_buttons.dart';
 import '../../widgets/general/labels.dart';
 import '../../widgets/progress/general_progress.dart';
 import '../../widgets/progress/skeleton.dart';
-import '../../theme/theme_colors.dart';
-import '../../theme/theme_data.dart';
-import '../../theme/theme_fonts.dart';
-import '../../theme/theme_styles.dart';
-import '../viewer/word_screen.dart';
 import '../../blocs/home/home_bloc.dart';
+import '../viewer/word_screen.dart';
 import 'common/home_utils.dart';
 
 part 'widgets/views/home_appbar.dart';
@@ -133,7 +133,7 @@ class HomeScreenState extends State<HomeScreen> {
             failure: (feedback) => Scaffold(appBar: appBar, body: emptyState),
             updateApp: (hasUpdate, appUpdate) => Scaffold(
               appBar: appBar,
-              body: const UpdateNow(),
+              body: UpdateNow(update: appUpdate),
             ),
             fetched: (idioms, proverbs, sayings, words) => Scaffold(
               appBar: HomeAppBar(parent: this),
