@@ -32,10 +32,8 @@ class IdiomItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleTxtStyle = TextStyles.headingStyle4.bold
-        .size(22)
-        .textColor(ThemeColors.foreColorPrimary(context))
-        .textHeight(1.2);
+    final titleTxtStyle =
+        TextStyles.headingStyle4.bold.size(22).textHeight(1.2);
     final bodyTxtStyle = TextStyles.bodyStyle1.size(18).textHeight(2);
 
     var meaning = cleanMeaning(idiom.meaning ?? "");

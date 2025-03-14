@@ -23,6 +23,7 @@ class WordView extends StatelessWidget {
             pinned: true,
             leading: const SizedBox(),
             flexibleSpace: FlexibleSpaceBar(
+              centerTitle: false,
               title: Text(
                 word.title ?? "",
                 style: TextStyles.headingStyle2.bold

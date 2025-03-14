@@ -1,4 +1,4 @@
-part of '../../home_screen.dart';
+part of '../home_screen.dart';
 
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   final HomeScreenState parent;
@@ -17,35 +17,6 @@ class HomeAppBarState extends State<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
     parent = widget.parent;
-    /*var leadingAction = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: InkWell(
-        onTap: () async {},
-        child: const Padding(
-          padding: EdgeInsets.all(10),
-          child: Icon(Icons.settings),
-        ),
-      ),
-    );*/
-
-    var actionButtons = <Widget>[
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: InkWell(
-          onTap: () async {
-            await showSearch(
-              context: context,
-              delegate: WordSearch(context, parent.words),
-            );
-          },
-          child: const Padding(
-            padding: EdgeInsets.all(10),
-            child: Icon(Icons.search),
-          ),
-        ),
-      ),
-    ];
-
     var tabActions = PreferredSize(
       preferredSize: const Size.fromHeight(50),
       child: SizedBox(
@@ -71,8 +42,6 @@ class HomeAppBarState extends State<HomeAppBar> {
         '${AppConstants.appTitle} - ${AppConstants.appTitle1}',
         style: TextStyles.headingStyle1.bold.size(25),
       ),
-      //leading: leadingAction,
-      actions: actionButtons,
       bottom: tabActions,
     );
   }

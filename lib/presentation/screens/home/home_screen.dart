@@ -7,23 +7,29 @@ import 'package:styled_widget/styled_widget.dart';
 import 'package:textstyle_extensions/textstyle_extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/di/injectable.dart';
+import '../../../core/utils/constants/app_assets.dart';
 import '../../../data/models/models.dart';
 import '../../../core/network/api_util.dart';
 import '../../../core/utils/app_util.dart';
 import '../../../core/utils/constants/app_constants.dart';
+import '../../../data/repository/pref_repository.dart';
+import '../../theme/bloc/theme_bloc.dart';
 import '../../theme/theme_colors.dart';
 import '../../theme/theme_data.dart';
 import '../../theme/theme_fonts.dart';
 import '../../widgets/action/base_buttons.dart';
 import '../../widgets/general/labels.dart';
+import '../../widgets/inputs/radio_input.dart';
 import '../../widgets/progress/general_progress.dart';
 import '../../widgets/progress/skeleton.dart';
 import '../../blocs/home/home_bloc.dart';
 import '../viewer/word_screen.dart';
 import 'common/home_utils.dart';
 
-part 'widgets/views/home_appbar.dart';
-part 'widgets/views/home_body.dart';
+part 'widgets/home_appbar.dart';
+part 'widgets/home_body.dart';
+part 'widgets/home_drawer.dart';
 part 'widgets/lists/words_lists.dart';
 part 'widgets/lists/idioms_list.dart';
 part 'widgets/lists/sayings_list.dart';
@@ -137,7 +143,18 @@ class HomeScreenState extends State<HomeScreen> {
             ),
             fetched: (idioms, proverbs, sayings, words) => Scaffold(
               appBar: HomeAppBar(parent: this),
+              drawer: HomeDrawer(parent: this),
               body: HomeBody(parent: this),
+              floatingActionButton: FloatingActionButton(
+                tooltip: 'Search',
+                onPressed: () async {
+                  await showSearch(
+                    context: context,
+                    delegate: WordSearch(context, words),
+                  );
+                },
+                child: const Icon(Icons.search, color: Colors.white, size: 28),
+              ),
             ),
           );
         },
